@@ -1,0 +1,1857 @@
+{
+  "id": "ex156",
+  "title": "Red Hat Certified Technologist in OpenShift Virtualization",
+  "vendor": "Red Hat",
+  "code": "EX156",
+  "version": "OCP 4.18",
+  "description": "Unofficial knowledge practice for EX156 (OpenShift Virtualization on OpenShift Container Platform 4.18). Mapped to Red Hat's published exam objectives. The real exam is a 2-hour performance-based lab with product docs only; these items are not Red Hat exam questions.",
+  "unofficial": true,
+  "passPercent": 70,
+  "timeLimitMinutes": 120,
+  "domains": [
+    {
+      "id": "vm",
+      "name": "Create and manage virtual machines",
+      "weight": 22
+    },
+    {
+      "id": "net",
+      "name": "Configure virtual machine networking",
+      "weight": 33
+    },
+    {
+      "id": "storage",
+      "name": "Manage virtual machine storage",
+      "weight": 45
+    }
+  ],
+  "questions": [
+    {
+      "id": "vm-web-catalog",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "In the OpenShift web console, which path opens the instance-type catalog used to create a virtual machine?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Workloads \u2192 Pods \u2192 Create"
+        },
+        {
+          "id": "b",
+          "text": "Virtualization \u2192 Catalog"
+        },
+        {
+          "id": "c",
+          "text": "Compute \u2192 Machines \u2192 Add MachineSet"
+        },
+        {
+          "id": "d",
+          "text": "Operators \u2192 OperatorHub \u2192 Create Project"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "OpenShift Virtualization\u2019s create flow lives under Virtualization \u2192 Catalog. The InstanceTypes tab is the default; Template catalog is a separate tab. Compute MachineSets are infrastructure, not guest VMs.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        },
+        {
+          "title": "EX156 exam page (Red Hat)",
+          "url": "https://www.redhat.com/en/services/training/ex156-red-hat-certified-technologist-in-openshift-virtualization"
+        }
+      ]
+    },
+    {
+      "id": "vm-web-boot-source",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "You want only templates that already have a disk image. Which catalog filter should you enable?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Boot source available"
+        },
+        {
+          "id": "b",
+          "text": "Live migratable only"
+        },
+        {
+          "id": "c",
+          "text": "Windows driver disk"
+        },
+        {
+          "id": "d",
+          "text": "Dedicated resources"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "The Template catalog includes a Boot source available checkbox so you see templates that already have a bootable volume. Templates without a source are labeled Boot source required.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-web-quick-create",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "You selected a template with an available boot source and do not need to change disks, cloud-init, or SSH keys. Which action creates the VM immediately?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Customize VirtualMachine"
+        },
+        {
+          "id": "b",
+          "text": "Quick create VirtualMachine"
+        },
+        {
+          "id": "c",
+          "text": "Create Template"
+        },
+        {
+          "id": "d",
+          "text": "Add volume"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Quick create VirtualMachine provisions from the template without opening the customize wizard. Customize VirtualMachine is for editing Overview, YAML, Network interfaces, Disks, and Scripts first.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-web-change-it",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "A running VM was created from an instance type. Where in the web console do you change that instance type so the new size takes effect immediately?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachine details \u2192 Configuration \u2192 Details, then the instance type text"
+        },
+        {
+          "id": "b",
+          "text": "Operators \u2192 Installed Operators \u2192 CSV YAML"
+        },
+        {
+          "id": "c",
+          "text": "Networking \u2192 Services \u2192 Edit selector"
+        },
+        {
+          "id": "d",
+          "text": "Storage \u2192 PersistentVolumeClaims \u2192 Expand"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "On VirtualMachine details, the Configuration tab\u2019s Details view shows the current instance type (for example 1 CPU | 2 GiB Memory). Editing Series and Size updates the VM immediately.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-instancetype-override",
+      "type": "truefalse",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "When you create a VM from an instance type, you can override the CPU and memory values defined in that instance type on the VirtualMachine spec.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Instance types require cpu and memory. OpenShift Virtualization rejects extra requests for those resources on a VM created from an instance type; those parameters cannot be overridden.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-instancetype-crds",
+      "type": "multi",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which two custom resources define reusable VM instance types? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachineInstancetype (namespaced)"
+        },
+        {
+          "id": "b",
+          "text": "VirtualMachineClusterInstancetype (cluster-scoped)"
+        },
+        {
+          "id": "c",
+          "text": "MachineSet"
+        },
+        {
+          "id": "d",
+          "text": "HyperConverged"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "OpenShift Virtualization ships namespaced VirtualMachineInstancetype and cluster-wide VirtualMachineClusterInstancetype, both using VirtualMachineInstancetypeSpec. MachineSet is the OpenShift node API; HyperConverged is the operator config.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-u1-medium",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the web interface",
+      "stem": "The pre-defined general-purpose instance type u1.medium provides which resources?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "1 vCPU and 4 GiB memory (1:4 ratio, burstable CPU)"
+        },
+        {
+          "id": "b",
+          "text": "4 vCPUs and 4 GiB memory (network/DPDK series)"
+        },
+        {
+          "id": "c",
+          "text": "2 vCPUs and 16 GiB memory (memory-intensive series)"
+        },
+        {
+          "id": "d",
+          "text": "8 vCPUs and 16 GiB memory (compute exclusive)"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "The U (general purpose) series uses burstable CPU and a 1:4 vCPU-to-memory ratio. u1.medium is 1 vCPU and 4 GiB. N/CX/M series have different ratios and hugepage/dedicated-CPU traits.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "vm-kind",
+      "type": "fill",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "What is the Kubernetes kind of the primary guest object you apply with oc to define a VM in OpenShift Virtualization? Enter the kind only.",
+      "answer": [
+        "VirtualMachine"
+      ],
+      "explanation": "Guests are kubevirt.io/v1 VirtualMachine objects. A running instance is a VirtualMachineInstance created from the VM template spec.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "vm-apiversion",
+      "type": "fill",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "What apiVersion is used on a VirtualMachine manifest in current OpenShift Virtualization documentation?",
+      "answer": [
+        "kubevirt.io/v1"
+      ],
+      "explanation": "Documented VM YAML uses apiVersion kubevirt.io/v1 and kind VirtualMachine.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "vm-virtctl-create",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which command writes a VirtualMachine manifest you can pipe to oc apply?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl create vm --name rhel-9-minimal --volume-import type:ds,src:openshift-virtualization-os-images/rhel9"
+        },
+        {
+          "id": "b",
+          "text": "oc new-app rhel9 --name vm"
+        },
+        {
+          "id": "c",
+          "text": "podman run --vm rhel9"
+        },
+        {
+          "id": "d",
+          "text": "virt-install --import --name rhel9"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl create vm generates a VM manifest, including volume-import from a DataSource in openshift-virtualization-os-images. oc new-app, podman, and virt-install are not the OpenShift Virtualization create path.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "vm-virtctl-start",
+      "type": "fill",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which virtctl subcommand starts a stopped virtual machine? Enter the subcommand only (not the VM name).",
+      "answer": [
+        "start"
+      ],
+      "explanation": "virtctl start <vm_name> starts a VM. stop, restart, pause, unpause, and migrate are separate management commands.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-virtctl-lifecycle",
+      "type": "multi",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which two virtctl commands manage power without deleting the VirtualMachine object? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl stop web1"
+        },
+        {
+          "id": "b",
+          "text": "virtctl start web1"
+        },
+        {
+          "id": "c",
+          "text": "oc delete vm web1"
+        },
+        {
+          "id": "d",
+          "text": "virtctl vmexport delete web1"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "start and stop change run state. oc delete vm removes the object. virtctl vmexport delete removes a VirtualMachineExport, not the guest.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-pause",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "How does virtctl pause differ from virtctl stop?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Pause keeps the machine state in memory; stop shuts the guest down."
+        },
+        {
+          "id": "b",
+          "text": "Pause deletes the VirtualMachineInstance; stop does not."
+        },
+        {
+          "id": "c",
+          "text": "Pause is only available in the web console."
+        },
+        {
+          "id": "d",
+          "text": "Stop keeps RAM contents; pause always writes a snapshot."
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl pause vm keeps machine state in memory. unpause resumes it. stop performs a shutdown (force stop with --grace-period 0 --force can lose data). Pause does not create a disk snapshot.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-rpm",
+      "type": "fill",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "On RHEL 8, after enabling the cnv-4.18 repository, which RPM package installs the virtctl client?",
+      "answer": [
+        "kubevirt-virtctl"
+      ],
+      "explanation": "RHEL 8 uses subscription-manager to enable cnv-4.18-for-rhel-8-x86_64-rpms, then yum install kubevirt-virtctl. On RHEL 9 and other OSes you download the virtctl binary from Virtualization \u2192 Overview.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-console",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which virtctl command attaches to a Linux guest\u2019s serial console?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl console web1"
+        },
+        {
+          "id": "b",
+          "text": "oc rsh web1"
+        },
+        {
+          "id": "c",
+          "text": "virtctl guestfs web1"
+        },
+        {
+          "id": "d",
+          "text": "oc debug node/web1"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl console connects to the serial console. virtctl vnc is the graphical console (needs virt-viewer). oc rsh talks to containers, not KubeVirt serial.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-create-ssh",
+      "type": "single",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "You need a VM manifest that injects cloud-init user fedora and an SSH public key. Which virtctl pattern is documented for that?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl create vm --name web1 --user fedora --ssh-key='ssh-ed25519 AAAA\u2026'"
+        },
+        {
+          "id": "b",
+          "text": "virtctl ssh --inject fedora web1"
+        },
+        {
+          "id": "c",
+          "text": "oc adm groups new fedora"
+        },
+        {
+          "id": "d",
+          "text": "virtctl expose vm web1 --user fedora"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl create vm --user <name> --ssh-key|password-file=<value> adds cloud-init that creates the user and installs the key or password. virtctl ssh is for connecting later, not for baking the key into the manifest.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "vm-infer-flags",
+      "type": "multi",
+      "domain": "vm",
+      "objective": "Provision and manage virtual machines from the command line interface (CLI)",
+      "stem": "Which two virtctl flags explicitly infer sizing and OS preference from the boot volume? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "--infer-instancetype"
+        },
+        {
+          "id": "b",
+          "text": "--infer-preference"
+        },
+        {
+          "id": "c",
+          "text": "--force-live-migration"
+        },
+        {
+          "id": "d",
+          "text": "--privileged"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "--infer-instancetype and --infer-preference read labels on the boot volume (or --infer-*-from another volume). Inference is on by default with Ignore-on-failure unless flags force Reject.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "net-masquerade",
+      "type": "single",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "What is the recommended binding method for a VM NIC attached to the default pod network?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "masquerade"
+        },
+        {
+          "id": "b",
+          "text": "bridge"
+        },
+        {
+          "id": "c",
+          "text": "sriov"
+        },
+        {
+          "id": "d",
+          "text": "macvtap"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Masquerade (NAT) is the recommended and supported binding for the default pod network. Bridge and SR-IOV are for secondary/predefined networks. Masquerade is not supported on non-default networks.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-masquerade-secondary",
+      "type": "truefalse",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "The masquerade binding method is supported for secondary (non-default) networks attached through Multus.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Documentation states masquerade is not supported for non-default networks. Secondary Linux-bridge networks use bridge; SR-IOV networks use the SR-IOV binding.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-bridge-secondary",
+      "type": "single",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "A VM must sit on an existing VLAN presented as a Linux bridge NAD. Which interface binding should that NIC use?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "bridge"
+        },
+        {
+          "id": "b",
+          "text": "masquerade"
+        },
+        {
+          "id": "c",
+          "text": "host-device without a NAD"
+        },
+        {
+          "id": "d",
+          "text": "ClusterIP"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Linux bridge NADs attach with the bridge binding. A Linux bridge NAD is the usual way to put a VM on a VLAN. ClusterIP is a Service type, not a NIC binding.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-nad-kind",
+      "type": "fill",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "What Kubernetes kind (from the Multus CRD) exposes a layer-2 device in a namespace so a VM can attach to it?",
+      "answer": [
+        "NetworkAttachmentDefinition"
+      ],
+      "explanation": "NetworkAttachmentDefinition (k8s.cni.cncf.io/v1) is the Multus object that publishes a CNI network in a namespace. VM spec.networks[].multus.networkName points at it.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-udn-kind",
+      "type": "fill",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "Which custom resource kind creates a namespace-scoped OVN user-defined network that can replace the default pod network?",
+      "answer": [
+        "UserDefinedNetwork"
+      ],
+      "explanation": "UserDefinedNetwork (k8s.ovn.org/v1) is namespace-scoped. ClusterUserDefinedNetwork is the cluster-scoped shared overlay. Namespaces that use a primary UDN need the k8s.ovn.org/primary-user-defined-network label.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Primary user-defined networks",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/multiple_networks/primary-networks"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-udn-label",
+      "type": "fill",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "Which label must you add when creating a namespace that will use a primary user-defined network?",
+      "answer": [
+        "k8s.ovn.org/primary-user-defined-network"
+      ],
+      "explanation": "The namespace must have k8s.ovn.org/primary-user-defined-network. Then a UserDefinedNetwork CR with role Primary can replace the default pod network in that namespace.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Primary user-defined networks",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/multiple_networks/primary-networks"
+        }
+      ]
+    },
+    {
+      "id": "net-udn-layer2",
+      "type": "truefalse",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "A primary user-defined network with layer2 topology can keep a VM IP address across live migration and reboot, without NAT.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "Layer2 UDN overlay is documented as a good VM alternative to secondary networks: seamless migration without NAT and persistent IPs across reboot and live migration.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-udn-primary",
+      "type": "single",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "What does a primary user-defined network do for VMs in the labeled namespace?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "It replaces the default pod network on the VM\u2019s primary interface."
+        },
+        {
+          "id": "b",
+          "text": "It always creates an extra SR-IOV VF in addition to the pod network."
+        },
+        {
+          "id": "c",
+          "text": "It is only used for Windows guests."
+        },
+        {
+          "id": "d",
+          "text": "It disables kube-proxy in the cluster."
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "A primary UDN replaces the default pod network for pods and VMs in selected namespaces, isolating the tenant without requiring NetworkPolicy.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-cluster-udn",
+      "type": "single",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "Which object creates a shared OVN layer2 network that multiple namespaces can use?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "ClusterUserDefinedNetwork"
+        },
+        {
+          "id": "b",
+          "text": "MachineConfig"
+        },
+        {
+          "id": "c",
+          "text": "Route"
+        },
+        {
+          "id": "d",
+          "text": "IngressController"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Cluster administrators use ClusterUserDefinedNetwork for a shared OVN layer2 network across namespaces. UserDefinedNetwork is namespace-scoped.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-ovn-topologies",
+      "type": "multi",
+      "domain": "net",
+      "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
+      "stem": "OpenShift Virtualization supports which two OVN-Kubernetes topologies for a secondary VM network? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "layer2 (cluster-wide logical switch / Geneve overlay)"
+        },
+        {
+          "id": "b",
+          "text": "localnet (connects to the physical underlay)"
+        },
+        {
+          "id": "c",
+          "text": "vxlan-only with no OVN"
+        },
+        {
+          "id": "d",
+          "text": "host-gateway without Multus"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "OVN-Kubernetes secondary networks for VMs support layer2 (overlay logical switch) and localnet (physical underlay, extra OVS config). Layer2 needs no extra physical fabric between nodes.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-multihome-yaml",
+      "type": "multi",
+      "domain": "net",
+      "objective": "Configure multihomed virtual machines",
+      "stem": "A multihomed VM should keep pod-network NAT and also attach to a Linux bridge NAD named br-vlan. Which two stanza pairs belong in the VM spec? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "interfaces: masquerade: {} name: default  and  networks: name: default pod: {}"
+        },
+        {
+          "id": "b",
+          "text": "interfaces: bridge: {} name: vlan  and  networks: name: vlan multus.networkName: br-vlan"
+        },
+        {
+          "id": "c",
+          "text": "interfaces: masquerade: {} name: vlan  and  networks: name: vlan multus.networkName: br-vlan"
+        },
+        {
+          "id": "d",
+          "text": "spec.hostNetwork: true with no interfaces list"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Multihoming means two (or more) NICs. Default pod net uses masquerade + pod: {}. The secondary NAD uses bridge: {} and networks[].multus.networkName. Masquerade is invalid on the Multus/bridge NIC. hostNetwork is a pod field, not how VMs attach to NADs.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-multus-name",
+      "type": "single",
+      "domain": "net",
+      "objective": "Configure multihomed virtual machines",
+      "stem": "In a VirtualMachine spec, how do you point a NIC at a NetworkAttachmentDefinition in another namespace?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "networks[].multus.networkName: <namespace>/<nad-name>"
+        },
+        {
+          "id": "b",
+          "text": "metadata.annotations['k8s.v1.cni.cncf.io/networks'] only, with no networks list"
+        },
+        {
+          "id": "c",
+          "text": "spec.externalIPs"
+        },
+        {
+          "id": "d",
+          "text": "status.interfaces[0].masquerade"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Each extra NIC is listed under domain.devices.interfaces and spec.template.spec.networks. For Multus, set multus.networkName to name or namespace/name of the NAD.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-hotplug-migrate",
+      "type": "single",
+      "domain": "net",
+      "objective": "Configure multihomed virtual machines",
+      "stem": "You added a second NIC to a running VM\u2019s VirtualMachine manifest. What documented virtctl step attaches that NIC?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl migrate <vm_name>"
+        },
+        {
+          "id": "b",
+          "text": "virtctl pause <vm_name>"
+        },
+        {
+          "id": "c",
+          "text": "virtctl memory-dump get <vm_name>"
+        },
+        {
+          "id": "d",
+          "text": "oc delete pod -l kubevirt.io=virt-launcher"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "After editing the VM to add interfaces/networks, live-migrate with virtctl migrate so the new NIC is hot-plugged on the running VMI. Deleting the launcher pod is not the documented attach method.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-sriov",
+      "type": "single",
+      "domain": "net",
+      "objective": "Configure multihomed virtual machines",
+      "stem": "A VM needs a VF from an SR-IOV network already defined in the namespace. Which NIC type do you select?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "SR-IOV"
+        },
+        {
+          "id": "b",
+          "text": "masquerade"
+        },
+        {
+          "id": "c",
+          "text": "LoadBalancer"
+        },
+        {
+          "id": "d",
+          "text": "hostPort"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "If an SR-IOV network device is configured and defined in the namespace, the NIC type is SR-IOV. Masquerade is pod-network NAT; LoadBalancer is a Service.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-expose-lb",
+      "type": "single",
+      "domain": "net",
+      "objective": "Configure external access with load balancer services",
+      "stem": "Which virtctl command creates a Service that publishes SSH on a VM to the cluster\u2019s load-balancer infrastructure?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl expose vm web1 --name web1-ssh --type LoadBalancer --port 22"
+        },
+        {
+          "id": "b",
+          "text": "virtctl ssh web1 --type LoadBalancer"
+        },
+        {
+          "id": "c",
+          "text": "oc expose route web1 --port 22 --type LoadBalancer"
+        },
+        {
+          "id": "d",
+          "text": "virtctl vnc web1 --type LoadBalancer"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl expose vm <vm> --name <svc> --type ClusterIP|NodePort|LoadBalancer --port <port> creates the Service. Routes are HTTP/TLS ingress, not a generic TCP 22 publish.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-service-types",
+      "type": "multi",
+      "domain": "net",
+      "objective": "Configure external access with load balancer services",
+      "stem": "Which two Service types can virtctl expose use besides ClusterIP? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "NodePort"
+        },
+        {
+          "id": "b",
+          "text": "LoadBalancer"
+        },
+        {
+          "id": "c",
+          "text": "ExternalName"
+        },
+        {
+          "id": "d",
+          "text": "Headless only with no spec.type"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Documented expose types are ClusterIP, NodePort, and LoadBalancer. LoadBalancer is the type used for external access via the cloud or metal LB. ExternalName is not in the virtctl expose list.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-lb-purpose",
+      "type": "truefalse",
+      "domain": "net",
+      "objective": "Configure external access with load balancer services",
+      "stem": "Exposing a VM as a Kubernetes Service lets you use native load balancing so clients outside the cluster can reach a designated guest port.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "A Service object exposes the VM inside or outside the cluster. LoadBalancer type is the documented way to publish a VM port on the cluster\u2019s load-balancer addresses.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "net-expose-label",
+      "type": "single",
+      "domain": "net",
+      "objective": "Configure external access with load balancer services",
+      "stem": "When you create a Service YAML by hand instead of virtctl expose, what must match so kube-proxy can select the VM\u2019s pod?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Service spec.selector labels and the VM template metadata labels (for example expose: me)"
+        },
+        {
+          "id": "b",
+          "text": "The Service name must equal the node hostname"
+        },
+        {
+          "id": "c",
+          "text": "The Service namespace must be openshift-ingress"
+        },
+        {
+          "id": "d",
+          "text": "The VM must use hostNetwork: true"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "The Service selector must match labels on the VM template (copied to the virt-launcher pod). Documented examples use a label such as expose: me.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Virtualization networking",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-kind",
+      "type": "fill",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "What is the kind of the object you create to request a VM snapshot?",
+      "answer": [
+        "VirtualMachineSnapshot"
+      ],
+      "explanation": "VirtualMachineSnapshot (snapshot.kubevirt.io/v1beta1) is the user request. The controller also creates VirtualMachineSnapshotContent bound 1:1 to that snapshot.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-api",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "Which apiVersion is shown in the documented VirtualMachineSnapshot example?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "snapshot.kubevirt.io/v1beta1"
+        },
+        {
+          "id": "b",
+          "text": "kubevirt.io/v1"
+        },
+        {
+          "id": "c",
+          "text": "snapshot.storage.k8s.io/v1"
+        },
+        {
+          "id": "d",
+          "text": "cdi.kubevirt.io/v1beta1"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "The VM snapshot CR uses snapshot.kubevirt.io/v1beta1. CSI VolumeSnapshot is snapshot.storage.k8s.io/v1 (used under the hood). DataVolume is cdi.kubevirt.io/v1beta1.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-source",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "In a VirtualMachineSnapshot spec.source stanza, which fields identify the VM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "apiGroup: kubevirt.io, kind: VirtualMachine, name: <vm_name>"
+        },
+        {
+          "id": "b",
+          "text": "kind: PersistentVolumeClaim only"
+        },
+        {
+          "id": "c",
+          "text": "kind: Node, name: the virt-launcher node"
+        },
+        {
+          "id": "d",
+          "text": "apiGroup: apps, kind: Deployment"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "spec.source must name the VirtualMachine (apiGroup kubevirt.io). The snapshot then copies CSI volumes plus VM spec and metadata.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-reqs",
+      "type": "multi",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "Which two conditions must a disk meet to be included in a VM snapshot? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "It is a data volume or persistent volume claim"
+        },
+        {
+          "id": "b",
+          "text": "Its storage class supports CSI volume snapshots"
+        },
+        {
+          "id": "c",
+          "text": "It is a containerDisk stored only in a registry"
+        },
+        {
+          "id": "d",
+          "text": "It uses hostPath without CSI"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Included disks must be DVs or PVCs on a CSI snapshot-capable storage class, and they must be bound and populated. containerDisk and hostPath are not CSI snapshot sources.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-immutable",
+      "type": "truefalse",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "A VirtualMachineSnapshot can be edited after creation to add disks that were excluded.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Snapshots cannot be changed after creation. You create a new snapshot if you need a different disk set.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-web",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "In the web console, where do you create a snapshot of an existing VM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachine details \u2192 Snapshots \u2192 Take Snapshot"
+        },
+        {
+          "id": "b",
+          "text": "Catalog \u2192 InstanceTypes \u2192 Snapshot"
+        },
+        {
+          "id": "c",
+          "text": "Operators \u2192 OpenShift Virtualization \u2192 Snapshot CSV"
+        },
+        {
+          "id": "d",
+          "text": "Compute \u2192 MachineSets \u2192 Take Snapshot"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Open Virtualization \u2192 VirtualMachines, select the VM, Snapshots tab, Take Snapshot. You can expand Disks included in this Snapshot before saving.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-snapshot-restore",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create and manage snapshots for virtual machines",
+      "stem": "What does restoring a VM from a snapshot do?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Returns that existing VM to the disk and spec state captured in the snapshot"
+        },
+        {
+          "id": "b",
+          "text": "Always creates a brand-new namespace"
+        },
+        {
+          "id": "c",
+          "text": "Converts the VM to a containerDisk"
+        },
+        {
+          "id": "d",
+          "text": "Deletes every PVC in the project"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Restore rolls the existing VM back to the snapshot. Creating a new VM from a snapshot is a separate action (Snapshots tab \u2192 Create VirtualMachine).",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-vtpm",
+      "type": "truefalse",
+      "domain": "storage",
+      "objective": "Create clones for virtual machines",
+      "stem": "Cloning a VM that has a vTPM device, or creating a new VM from that VM\u2019s snapshot, is supported.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Documented limitation: cloning a VM with a vTPM attached, or creating a new VM from its snapshot, is not supported.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ]
+    },
+    {
+      "id": "sto-clone-web",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create clones for virtual machines",
+      "stem": "How do you clone a VM in the web console?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachine details \u2192 Actions \u2192 Clone, then name the new VM"
+        },
+        {
+          "id": "b",
+          "text": "oc adm clone vm"
+        },
+        {
+          "id": "c",
+          "text": "Catalog \u2192 Clone Operator"
+        },
+        {
+          "id": "d",
+          "text": "Storage \u2192 Clone StorageClass"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Actions \u2192 Clone opens Clone VirtualMachine. You name the clone and may check Start cloned VM. You can also create a VM from a snapshot via the Snapshots tab.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-clone-dv",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Create clones for virtual machines",
+      "stem": "To clone an existing VM disk PVC into a new volume with an independent lifecycle, which source does a DataVolume use?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "spec.source.pvc.namespace and spec.source.pvc.name of the original disk"
+        },
+        {
+          "id": "b",
+          "text": "spec.source.git"
+        },
+        {
+          "id": "c",
+          "text": "spec.source.configMap"
+        },
+        {
+          "id": "d",
+          "text": "spec.source.secret"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "CDI DataVolume YAML clones with source.pvc namespace/name. The new DV\u2019s lifecycle is independent of the original VM. virtctl create vm --volume-import type:pvc,src:ns/pvc can consume that clone.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-dv-kind",
+      "type": "fill",
+      "domain": "storage",
+      "objective": "Attach storage to virtual machines",
+      "stem": "What kind (CDI API) represents an import or clone that must finish before the VM is allowed to start?",
+      "answer": [
+        "DataVolume"
+      ],
+      "explanation": "DataVolume (cdi.kubevirt.io/v1beta1) is the CDI object for HTTP/registry/PVC import and clone. Data volumes prevent a VM from starting until the PVC is prepared.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-csi-clone-reqs",
+      "type": "multi",
+      "domain": "storage",
+      "objective": "Create clones for virtual machines",
+      "stem": "For CDI CSI volume cloning, which two requirements apply? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "Source and target PVCs use the same storage class and volume mode"
+        },
+        {
+          "id": "b",
+          "text": "The source volume must not be in use"
+        },
+        {
+          "id": "c",
+          "text": "The source must be an NFS export outside the cluster"
+        },
+        {
+          "id": "d",
+          "text": "The VM must be running with a vTPM"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "CSI cloning needs matching storage class and volume mode, and the source volume must not be in use. You also need datavolumes/source permission in the source namespace. Smart cloning uses CSI snapshots instead when the plugin supports them.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-import-http",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "Which virtctl create vm option imports a qcow2 from an HTTP URL into a new disk?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "--volume-import type:http,url:https://example.com/rhel9.qcow2,size:10Gi"
+        },
+        {
+          "id": "b",
+          "text": "--volume-import type:git,url:https://example.com/rhel9.git"
+        },
+        {
+          "id": "c",
+          "text": "--from-image-stream rhel9"
+        },
+        {
+          "id": "d",
+          "text": "--hostpath /var/lib/libvirt/images/rhel9.qcow2"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Documented HTTP import is virtctl create vm --volume-import type:http,url:<url>,size:<size>. Golden images in-cluster use type:ds,src:openshift-virtualization-os-images/<os>.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    },
+    {
+      "id": "sto-import-ds",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "Where do Red Hat-provided boot sources such as rhel9 typically live for --volume-import type:ds?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "openshift-virtualization-os-images"
+        },
+        {
+          "id": "b",
+          "text": "kube-public"
+        },
+        {
+          "id": "c",
+          "text": "openshift-operators"
+        },
+        {
+          "id": "d",
+          "text": "default"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Examples use type:ds,src:openshift-virtualization-os-images/rhel9. The catalog lists bootable volumes in that namespace that carry instancetype.kubevirt.io/default-preference.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        },
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "sto-vmexport-create",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "Which command creates a VirtualMachineExport so you can download a VM\u2019s PVC?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl vmexport create myexport --vm=web1"
+        },
+        {
+          "id": "b",
+          "text": "oc adm export vm web1"
+        },
+        {
+          "id": "c",
+          "text": "virtctl migrate web1 --export"
+        },
+        {
+          "id": "d",
+          "text": "podman save web1"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl vmexport create <name> --vm|snapshot|pvc=<object> creates the export CR. Default TTL is 2 hours. download retrieves the volume; the CR is deleted after download unless --keep-vme.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-vmexport-ttl",
+      "type": "fill",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "If you omit --ttl, how long does a VirtualMachineExport last by default? Enter a short form such as 2h.",
+      "answer": [
+        "2h",
+        "2 hours"
+      ],
+      "explanation": "Optional --ttl=1h overrides TTL. The default duration is 2 hours.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-vmexport-src",
+      "type": "multi",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "virtctl vmexport create can export volumes from which two of these sources (in addition to a raw PVC)? Select two.",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "A VirtualMachine (--vm)"
+        },
+        {
+          "id": "b",
+          "text": "A VirtualMachineSnapshot (--snapshot)"
+        },
+        {
+          "id": "c",
+          "text": "A MachineSet"
+        },
+        {
+          "id": "d",
+          "text": "An Ingress"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Create accepts --vm, --snapshot, or --pvc. Snapshot exports the PVCs stored in the VirtualMachineSnapshot. MachineSet and Ingress are unrelated.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-export-manifest",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Import previously exported virtual machines",
+      "stem": "You need YAML that another cluster can use to import an exported disk. Which virtctl flag retrieves that manifest?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl vmexport download export --manifest"
+        },
+        {
+          "id": "b",
+          "text": "virtctl expose vm --manifest"
+        },
+        {
+          "id": "c",
+          "text": "oc get events --export"
+        },
+        {
+          "id": "d",
+          "text": "virtctl create instancetype --manifest"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "vmexport download \u2026 --manifest returns the import manifest. It omits the header secret unless you also pass --include-secret. That secret grants access to the export endpoint.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-addvolume",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Attach storage to virtual machines",
+      "stem": "Which command hot-plugs an existing DataVolume or PVC onto a running VM?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "virtctl addvolume web1 --volume-name=data1"
+        },
+        {
+          "id": "b",
+          "text": "virtctl expose web1 --volume data1"
+        },
+        {
+          "id": "c",
+          "text": "oc set volume deploy/web1 --add"
+        },
+        {
+          "id": "d",
+          "text": "virtctl start web1 --add-disk data1"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "virtctl addvolume <vm> --volume-name=<dv_or_pvc> hot-plugs the volume. Optional --persist makes the disk permanent on the VM (not on a VMI-only object). --serial sets a label.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-addvolume-persist",
+      "type": "truefalse",
+      "domain": "storage",
+      "objective": "Attach storage to virtual machines",
+      "stem": "The virtctl addvolume --persist flag permanently mounts the disk on a VirtualMachine. It does not apply to VirtualMachineInstance-only objects.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "Documentation: --persist mounts the virtual disk permanently on a VM. This flag does not apply to VMIs.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-removevolume",
+      "type": "fill",
+      "domain": "storage",
+      "objective": "Attach storage to virtual machines",
+      "stem": "Which virtctl subcommand hot-unplugs a virtual disk? Enter the subcommand only.",
+      "answer": [
+        "removevolume"
+      ],
+      "explanation": "virtctl removevolume <vm_name> --volume-name=<virtual_disk> hot-unplugs the disk.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 virtctl CLI tools",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ]
+    },
+    {
+      "id": "sto-attach-web",
+      "type": "single",
+      "domain": "storage",
+      "objective": "Attach storage to virtual machines",
+      "stem": "In the create/customize wizard, which tab do you use to add or review VM disks before clicking Create VirtualMachine?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Disks"
+        },
+        {
+          "id": "b",
+          "text": "Scheduling"
+        },
+        {
+          "id": "c",
+          "text": "Metadata"
+        },
+        {
+          "id": "d",
+          "text": "Installed Operators"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Customize VirtualMachine includes Overview, YAML, Scheduling, Environment, Network interfaces, Disks, Scripts, and Metadata. Disks is where you attach storage. You can also add a volume from Catalog with Add volume (upload, existing PVC, snapshot, or containerDisk).",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Creating a virtual machine",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/creating-a-virtual-machine"
+        }
+      ]
+    },
+    {
+      "id": "sto-qemu-agent",
+      "type": "truefalse",
+      "domain": "storage",
+      "objective": "Create clones for virtual machines",
+      "stem": "You must install the QEMU guest agent on VMs created from operating system images that are not provided by Red Hat.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "When cloning PVCs with custom images, documentation requires the QEMU guest agent on guests that did not come from Red Hat OS images.",
+      "references": [
+        {
+          "title": "OCP 4.18 \u2014 Advanced VM creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ]
+    }
+  ]
+}

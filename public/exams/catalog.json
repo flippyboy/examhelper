@@ -14,6 +14,21 @@
         "Security",
         "Linux / OS"
       ]
+    },
+    {
+      "id": "ex156",
+      "title": "Red Hat Certified Technologist in OpenShift Virtualization",
+      "vendor": "Red Hat",
+      "version": "OCP 4.18",
+      "path": "ex156/exam.json",
+      "questionCount": 58,
+      "timeLimitMinutes": 120,
+      "passPercent": 70,
+      "domains": [
+        "Create and manage virtual machines",
+        "Configure virtual machine networking",
+        "Manage virtual machine storage"
+      ]
     }
   ]
 }
