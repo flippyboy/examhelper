@@ -56,8 +56,8 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
    verdict. Apply the fixes in the parent, then re-run validate.
    Reviewer must flag: joke/impossible/`foo`/`bar` distractors; wrong choices
    a novice would dismiss on sight; keys that disagree with the explanation or
-   cited doc; duplicate or reworded stems; `fill` answers that are not short
-   tokens; stems that leak the answer (key text, a `such as`/`e.g.` example of
+   cited doc; duplicate or reworded stems; `fill` answers that are not a
+   well-known port, short duration, or single CLI token; stems that leak the answer (key text, a `such as`/`e.g.` example of
    the key, or a parenthetical alias of the fill token); guessable patterns
    (see Question bar): "all/none of the above", a key visibly longer or more
    detailed than its distractors, `NOT`/`EXCEPT` stems, `truefalse` on anything
@@ -99,8 +99,11 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 - `explanation` must say why the key is right **and** why each distractor is
   wrong, naming the misconception behind it. "Correct: X, because Y" beats a
   restated answer.
-- `fill` answers are short tokens (port numbers, command names, reserved words), with
-  common variants listed in `answer`.
+- `fill` only for values typed from muscle memory at a prompt: well-known ports,
+  short durations (`22`, `2h`), a single binary or subcommand (`chmod`, `start`).
+  If the answer contains a slash, a dotted group, a Kind, a label, an annotation,
+  a package NEVRA, or more than one word, rewrite the item as `single` or `multi`.
+  List accepted spellings in `answer`.
 - `stem`, `choices[].text` and `explanation` render a markdown subset: inline
   `code`, fenced code blocks with a language tag (```yaml, ```bash), **bold**,
   lists and blank-line paragraphs. Put manifests, commands and config excerpts in

@@ -271,14 +271,14 @@
     },
     {
       "id": "vm-kind",
-      "type": "fill",
+      "type": "single",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "What is the Kubernetes kind of the primary guest object you apply with oc to define a VM in OpenShift Virtualization? Enter the kind only.",
+      "stem": "You need to apply a guest definition with oc. Which kind is the object that represents the VM you manage day to day?",
       "answer": [
-        "VirtualMachine"
+        "a"
       ],
-      "explanation": "Guests are kubevirt.io/v1 VirtualMachine objects. A running instance is a VirtualMachineInstance created from the VM template spec.",
+      "explanation": "Guests you create and start are kubevirt.io VirtualMachine objects. A VirtualMachineInstance is the running instance created from the VM template. Pod is the virt-launcher; DataVolume is CDI storage.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 virtctl CLI tools",
@@ -288,22 +288,58 @@
           "title": "OCP 4.18 \u2014 Advanced VM creation",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
         }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachine"
+        },
+        {
+          "id": "b",
+          "text": "VirtualMachineInstance"
+        },
+        {
+          "id": "c",
+          "text": "Pod"
+        },
+        {
+          "id": "d",
+          "text": "DataVolume"
+        }
       ]
     },
     {
       "id": "vm-apiversion",
-      "type": "fill",
+      "type": "single",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "What apiVersion is used on a VirtualMachine manifest in current OpenShift Virtualization documentation?",
+      "stem": "You are writing a VirtualMachine YAML from the OCP 4.18 Virtualization docs. Which apiVersion belongs on that manifest?",
       "answer": [
-        "kubevirt.io/v1"
+        "a"
       ],
-      "explanation": "Documented VM YAML uses apiVersion kubevirt.io/v1 and kind VirtualMachine.",
+      "explanation": "Documented VM YAML uses apiVersion kubevirt.io/v1. core v1 is for Pod/Service. Snapshots use snapshot.kubevirt.io/v1beta1; DataVolumes use cdi.kubevirt.io/v1beta1.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Advanced VM creation",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "kubevirt.io/v1"
+        },
+        {
+          "id": "b",
+          "text": "v1"
+        },
+        {
+          "id": "c",
+          "text": "snapshot.kubevirt.io/v1beta1"
+        },
+        {
+          "id": "d",
+          "text": "cdi.kubevirt.io/v1beta1"
         }
       ]
     },
@@ -437,18 +473,36 @@
     },
     {
       "id": "vm-rpm",
-      "type": "fill",
+      "type": "single",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "On RHEL 8, after enabling the cnv-4.18 repository, which RPM package installs the virtctl client?",
+      "stem": "On RHEL 8, after enabling the cnv-4.18 repository, which package installs the virtctl client?",
       "answer": [
-        "kubevirt-virtctl"
+        "a"
       ],
-      "explanation": "RHEL 8 uses subscription-manager to enable cnv-4.18-for-rhel-8-x86_64-rpms, then yum install kubevirt-virtctl. On RHEL 9 and other OSes you download the virtctl binary from Virtualization \u2192 Overview.",
+      "explanation": "yum install kubevirt-virtctl after enabling cnv-4.18-for-rhel-8-x86_64-rpms. virt-viewer is the VNC client; openshift-clients is oc; kubevirt-hyperconverged is the operator, not the CLI.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 virtctl CLI tools",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/getting-started"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "kubevirt-virtctl"
+        },
+        {
+          "id": "b",
+          "text": "virt-viewer"
+        },
+        {
+          "id": "c",
+          "text": "openshift-clients"
+        },
+        {
+          "id": "d",
+          "text": "kubevirt-hyperconverged"
         }
       ]
     },
@@ -658,31 +712,49 @@
     },
     {
       "id": "net-nad-kind",
-      "type": "fill",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "What Kubernetes kind (from the Multus CRD) exposes a layer-2 device in a namespace so a VM can attach to it?",
+      "stem": "A VM must attach to a project-level layer-2 network published by Multus. Which kind do you create in that namespace?",
       "answer": [
-        "NetworkAttachmentDefinition"
+        "a"
       ],
-      "explanation": "NetworkAttachmentDefinition (k8s.cni.cncf.io/v1) is the Multus object that publishes a CNI network in a namespace. VM spec.networks[].multus.networkName points at it.",
+      "explanation": "Multus exposes a CNI network in a namespace as a NetworkAttachmentDefinition. UserDefinedNetwork is OVN UDN; SriovNetwork is the SR-IOV operator object; Service publishes ports, not L2.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "NetworkAttachmentDefinition"
+        },
+        {
+          "id": "b",
+          "text": "UserDefinedNetwork"
+        },
+        {
+          "id": "c",
+          "text": "SriovNetwork"
+        },
+        {
+          "id": "d",
+          "text": "Service"
         }
       ]
     },
     {
       "id": "net-udn-kind",
-      "type": "fill",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Which CR kind creates a namespace-scoped OVN overlay that can replace the default pod network?",
+      "stem": "You need a namespace-scoped OVN overlay that can replace the default pod network for VMs. Which kind do you create?",
       "answer": [
-        "UserDefinedNetwork"
+        "a"
       ],
-      "explanation": "UserDefinedNetwork (k8s.ovn.org/v1) is namespace-scoped. ClusterUserDefinedNetwork is the cluster-scoped shared overlay. Namespaces that use a primary UDN need the k8s.ovn.org/primary-user-defined-network label.",
+      "explanation": "UserDefinedNetwork is namespace-scoped. ClusterUserDefinedNetwork is cluster-scoped. NAD is Multus; SriovNetwork is hardware VFs.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
@@ -692,18 +764,36 @@
           "title": "OCP 4.18 \u2014 Virtualization networking",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
         }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "UserDefinedNetwork"
+        },
+        {
+          "id": "b",
+          "text": "ClusterUserDefinedNetwork"
+        },
+        {
+          "id": "c",
+          "text": "NetworkAttachmentDefinition"
+        },
+        {
+          "id": "d",
+          "text": "SriovNetwork"
+        }
       ]
     },
     {
       "id": "net-udn-label",
-      "type": "fill",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Which namespace label is required before a primary UDN can attach in that project?",
+      "stem": "A namespace will host a primary UDN. Which label must be on that namespace before the UDN can attach?",
       "answer": [
-        "k8s.ovn.org/primary-user-defined-network"
+        "a"
       ],
-      "explanation": "The namespace must have k8s.ovn.org/primary-user-defined-network. Then a UserDefinedNetwork CR with role Primary can replace the default pod network in that namespace.",
+      "explanation": "Primary UDN namespaces require k8s.ovn.org/primary-user-defined-network. The CNI networks annotation is for extra NADs on pods; the others are unrelated policy/bridge keys.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
@@ -712,6 +802,24 @@
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/multiple_networks/primary-networks"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "k8s.ovn.org/primary-user-defined-network"
+        },
+        {
+          "id": "b",
+          "text": "k8s.v1.cni.cncf.io/networks"
+        },
+        {
+          "id": "c",
+          "text": "network.openshift.io/policy-group"
+        },
+        {
+          "id": "d",
+          "text": "kubevirt.io/allow-pod-bridge"
         }
       ]
     },
@@ -1135,18 +1243,36 @@
     },
     {
       "id": "sto-snapshot-kind",
-      "type": "fill",
+      "type": "single",
       "domain": "storage",
       "objective": "Create and manage snapshots for virtual machines",
-      "stem": "What is the kind of the object you create to request a VM snapshot?",
+      "stem": "You want a point-in-time copy of a VM\u2019s disks and spec from the CLI. Which kind do you create?",
       "answer": [
-        "VirtualMachineSnapshot"
+        "a"
       ],
-      "explanation": "VirtualMachineSnapshot (snapshot.kubevirt.io/v1beta1) is the user request. The controller also creates VirtualMachineSnapshotContent bound 1:1 to that snapshot.",
+      "explanation": "The user request is a VirtualMachineSnapshot. CSI VolumeSnapshot is created under the hood. Export is vmexport; Restore applies a snapshot back to a VM.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/backup-and-restore"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "VirtualMachineSnapshot"
+        },
+        {
+          "id": "b",
+          "text": "VolumeSnapshot"
+        },
+        {
+          "id": "c",
+          "text": "VirtualMachineExport"
+        },
+        {
+          "id": "d",
+          "text": "VirtualMachineRestore"
         }
       ]
     },
@@ -1461,18 +1587,36 @@
     },
     {
       "id": "sto-dv-kind",
-      "type": "fill",
+      "type": "single",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "What kind represents an import or clone that must finish before the VM is allowed to start?",
+      "stem": "An import or clone must finish before the VM is allowed to start. Which kind represents that wait?",
       "answer": [
-        "DataVolume"
+        "a"
       ],
-      "explanation": "DataVolume (cdi.kubevirt.io/v1beta1) is the CDI object for HTTP/registry/PVC import and clone. Data volumes prevent a VM from starting until the PVC is prepared.",
+      "explanation": "A DataVolume (CDI) blocks VM start until the PVC is prepared. A raw PVC does not provide that gate. Snapshots are a different lifecycle.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Advanced VM creation",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "DataVolume"
+        },
+        {
+          "id": "b",
+          "text": "PersistentVolumeClaim"
+        },
+        {
+          "id": "c",
+          "text": "VirtualMachineSnapshot"
+        },
+        {
+          "id": "d",
+          "text": "VolumeSnapshot"
         }
       ]
     },
@@ -2541,35 +2685,71 @@
     },
     {
       "id": "net-nad-api",
-      "type": "fill",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "What apiVersion is used on a NetworkAttachmentDefinition manifest?",
+      "stem": "You are writing a NetworkAttachmentDefinition YAML. Which apiVersion is documented?",
       "answer": [
-        "k8s.cni.cncf.io/v1"
+        "a"
       ],
-      "explanation": "NADs are k8s.cni.cncf.io/v1 NetworkAttachmentDefinition objects. UserDefinedNetwork uses k8s.ovn.org/v1 instead.",
+      "explanation": "NADs are k8s.cni.cncf.io/v1. UDN uses k8s.ovn.org/v1. VirtualMachine is kubevirt.io/v1. core v1 is Pod/Service.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/networking"
         }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "k8s.cni.cncf.io/v1"
+        },
+        {
+          "id": "b",
+          "text": "k8s.ovn.org/v1"
+        },
+        {
+          "id": "c",
+          "text": "kubevirt.io/v1"
+        },
+        {
+          "id": "d",
+          "text": "v1"
+        }
       ]
     },
     {
       "id": "net-udn-api",
-      "type": "fill",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "What apiVersion is used on a UserDefinedNetwork custom resource?",
+      "stem": "You are writing a UserDefinedNetwork custom resource. Which apiVersion is documented?",
       "answer": [
-        "k8s.ovn.org/v1"
+        "a"
       ],
-      "explanation": "UDN and ClusterUserDefinedNetwork are k8s.ovn.org/v1. Do not name the UDN default or collide with CNO global namespaces.",
+      "explanation": "UDN and ClusterUserDefinedNetwork are k8s.ovn.org/v1. NAD is k8s.cni.cncf.io/v1. kubevirt.io/v1 is the VM API.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/multiple_networks/primary-networks"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "k8s.ovn.org/v1"
+        },
+        {
+          "id": "b",
+          "text": "k8s.cni.cncf.io/v1"
+        },
+        {
+          "id": "c",
+          "text": "kubevirt.io/v1"
+        },
+        {
+          "id": "d",
+          "text": "operator.openshift.io/v1"
         }
       ]
     },
@@ -3193,20 +3373,36 @@
     },
     {
       "id": "sto-cdi-name",
-      "type": "fill",
+      "type": "single",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "Which component chooses CSI clone vs smart clone when you create a DataVolume from a PVC?",
+      "stem": "A DataVolume cloned from a PVC can use CSI volume cloning or smart cloning. Which component chooses that method?",
       "answer": [
-        "CDI",
-        "Containerized Data Importer",
-        "Containerized Data Importer (CDI)"
+        "a"
       ],
-      "explanation": "The Containerized Data Importer (CDI) implements DataVolumes and picks CSI volume cloning or smart cloning (clone via CSI snapshot) based on the storage profile.",
+      "explanation": "CDI implements DataVolumes and picks CSI clone vs smart clone (clone via CSI snapshot) from the storage profile. HPP provisions local disks; SSP owns templates; virt-controller reconciles VMs.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Advanced VM creation",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "Containerized Data Importer (CDI)"
+        },
+        {
+          "id": "b",
+          "text": "Hostpath Provisioner"
+        },
+        {
+          "id": "c",
+          "text": "SSP Operator"
+        },
+        {
+          "id": "d",
+          "text": "virt-controller"
         }
       ]
     },
@@ -3443,18 +3639,36 @@
     },
     {
       "id": "sto-dv-api",
-      "type": "fill",
+      "type": "single",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "What apiVersion is used on a DataVolume manifest in the documented PVC-clone example?",
+      "stem": "You are writing the documented PVC-clone DataVolume example. Which apiVersion belongs on that manifest?",
       "answer": [
-        "cdi.kubevirt.io/v1beta1"
+        "a"
       ],
-      "explanation": "DataVolume YAML uses apiVersion cdi.kubevirt.io/v1beta1. VirtualMachine remains kubevirt.io/v1; snapshots use snapshot.kubevirt.io/v1beta1.",
+      "explanation": "DataVolume YAML uses cdi.kubevirt.io/v1beta1. VirtualMachine remains kubevirt.io/v1; VM snapshots use snapshot.kubevirt.io/v1beta1.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Advanced VM creation",
           "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/advanced-vm-creation"
+        }
+      ],
+      "choices": [
+        {
+          "id": "a",
+          "text": "cdi.kubevirt.io/v1beta1"
+        },
+        {
+          "id": "b",
+          "text": "kubevirt.io/v1"
+        },
+        {
+          "id": "c",
+          "text": "snapshot.kubevirt.io/v1beta1"
+        },
+        {
+          "id": "d",
+          "text": "v1"
         }
       ]
     },
