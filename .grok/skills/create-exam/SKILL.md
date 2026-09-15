@@ -101,5 +101,9 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
   restated answer.
 - `fill` answers are short tokens (port numbers, command names, reserved words), with
   common variants listed in `answer`.
+- `stem`, `choices[].text` and `explanation` render a markdown subset: inline
+  `code`, fenced code blocks with a language tag (```yaml, ```bash), **bold**,
+  lists and blank-line paragraphs. Put manifests, commands and config excerpts in
+  fenced blocks rather than inlining them as prose.
 - Never paste vendor exam item text, even "from memory."
 - Prefer surplus unique questions over a short pack.

@@ -1,5 +1,6 @@
 import type { Question } from "../types/exam";
 import ChoiceList from "./ChoiceList";
+import Markdown from "./Markdown";
 
 interface Props {
   question: Question;
@@ -23,7 +24,9 @@ export default function QuestionCard({
       <p className="objective">
         {domainName} · {question.objective}
       </p>
-      <h2 className="stem">{question.stem}</h2>
+      <div className="stem" role="heading" aria-level={2}>
+        <Markdown source={question.stem} />
+      </div>
       {question.type === "fill" ? (
         <>
           <input
@@ -36,7 +39,14 @@ export default function QuestionCard({
             onChange={(e) => onChange([e.target.value])}
           />
           {reveal ? (
-            <p className="muted">Accepted: {question.answer.join(" / ")}</p>
+            <p className="muted">
+              Accepted: {question.answer.map((a, i) => (
+                <span key={a}>
+                  {i > 0 ? " / " : null}
+                  <code>{a}</code>
+                </span>
+              ))}
+            </p>
           ) : null}
         </>
       ) : (

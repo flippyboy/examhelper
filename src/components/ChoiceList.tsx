@@ -1,4 +1,5 @@
 import type { Question } from "../types/exam";
+import Markdown from "./Markdown";
 
 const KEYS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
@@ -47,7 +48,7 @@ export default function ChoiceList({ question, value, disabled, reveal, onChange
             onClick={() => pick(choice.id)}
           >
             <span className="key">{KEYS[i] ?? i + 1}</span>
-            <span>{choice.text}</span>
+            <Markdown className="choice-text" source={choice.text} />
           </button>
         );
       })}

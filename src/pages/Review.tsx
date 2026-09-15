@@ -6,6 +6,7 @@ import { isCorrect } from "../lib/scoring";
 import { withChoiceOrder } from "../lib/session";
 import { loadSession } from "../lib/storage";
 import type { Exam, SessionState } from "../types/exam";
+import Markdown from "../components/Markdown";
 
 export default function Review() {
   const { id = "" } = useParams();
@@ -80,7 +81,10 @@ export default function Review() {
             onChange={() => undefined}
           />
           <div className={`callout ${ok ? "ok" : "bad"}`}>
-            <strong>{ok ? "Correct." : "Incorrect."}</strong> {question.explanation}
+            <Markdown
+              source={question.explanation}
+              lead={<strong>{ok ? "Correct." : "Incorrect."}</strong>}
+            />
           </div>
           {question.references && question.references.length > 0 ? (
             <ul className="meta">

@@ -16,6 +16,7 @@ import {
 } from "../lib/session";
 import { loadSession, saveSession } from "../lib/storage";
 import type { Exam, Question, SessionState } from "../types/exam";
+import Markdown from "../components/Markdown";
 
 export default function Session() {
   const { id = "" } = useParams();
@@ -198,7 +199,10 @@ export default function Session() {
           />
           {reveal ? (
             <div className={`callout ${isCorrect(question, value) ? "ok" : "bad"}`}>
-              <strong>{isCorrect(question, value) ? "Correct." : "Incorrect."}</strong> {question.explanation}
+              <Markdown
+                source={question.explanation}
+                lead={<strong>{isCorrect(question, value) ? "Correct." : "Incorrect."}</strong>}
+              />
             </div>
           ) : null}
           <div className="footer-nav">
