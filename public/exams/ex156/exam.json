@@ -351,7 +351,7 @@
       "type": "fill",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "Which virtctl subcommand starts a stopped virtual machine? Enter the subcommand only (not the VM name).",
+      "stem": "Which virtctl subcommand powers on a stopped virtual machine? Enter the subcommand only (not the VM name).",
       "answer": [
         "start"
       ],
@@ -504,7 +504,7 @@
         },
         {
           "id": "c",
-          "text": "oc adm groups new fedora"
+          "text": "virtctl create vm --access-cred type:ssh,src:<secret>,user:fedora"
         },
         {
           "id": "d",
@@ -527,7 +527,7 @@
       "type": "multi",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "Which two virtctl flags explicitly infer sizing and OS preference from the boot volume? Select two.",
+      "stem": "Which two virtctl flags force instance type and OS preference from boot-volume labels (Reject on failure)? Select two.",
       "selectCount": 2,
       "choices": [
         {
@@ -544,7 +544,7 @@
         },
         {
           "id": "d",
-          "text": "--privileged"
+          "text": "--infer-instancetype-from"
         }
       ],
       "answer": [
@@ -626,7 +626,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "A VM must sit on an existing VLAN presented as a Linux bridge NAD. Which interface binding should that NIC use?",
+      "stem": "A VM must sit on an existing VLAN presented by a node NAD. Which interface binding should that NIC use?",
       "choices": [
         {
           "id": "a",
@@ -678,7 +678,7 @@
       "type": "fill",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Which custom resource kind creates a namespace-scoped OVN user-defined network that can replace the default pod network?",
+      "stem": "Which CR kind creates a namespace-scoped OVN overlay that can replace the default pod network?",
       "answer": [
         "UserDefinedNetwork"
       ],
@@ -699,7 +699,7 @@
       "type": "fill",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Which label must you add when creating a namespace that will use a primary user-defined network?",
+      "stem": "Which namespace label is required before a primary UDN can attach in that project?",
       "answer": [
         "k8s.ovn.org/primary-user-defined-network"
       ],
@@ -830,18 +830,18 @@
         },
         {
           "id": "c",
-          "text": "vxlan-only with no OVN"
+          "text": "layer3"
         },
         {
           "id": "d",
-          "text": "host-gateway without Multus"
+          "text": "geneve"
         }
       ],
       "answer": [
         "a",
         "b"
       ],
-      "explanation": "OVN-Kubernetes secondary networks for VMs support layer2 (overlay logical switch) and localnet (physical underlay, extra OVS config). Layer2 needs no extra physical fabric between nodes.",
+      "explanation": "OVN-Kubernetes secondary networks for VMs support layer2 (overlay logical switch) and localnet (physical underlay). layer3 is a UDN topology, not the documented secondary-VM pair. Geneve is the overlay protocol used by layer2, not a topology name.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
@@ -961,7 +961,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Configure multihomed virtual machines",
-      "stem": "A VM needs a VF from an SR-IOV network already defined in the namespace. Which NIC type do you select?",
+      "stem": "A VM must use a hardware VF already published in the namespace. Which NIC type do you select?",
       "choices": [
         {
           "id": "a",
@@ -996,7 +996,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Configure external access with load balancer services",
-      "stem": "Which virtctl command creates a Service that publishes SSH on a VM to the cluster\u2019s load-balancer infrastructure?",
+      "stem": "Which virtctl command publishes SSH on VM web1 as a Service for clients outside the cluster?",
       "choices": [
         {
           "id": "a",
@@ -1464,7 +1464,7 @@
       "type": "fill",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "What kind (CDI API) represents an import or clone that must finish before the VM is allowed to start?",
+      "stem": "What kind represents an import or clone that must finish before the VM is allowed to start?",
       "answer": [
         "DataVolume"
       ],
@@ -1627,7 +1627,7 @@
       "type": "fill",
       "domain": "storage",
       "objective": "Import previously exported virtual machines",
-      "stem": "If you omit --ttl, how long does a VirtualMachineExport last by default? Enter a short form such as 2h.",
+      "stem": "If you omit --ttl, how long does a VirtualMachineExport last by default?",
       "answer": [
         "2h",
         "2 hours"
@@ -1796,7 +1796,7 @@
       "type": "single",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "In the create/customize wizard, which tab do you use to add or review VM disks before clicking Create VirtualMachine?",
+      "stem": "In the create/customize wizard, which tab do you use to add or review persistent volumes on the guest before clicking Create VirtualMachine?",
       "choices": [
         {
           "id": "a",
@@ -2507,7 +2507,7 @@
       "type": "multi",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the web interface",
-      "stem": "A copied VM template is marked deprecated after an SSP Operator update. Which two labels should you remove to clear the base-template mark? Select two.",
+      "stem": "A copied VM template is marked deprecated after an SSP Operator update. Which two labels should you remove so SSP no longer treats it as an upstream template? Select two.",
       "selectCount": 2,
       "choices": [
         {
@@ -2520,18 +2520,18 @@
         },
         {
           "id": "c",
-          "text": "app.kubernetes.io/managed-by: machine-api"
+          "text": "template.kubevirt.io/deprecated: \"true\""
         },
         {
           "id": "d",
-          "text": "node-role.kubernetes.io/worker"
+          "text": "app.kubernetes.io/name: ssp-operator"
         }
       ],
       "answer": [
         "a",
         "b"
       ],
-      "explanation": "Remove template.kubevirt.io/type=base and template.kubevirt.io/version, then remove the template.kubevirt.io/deprecated annotation. Those identify SSP base templates.",
+      "explanation": "Remove template.kubevirt.io/type=base and template.kubevirt.io/version. Also remove the template.kubevirt.io/deprecated annotation (not a label in the two-label pair asked here). machine-api and worker node-role labels are unrelated.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Creating a virtual machine",
@@ -2575,11 +2575,10 @@
     },
     {
       "id": "net-udn-roles",
-      "type": "multi",
+      "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Which two role values can a UserDefinedNetwork spec use? Select two.",
-      "selectCount": 2,
+      "stem": "For OpenShift Virtualization on OCP 4.18, which UserDefinedNetwork role is supported?",
       "choices": [
         {
           "id": "a",
@@ -2599,10 +2598,9 @@
         }
       ],
       "answer": [
-        "a",
-        "b"
+        "a"
       ],
-      "explanation": "UDN role is Primary (replaces default pod network in a labeled namespace) or Secondary (extra network). NodePort is a Service type; masquerade is a KubeVirt binding.",
+      "explanation": "OpenShift Virtualization documents that it currently does not support secondary user-defined networks; spec.layer2.role must be Primary so the UDN is the VM\u2019s primary interface. Secondary exists in the UDN API for pods, but not for CNV in 4.18.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
@@ -2627,17 +2625,17 @@
         },
         {
           "id": "c",
-          "text": "Layer2 with a shared OVN logical switch"
+          "text": "Localnet"
         },
         {
           "id": "d",
-          "text": "A Linux-bridge NAD (not a UDN topology)"
+          "text": "Geneve"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "The UDN support matrix: Layer2 has persistent IPs; Layer3 does not. Layer2 is the topology recommended for VM live migration without NAT. Linux-bridge NADs are a different attachment method, not a UDN topology value.",
+      "explanation": "The UDN support matrix: Layer2 has persistent IPs; Layer3 does not. Localnet is a NAD secondary topology, not a UDN topology in 4.18. Geneve is the overlay protocol, not a topology field value.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
@@ -2716,29 +2714,29 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "What does documentation call the most efficient method for connecting a VM to a VLAN?",
+      "stem": "The node already has a Linux bridge on a VLAN NIC. Which project object do you create so a VM can attach to that VLAN?",
       "choices": [
         {
           "id": "a",
-          "text": "A Linux bridge network attachment definition"
+          "text": "A NetworkAttachmentDefinition for the bridge"
         },
         {
           "id": "b",
-          "text": "An OVN-Kubernetes localnet NAD"
+          "text": "A NodeNetworkConfigurationPolicy in the same namespace as the VM"
         },
         {
           "id": "c",
-          "text": "A masquerade NIC on the default pod network"
+          "text": "A ClusterUserDefinedNetwork with role Secondary"
         },
         {
           "id": "d",
-          "text": "An SR-IOV network attachment"
+          "text": "A Service of type LoadBalancer"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "A Linux bridge NAD is documented as the most efficient way to connect a VM to a VLAN. Services and Ingress publish application ports; they are not L2 VLAN attachment.",
+      "explanation": "After the node bridge exists (often via NMState/NNCP at cluster scope), the project-level object a VM references is a Linux-bridge NetworkAttachmentDefinition. NNCP is node config, not the VM attach object. Secondary UDN is unsupported for CNV; a Service does not attach L2.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
@@ -2751,7 +2749,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "In a Linux-bridge NAD spec.config JSON, which CNI type attaches the VM tap to a node bridge?",
+      "stem": "In an OCP 4.18 NAD that attaches a VM tap to a node L2 device, which spec.config type is documented?",
       "choices": [
         {
           "id": "a",
@@ -2821,7 +2819,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Configure external access with load balancer services",
-      "stem": "You ran virtctl expose vm web1 --name web1-ssh --type NodePort --port 22. How do clients reach SSH on the guest?",
+      "stem": "After virtctl expose vm web1 --name web1-ssh --type NodePort --port 22, how do clients reach SSH?",
       "choices": [
         {
           "id": "a",
@@ -2930,15 +2928,15 @@
         },
         {
           "id": "b",
-          "text": "pcnet32-only"
+          "text": "e1000"
         },
         {
           "id": "c",
-          "text": "usb-net"
+          "text": "rtl8139"
         },
         {
           "id": "d",
-          "text": "bridge-slave"
+          "text": "ne2k_pci"
         }
       ],
       "answer": [
@@ -2957,7 +2955,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "Pods on the default network must reach a VM on a primary UDN on UDP/53. Which annotation opens that port on the UDN endpoint?",
+      "stem": "Which annotation lets default-network pods reach a primary-UDN VM on UDP/53?",
       "choices": [
         {
           "id": "a",
@@ -3093,7 +3091,7 @@
       "type": "single",
       "domain": "storage",
       "objective": "Import previously exported virtual machines",
-      "stem": "After virtctl vmexport download, the VirtualMachineExport CR is deleted by default. Which flag keeps it?",
+      "stem": "After virtctl vmexport download, which flag retains the export CR?",
       "choices": [
         {
           "id": "a",
@@ -3128,7 +3126,7 @@
       "type": "single",
       "domain": "storage",
       "objective": "Import previously exported virtual machines",
-      "stem": "virtctl vmexport download export --manifest omits a credential by default. Which extra flag includes the header secret in the manifest?",
+      "stem": "Which extra flag adds the export authorization Secret to the import YAML?",
       "choices": [
         {
           "id": "a",
@@ -3163,7 +3161,7 @@
       "type": "single",
       "domain": "storage",
       "objective": "Import previously exported virtual machines",
-      "stem": "When downloading an exported volume, which flag sets the output file (example disk.img.gz)?",
+      "stem": "When downloading an exported volume, which flag sets the destination path (example disk.img.gz)?",
       "choices": [
         {
           "id": "a",
@@ -3198,7 +3196,7 @@
       "type": "fill",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "Which component (full name or CDI) chooses CSI clone vs smart clone when you create a DataVolume from a PVC?",
+      "stem": "Which component chooses CSI clone vs smart clone when you create a DataVolume from a PVC?",
       "answer": [
         "CDI",
         "Containerized Data Importer",
@@ -3287,7 +3285,7 @@
       "type": "multi",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "From Virtualization \u2192 Catalog, Add volume can source a bootable volume from which two of these (besides upload and containerDisk)? Select two.",
+      "stem": "From Virtualization \u2192 Catalog, Add volume can source a bootable volume from which two of these? Select two.",
       "selectCount": 2,
       "choices": [
         {
@@ -3359,7 +3357,7 @@
       "type": "truefalse",
       "domain": "storage",
       "objective": "Attach storage to virtual machines",
-      "stem": "A DataVolume listed in a VM\u2019s dataVolumeTemplates keeps the VM from starting until the PVC is fully prepared.",
+      "stem": "A VM that references only an already-bound PVC (no DataVolume) still waits for CDI to finish an import before it can start.",
       "choices": [
         {
           "id": "true",
@@ -3371,9 +3369,9 @@
         }
       ],
       "answer": [
-        "true"
+        "false"
       ],
-      "explanation": "Data volumes prevent a VM from starting before the PVC is prepared. That is why imports and clones are modeled as DataVolumes rather than raw PVCs alone.",
+      "explanation": "DataVolumes prevent a VM from starting until the PVC is prepared. An already-bound PVC used directly does not go through that CDI wait. Use a DataVolume (or dataVolumeTemplates) when the import/clone must complete first.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Advanced VM creation",
@@ -3500,7 +3498,7 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "In the Administrator view, where do you create a namespace-scoped UserDefinedNetwork?",
+      "stem": "In Administrator view, where do you create a namespace-scoped OVN overlay (not a NAD)?",
       "choices": [
         {
           "id": "a",
@@ -3535,7 +3533,7 @@
       "type": "fill",
       "domain": "vm",
       "objective": "Provision and manage virtual machines from the command line interface (CLI)",
-      "stem": "A VM was paused with virtctl pause vm web1. Which virtctl subcommand resumes it? Enter the subcommand only.",
+      "stem": "A VM is frozen with machine state kept in RAM. Which virtctl subcommand resumes it? Enter the subcommand only.",
       "answer": [
         "unpause"
       ],

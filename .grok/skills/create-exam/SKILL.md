@@ -57,13 +57,14 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
    Reviewer must flag: joke/impossible/`foo`/`bar` distractors; wrong choices
    a novice would dismiss on sight; keys that disagree with the explanation or
    cited doc; duplicate or reworded stems; `fill` answers that are not short
-   tokens; guessable patterns (see Question bar): "all/none of the above",
-   a key visibly longer or more detailed than its distractors, `NOT`/`EXCEPT`
-   stems, `truefalse` on anything with nuance; stems with a second defensible
-   answer or vague qualifiers; explanations that state the key without saying
-   why each distractor is wrong. Distractors pass only if they look like a
-   nearby command, CRD, flag, UI path, or sibling objective from the same
-   product.
+   tokens; stems that leak the answer (key text, a `such as`/`e.g.` example of
+   the key, or a parenthetical alias of the fill token); guessable patterns
+   (see Question bar): "all/none of the above", a key visibly longer or more
+   detailed than its distractors, `NOT`/`EXCEPT` stems, `truefalse` on anything
+   with nuance; stems with a second defensible answer or vague qualifiers;
+   explanations that state the key without saying why each distractor is wrong.
+   Distractors pass only if they look like a nearby command, CRD, flag, UI path,
+   or sibling objective from the same product.
 8. **Report** to the user: blueprint URL, domain coverage (domain → objective → question
    ids), question counts by type, review outcome, and that the pack is unofficial
    practice.
@@ -71,6 +72,8 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 ## Question bar
 
 - Test one fact or decision from the objective; no trick double-negatives.
+- The stem must not leak the answer: no key text, no `such as` / `e.g.` worked
+  example of the key, no parenthetical alias of the token to type.
 - Exactly one defensibly correct answer. If you need a paragraph to argue why
   the key is "more correct" than another choice, rewrite the item. No vague
   qualifiers (`sometimes`, `usually`), no jargon absent from the cited docs.
