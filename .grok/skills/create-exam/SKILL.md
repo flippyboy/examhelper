@@ -48,13 +48,27 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 6. **Validate.** Run `node scripts/validate-exam.mjs` (or
    `docker run --rm -v "$PWD":/app -w /app node:22-alpine node scripts/validate-exam.mjs`
    if Node is not on the host). Fix until it prints `ok`.
-7. **Report** to the user: blueprint URL, domain coverage (domain → objective → question
-   ids), question counts by type, and that the pack is unofficial practice.
+7. **Review separately.** Do not grade the pack in the same pass that wrote it.
+   Spawn a **general-purpose** subagent whose only job is to read the new
+   `exam.json` (and the cited URLs as needed) and audit quality. The parent
+   must not reuse drafting context as the review. The reviewer returns only:
+   items to fix (id + problem), items that are fine, and a short distractor
+   verdict. Apply the fixes in the parent, then re-run validate.
+   Reviewer must flag: joke/impossible/`foo`/`bar` distractors; wrong choices
+   a novice would dismiss on sight; keys that disagree with the explanation or
+   cited doc; duplicate or reworded stems; `fill` answers that are not short
+   tokens. Distractors pass only if they look like a nearby command, CRD, flag,
+   UI path, or sibling objective from the same product.
+8. **Report** to the user: blueprint URL, domain coverage (domain → objective → question
+   ids), question counts by type, review outcome, and that the pack is unofficial
+   practice.
 
 ## Question bar
 
 - Test one fact or decision from the objective; no trick double-negatives.
-- Wrong choices must be plausible for someone who mixed adjacent objectives.
+- Wrong choices must be reasonable: a nearby command, similar CRD/kind, sibling
+  UI path, or off-by-one flag from the same docs — the mix-up a practitioner
+  might actually make. Not jokes, unrelated products, or throwaway fillers.
 - `fill` answers are short tokens (port numbers, command names, reserved words), with
   common variants listed in `answer`.
 - Never paste vendor exam item text, even "from memory."
