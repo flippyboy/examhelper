@@ -1,0 +1,6 @@
+node_modules
+dist
+.git
+.grok
+*.md
+!README.md

@@ -1,0 +1,212 @@
+{
+  "id": "demo-it-foundations",
+  "title": "IT Foundations (Demo)",
+  "vendor": "ExamHelper",
+  "version": "1.0",
+  "description": "A short unofficial sample covering networking, security, and Linux basics. Use it to learn the app; replace it with a real cert pack via /create-exam.",
+  "unofficial": true,
+  "passPercent": 70,
+  "timeLimitMinutes": 20,
+  "domains": [
+    { "id": "net", "name": "Networking", "weight": 34 },
+    { "id": "sec", "name": "Security", "weight": 33 },
+    { "id": "os", "name": "Linux / OS", "weight": 33 }
+  ],
+  "questions": [
+    {
+      "id": "net-osi-routing",
+      "type": "single",
+      "domain": "net",
+      "objective": "Identify OSI layers and their functions",
+      "stem": "A router forwards packets based on IP addresses. Which OSI layer does this forwarding decision belong to?",
+      "choices": [
+        { "id": "a", "text": "Data Link" },
+        { "id": "b", "text": "Network" },
+        { "id": "c", "text": "Transport" },
+        { "id": "d", "text": "Session" }
+      ],
+      "answer": ["b"],
+      "explanation": "IP routing is a Network-layer (layer 3) function. Data Link addresses frames on a local segment; Transport handles TCP/UDP; Session is not used for forwarding.",
+      "references": [
+        { "title": "RFC 1122 — Requirements for Internet Hosts", "url": "https://www.rfc-editor.org/rfc/rfc1122" }
+      ]
+    },
+    {
+      "id": "net-rfc1918",
+      "type": "multi",
+      "domain": "net",
+      "objective": "Recognize private IPv4 address space",
+      "stem": "Which of the following are RFC 1918 private IPv4 ranges? Select two.",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "10.0.0.0/8" },
+        { "id": "b", "text": "172.16.0.0/12" },
+        { "id": "c", "text": "169.254.0.0/16" },
+        { "id": "d", "text": "11.0.0.0/8" }
+      ],
+      "answer": ["a", "b"],
+      "explanation": "RFC 1918 reserves 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16. 169.254.0.0/16 is link-local (APIPA). 11.0.0.0/8 is public space.",
+      "references": [
+        { "title": "RFC 1918 — Address Allocation for Private Internets", "url": "https://www.rfc-editor.org/rfc/rfc1918" }
+      ]
+    },
+    {
+      "id": "net-http-port",
+      "type": "fill",
+      "domain": "net",
+      "objective": "Recall well-known TCP ports",
+      "stem": "What is the default TCP port number for unencrypted HTTP?",
+      "answer": ["80"],
+      "explanation": "HTTP listens on TCP 80 by default. Encrypted HTTP (HTTPS) uses 443.",
+      "references": [
+        { "title": "IANA Service Name and Transport Protocol Port Number Registry", "url": "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml" }
+      ]
+    },
+    {
+      "id": "net-tcp-conn",
+      "type": "truefalse",
+      "domain": "net",
+      "objective": "Contrast TCP and UDP",
+      "stem": "TCP is a connection-oriented protocol that provides retransmission of lost segments.",
+      "choices": [
+        { "id": "true", "text": "True" },
+        { "id": "false", "text": "False" }
+      ],
+      "answer": ["true"],
+      "explanation": "TCP establishes a connection (three-way handshake) and retransmits lost data. UDP is connectionless and does not retransmit.",
+      "references": [
+        { "title": "RFC 9293 — Transmission Control Protocol", "url": "https://www.rfc-editor.org/rfc/rfc9293" }
+      ]
+    },
+    {
+      "id": "sec-cia-conf",
+      "type": "single",
+      "domain": "sec",
+      "objective": "Apply the CIA triad",
+      "stem": "An attacker reads a database of customer records but does not change them. Which CIA triad property was primarily violated?",
+      "choices": [
+        { "id": "a", "text": "Confidentiality" },
+        { "id": "b", "text": "Integrity" },
+        { "id": "c", "text": "Availability" },
+        { "id": "d", "text": "Non-repudiation" }
+      ],
+      "answer": ["a"],
+      "explanation": "Unauthorized disclosure is a confidentiality failure. Integrity would require alteration; availability would require disruption. Non-repudiation is not part of the CIA triad.",
+      "references": [
+        { "title": "NIST SP 800-12r1 — An Introduction to Information Security", "url": "https://csrc.nist.gov/publications/detail/sp/800-12/rev-1/final" }
+      ]
+    },
+    {
+      "id": "sec-mfa",
+      "type": "multi",
+      "domain": "sec",
+      "objective": "Identify authentication factors",
+      "stem": "Which of the following are something-you-have authentication factors? Select two.",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "Hardware OTP token" },
+        { "id": "b", "text": "Password" },
+        { "id": "c", "text": "Fingerprint" },
+        { "id": "d", "text": "Smart card" }
+      ],
+      "answer": ["a", "d"],
+      "explanation": "Tokens and smart cards are possession factors. A password is knowledge; a fingerprint is inherence (something you are).",
+      "references": [
+        { "title": "NIST SP 800-63B — Digital Identity Guidelines", "url": "https://pages.nist.gov/800-63-3/sp800-63b.html" }
+      ]
+    },
+    {
+      "id": "sec-ssh-port",
+      "type": "fill",
+      "domain": "sec",
+      "objective": "Recall well-known secure-admin ports",
+      "stem": "What is the default TCP port for SSH?",
+      "answer": ["22"],
+      "explanation": "SSH uses TCP 22 by default. Changing the port is a common hardening step but does not replace key-based auth and firewalling.",
+      "references": [
+        { "title": "IANA Service Name and Transport Protocol Port Number Registry", "url": "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml" }
+      ]
+    },
+    {
+      "id": "sec-https-tls",
+      "type": "truefalse",
+      "domain": "sec",
+      "objective": "Describe HTTPS",
+      "stem": "HTTPS is HTTP tunneled over TLS, which provides confidentiality and integrity for the HTTP messages.",
+      "choices": [
+        { "id": "true", "text": "True" },
+        { "id": "false", "text": "False" }
+      ],
+      "answer": ["true"],
+      "explanation": "HTTPS wraps HTTP in TLS. TLS encrypts the bytes (confidentiality) and authenticates the stream (integrity). It does not by itself authenticate the user.",
+      "references": [
+        { "title": "RFC 9110 — HTTP Semantics", "url": "https://www.rfc-editor.org/rfc/rfc9110" }
+      ]
+    },
+    {
+      "id": "os-listen-cmd",
+      "type": "single",
+      "domain": "os",
+      "objective": "Inspect listening sockets on Linux",
+      "stem": "Which command is the modern preferred way to list TCP listening sockets on Linux?",
+      "choices": [
+        { "id": "a", "text": "ss -lnt" },
+        { "id": "b", "text": "ifconfig -a" },
+        { "id": "c", "text": "chmod -R 755 /" },
+        { "id": "d", "text": "dig +short" }
+      ],
+      "answer": ["a"],
+      "explanation": "`ss` replaces netstat for socket stats. `-lnt` lists listening TCP sockets numerically. ifconfig is interface config; chmod changes mode; dig queries DNS.",
+      "references": [
+        { "title": "ss(8) man page", "url": "https://man7.org/linux/man-pages/man8/ss.8.html" }
+      ]
+    },
+    {
+      "id": "os-mode-bits",
+      "type": "multi",
+      "domain": "os",
+      "objective": "Interpret Unix permission bits",
+      "stem": "A file mode of 644 means which of the following? Select two.",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "Owner can read and write" },
+        { "id": "b", "text": "Group can write" },
+        { "id": "c", "text": "Others can read" },
+        { "id": "d", "text": "Others can execute" }
+      ],
+      "answer": ["a", "c"],
+      "explanation": "6 is rw- for owner, 4 is r-- for group and others. Nobody has execute; group does not have write.",
+      "references": [
+        { "title": "chmod(1) man page", "url": "https://man7.org/linux/man-pages/man1/chmod.1.html" }
+      ]
+    },
+    {
+      "id": "os-chmod",
+      "type": "fill",
+      "domain": "os",
+      "objective": "Change file mode on Unix",
+      "stem": "Which command changes the permission bits of a file on Linux? Enter the command name only.",
+      "answer": ["chmod"],
+      "explanation": "`chmod` changes mode bits. `chown` changes ownership; `umask` sets the default mask for new files.",
+      "references": [
+        { "title": "chmod(1) man page", "url": "https://man7.org/linux/man-pages/man1/chmod.1.html" }
+      ]
+    },
+    {
+      "id": "os-root-uid",
+      "type": "truefalse",
+      "domain": "os",
+      "objective": "Identify the superuser on Unix",
+      "stem": "On a typical Linux system, the root account has user ID 0.",
+      "choices": [
+        { "id": "true", "text": "True" },
+        { "id": "false", "text": "False" }
+      ],
+      "answer": ["true"],
+      "explanation": "UID 0 is the superuser. The login name is usually `root`, but the kernel grants privilege by UID.",
+      "references": [
+        { "title": "credentials(7) man page", "url": "https://man7.org/linux/man-pages/man7/credentials.7.html" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "exams": [
+    {
+      "id": "demo-it-foundations",
+      "title": "IT Foundations (Demo)",
+      "vendor": "ExamHelper",
+      "version": "1.0",
+      "path": "demo-it-foundations/exam.json",
+      "questionCount": 12,
+      "timeLimitMinutes": 20,
+      "passPercent": 70,
+      "domains": [
+        "Networking",
+        "Security",
+        "Linux / OS"
+      ]
+    }
+  ]
+}
