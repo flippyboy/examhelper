@@ -1,0 +1,911 @@
+{
+  "id": "capa",
+  "title": "Certified Argo Project Associate (CAPA)",
+  "vendor": "CNCF / Linux Foundation",
+  "code": "CAPA",
+  "version": "2024-10",
+  "description": "Unofficial practice pack for the Certified Argo Project Associate exam. Written from the public CNCF curriculum (Argo Workflows 36%, Argo CD 34%, Argo Rollouts 18%, Argo Events 12%) and the upstream Argo project documentation. Not affiliated with CNCF or the Linux Foundation.",
+  "unofficial": true,
+  "passPercent": 75,
+  "timeLimitMinutes": 90,
+  "domains": [
+    { "id": "workflows", "name": "Argo Workflows", "weight": 36 },
+    { "id": "cd", "name": "Argo CD", "weight": 34 },
+    { "id": "rollouts", "name": "Argo Rollouts", "weight": 18 },
+    { "id": "events", "name": "Argo Events", "weight": 12 }
+  ],
+  "questions": [
+    {
+      "id": "wf-01",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Fundamentals",
+      "stem": "How is Argo Workflows implemented on a Kubernetes cluster?",
+      "choices": [
+        { "id": "a", "text": "As a Kubernetes CRD (Workflow) reconciled by a controller, where each step runs in its own Pod" },
+        { "id": "b", "text": "As a replacement for the kube-scheduler that schedules batch jobs directly on nodes" },
+        { "id": "c", "text": "As a Helm plugin that renders workflow YAML into Kubernetes Jobs" },
+        { "id": "d", "text": "As an admission webhook that rewrites Deployments into ordered steps" }
+      ],
+      "answer": ["a"],
+      "explanation": "Argo Workflows is a Kubernetes-native workflow engine. Workflows are defined with a `Workflow` custom resource, and the workflow controller runs each step of the workflow as a container inside a Kubernetes Pod.",
+      "references": [
+        { "title": "Argo Workflows — Core Concepts", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/" }
+      ]
+    },
+    {
+      "id": "wf-02",
+      "type": "fill",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Fundamentals",
+      "stem": "Complete the CLI command used to create a Workflow from a local YAML file: `argo ______ hello-world.yaml`",
+      "answer": ["submit"],
+      "explanation": "`argo submit <file>` creates the Workflow resource on the cluster. Common companions are `argo list`, `argo get`, `argo logs`, and `argo watch`.",
+      "references": [
+        { "title": "Argo Workflows — Quick Start", "url": "https://argo-workflows.readthedocs.io/en/latest/quick-start/" }
+      ]
+    },
+    {
+      "id": "wf-03",
+      "type": "truefalse",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Fundamentals",
+      "stem": "In Argo Workflows, the `Workflow` resource is both the definition of the work to be done and the record of its execution state.",
+      "choices": [
+        { "id": "t", "text": "True" },
+        { "id": "f", "text": "False" }
+      ],
+      "answer": ["t"],
+      "explanation": "The `Workflow` object holds the `spec` (templates, entrypoint) and the controller writes the live `status` (phase, node results, outputs) back into the same object. Reusable definitions without state live in `WorkflowTemplate` resources instead.",
+      "references": [
+        { "title": "Argo Workflows — Core Concepts", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/" }
+      ]
+    },
+    {
+      "id": "wf-04",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Generating and Consuming Artifacts",
+      "stem": "A container template writes a file to `/tmp/report.txt`. Which template section makes that file available to later steps as an artifact named `report`?",
+      "choices": [
+        { "id": "a", "text": "`outputs.artifacts` with `name: report` and `path: /tmp/report.txt`" },
+        { "id": "b", "text": "`inputs.artifacts` with `name: report` and `path: /tmp/report.txt`" },
+        { "id": "c", "text": "`outputs.parameters` with `valueFrom.path: /tmp/report.txt`" },
+        { "id": "d", "text": "`volumeMounts` with `mountPath: /tmp/report.txt`" }
+      ],
+      "answer": ["a"],
+      "explanation": "Output artifacts are declared under `outputs.artifacts`, giving a name and the container path to save. `outputs.parameters` with `valueFrom.path` captures a file's *contents* as a string parameter rather than as an artifact.",
+      "references": [
+        { "title": "Argo Workflows — Artifacts", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/artifacts/" }
+      ]
+    },
+    {
+      "id": "wf-05",
+      "type": "multi",
+      "domain": "workflows",
+      "objective": "Generating and Consuming Artifacts",
+      "stem": "Which two of the following can be configured as an Argo Workflows artifact repository?",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "An S3-compatible object store such as MinIO" },
+        { "id": "b", "text": "Azure Blob Storage" },
+        { "id": "c", "text": "The cluster's etcd datastore" },
+        { "id": "d", "text": "A Kubernetes ConfigMap" }
+      ],
+      "answer": ["a", "b"],
+      "explanation": "Supported artifact repositories include S3 and S3-compatible stores (MinIO), GCS, Azure Blob Storage, Alibaba OSS, Artifactory, HTTP, Git, and HDFS. etcd and ConfigMaps are not artifact storage back ends.",
+      "references": [
+        { "title": "Argo Workflows — Configuring Your Artifact Repository", "url": "https://argo-workflows.readthedocs.io/en/latest/configure-artifact-repository/" }
+      ]
+    },
+    {
+      "id": "wf-06",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Generating and Consuming Artifacts",
+      "stem": "In a `steps` template, step `generate` produces an output artifact `data`. How does a later step `consume` reference it as an input artifact?",
+      "choices": [
+        { "id": "a", "text": "`from: \"{{steps.generate.outputs.artifacts.data}}\"` under `arguments.artifacts`" },
+        { "id": "b", "text": "`valueFrom: \"{{steps.generate.outputs.result}}\"` under `arguments.parameters`" },
+        { "id": "c", "text": "`from: \"{{workflow.artifacts.data}}\"` under `inputs.artifacts`" },
+        { "id": "d", "text": "`s3.key: \"{{steps.generate.name}}/data\"` under `inputs.artifacts`" }
+      ],
+      "answer": ["a"],
+      "explanation": "The consuming step passes the artifact via `arguments.artifacts[].from` using the `{{steps.<name>.outputs.artifacts.<artifact>}}` variable; the target template then declares a matching `inputs.artifacts` entry with a `path`. In a DAG the variable is `{{tasks.<name>...}}`.",
+      "references": [
+        { "title": "Argo Workflows — Artifacts", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/artifacts/" },
+        { "title": "Argo Workflows — Workflow Variables", "url": "https://argo-workflows.readthedocs.io/en/latest/variables/" }
+      ]
+    },
+    {
+      "id": "wf-07",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Templates",
+      "stem": "What distinguishes a `ClusterWorkflowTemplate` from a `WorkflowTemplate`?",
+      "choices": [
+        { "id": "a", "text": "It is cluster-scoped and can be referenced by Workflows in any namespace" },
+        { "id": "b", "text": "It can only be submitted by cluster administrators" },
+        { "id": "c", "text": "It runs its pods on every node in the cluster" },
+        { "id": "d", "text": "It is stored in etcd while WorkflowTemplates are stored in an artifact repository" }
+      ],
+      "answer": ["a"],
+      "explanation": "`WorkflowTemplate` is namespaced; `ClusterWorkflowTemplate` is a cluster-scoped equivalent that any namespace can reference (with `clusterScope: true` in `templateRef` or `workflowTemplateRef`).",
+      "references": [
+        { "title": "Argo Workflows — Cluster Workflow Templates", "url": "https://argo-workflows.readthedocs.io/en/latest/cluster-workflow-templates/" }
+      ]
+    },
+    {
+      "id": "wf-08",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Templates",
+      "stem": "Which field lets a `Workflow` reuse an entire existing `WorkflowTemplate` (its templates and entrypoint) rather than defining its own templates?",
+      "choices": [
+        { "id": "a", "text": "`spec.workflowTemplateRef`" },
+        { "id": "b", "text": "`spec.templateRef`" },
+        { "id": "c", "text": "`spec.templates[].from`" },
+        { "id": "d", "text": "`metadata.ownerReferences`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`spec.workflowTemplateRef.name` points a Workflow at a WorkflowTemplate so it inherits that template's spec. `templateRef` is used *inside* a step or task to call a single template from another WorkflowTemplate.",
+      "references": [
+        { "title": "Argo Workflows — Workflow Templates", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-templates/" }
+      ]
+    },
+    {
+      "id": "wf-09",
+      "type": "truefalse",
+      "domain": "workflows",
+      "objective": "Understand Argo Workflow Templates",
+      "stem": "A `WorkflowTemplate` can be run directly from the CLI with `argo submit --from workflowtemplate/<name>`.",
+      "choices": [
+        { "id": "t", "text": "True" },
+        { "id": "f", "text": "False" }
+      ],
+      "answer": ["t"],
+      "explanation": "`argo submit --from workflowtemplate/<name>` (or `clusterworkflowtemplate/<name>`) creates a Workflow from the template, optionally overriding parameters with `-p`.",
+      "references": [
+        { "title": "Argo Workflows — Workflow Templates", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-templates/" }
+      ]
+    },
+    {
+      "id": "wf-10",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand the Argo Workflow Spec",
+      "stem": "What does `spec.entrypoint` specify in a Workflow?",
+      "choices": [
+        { "id": "a", "text": "The name of the template the controller invokes first" },
+        { "id": "b", "text": "The container command to run in every step" },
+        { "id": "c", "text": "The Kubernetes ServiceAccount used by the workflow pods" },
+        { "id": "d", "text": "The Pod on which the workflow controller runs" }
+      ],
+      "answer": ["a"],
+      "explanation": "`entrypoint` names the template in `spec.templates` that starts the workflow. It can be a leaf template (container, script) or an orchestration template (steps, dag).",
+      "references": [
+        { "title": "Argo Workflows — Core Concepts", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/" }
+      ]
+    },
+    {
+      "id": "wf-11",
+      "type": "fill",
+      "domain": "workflows",
+      "objective": "Understand the Argo Workflow Spec",
+      "stem": "Which template type lets you write code inline with an `image`, `command`, and a `source` block, and exposes what it prints to stdout as `{{...outputs.result}}`?",
+      "answer": ["script", "script template"],
+      "explanation": "A `script` template is a container template with an inline `source`. Its stdout is captured automatically as the `result` output parameter.",
+      "references": [
+        { "title": "Argo Workflows — Scripts & Results", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/scripts-and-results/" }
+      ]
+    },
+    {
+      "id": "wf-12",
+      "type": "multi",
+      "domain": "workflows",
+      "objective": "Understand the Argo Workflow Spec",
+      "stem": "Which two template types orchestrate other templates rather than doing work themselves?",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "`steps`" },
+        { "id": "b", "text": "`dag`" },
+        { "id": "c", "text": "`container`" },
+        { "id": "d", "text": "`resource`" },
+        { "id": "e", "text": "`script`" }
+      ],
+      "answer": ["a", "b"],
+      "explanation": "`steps` and `dag` are template invocators that call other templates. `container`, `script`, `resource`, and `suspend` are template definitions that perform the actual work (or wait).",
+      "references": [
+        { "title": "Argo Workflows — Core Concepts (Template Types)", "url": "https://argo-workflows.readthedocs.io/en/latest/workflow-concepts/" }
+      ]
+    },
+    {
+      "id": "wf-13",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand the Argo Workflow Spec",
+      "stem": "A template has `retryStrategy: {limit: \"3\"}` and no `retryPolicy`. Under what condition will the step be retried?",
+      "choices": [
+        { "id": "a", "text": "Only when the container exits with a non-zero code (failure), up to 3 retries" },
+        { "id": "b", "text": "On any failure or error, up to 3 retries" },
+        { "id": "c", "text": "Only on controller errors such as pod eviction" },
+        { "id": "d", "text": "Never — a `retryPolicy` is required for retries to occur" }
+      ],
+      "answer": ["a"],
+      "explanation": "The default `retryPolicy` is `OnFailure`, which retries steps whose main container failed. `OnError` retries system errors, and `Always` retries both. `limit` caps the number of retries.",
+      "references": [
+        { "title": "Argo Workflows — Retrying Failed or Errored Steps", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/retrying-failed-or-errored-steps/" }
+      ]
+    },
+    {
+      "id": "wf-14",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Understand the Argo Workflow Spec",
+      "stem": "You need a cleanup template to run after a workflow finishes, whether it succeeded or failed. Which field do you set?",
+      "choices": [
+        { "id": "a", "text": "`spec.onExit`" },
+        { "id": "b", "text": "`spec.retryStrategy`" },
+        { "id": "c", "text": "`spec.activeDeadlineSeconds`" },
+        { "id": "d", "text": "`spec.suspend`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`spec.onExit` names an exit-handler template that always runs at the end of the workflow. Inside it, `{{workflow.status}}` can be used to branch on Succeeded/Failed/Error.",
+      "references": [
+        { "title": "Argo Workflows — Exit Handlers", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/exit-handlers/" }
+      ]
+    },
+    {
+      "id": "wf-15",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Work with DAG (Directed-Acyclic Graphs)",
+      "stem": "In a `dag` template, which field on a task declares that it must wait for other named tasks to complete?",
+      "choices": [
+        { "id": "a", "text": "`dependencies`" },
+        { "id": "b", "text": "`when`" },
+        { "id": "c", "text": "`withItems`" },
+        { "id": "d", "text": "`onExit`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`dependencies: [A, B]` lists the tasks that must finish before this task starts. The richer `depends` field allows boolean expressions on task status.",
+      "references": [
+        { "title": "Argo Workflows — DAG", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/dag/" }
+      ]
+    },
+    {
+      "id": "wf-16",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Work with DAG (Directed-Acyclic Graphs)",
+      "stem": "A DAG task uses `depends: \"A\"` (no result suffix). Which task results of `A` allow the task to run?",
+      "choices": [
+        { "id": "a", "text": "Succeeded, Skipped, or Daemoned" },
+        { "id": "b", "text": "Succeeded only" },
+        { "id": "c", "text": "Succeeded or Failed" },
+        { "id": "d", "text": "Any result, including Errored" }
+      ],
+      "answer": ["a"],
+      "explanation": "With enhanced depends logic, a bare task name expands to `A.Succeeded || A.Skipped || A.Daemoned`. Use suffixes such as `A.Failed` or `A.Errored` to run on other outcomes.",
+      "references": [
+        { "title": "Argo Workflows — Enhanced Depends Logic", "url": "https://argo-workflows.readthedocs.io/en/latest/enhanced-depends-logic/" }
+      ]
+    },
+    {
+      "id": "wf-17",
+      "type": "truefalse",
+      "domain": "workflows",
+      "objective": "Work with DAG (Directed-Acyclic Graphs)",
+      "stem": "In a `dag` template, tasks with no declared dependencies are started concurrently.",
+      "choices": [
+        { "id": "t", "text": "True" },
+        { "id": "f", "text": "False" }
+      ],
+      "answer": ["t"],
+      "explanation": "The DAG scheduler runs every task as soon as its dependencies are satisfied; tasks with no dependencies are all eligible immediately and run in parallel (subject to `parallelism` limits).",
+      "references": [
+        { "title": "Argo Workflows — DAG", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/dag/" }
+      ]
+    },
+    {
+      "id": "wf-18",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Run Data Processing Jobs with Argo Workflows",
+      "stem": "A step outputs a JSON list of file names. You want to fan out one task per file. Which loop construct takes that list from a previous step's output?",
+      "choices": [
+        { "id": "a", "text": "`withParam: \"{{steps.list-files.outputs.result}}\"`" },
+        { "id": "b", "text": "`withItems: \"{{steps.list-files.outputs.result}}\"`" },
+        { "id": "c", "text": "`withSequence: {count: \"{{steps.list-files.outputs.result}}\"}`" },
+        { "id": "d", "text": "`parallelism: \"{{steps.list-files.outputs.result}}\"`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`withParam` iterates over a JSON array supplied at runtime (typically another step's output). `withItems` takes a static list in the YAML, and `withSequence` generates a numeric range.",
+      "references": [
+        { "title": "Argo Workflows — Loops", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/loops/" }
+      ]
+    },
+    {
+      "id": "wf-19",
+      "type": "single",
+      "domain": "workflows",
+      "objective": "Run Data Processing Jobs with Argo Workflows",
+      "stem": "What is the purpose of the `data` template type?",
+      "choices": [
+        { "id": "a", "text": "To list artifact paths from a repository and transform the list with expressions before fan-out processing" },
+        { "id": "b", "text": "To mount a persistent volume shared by all steps" },
+        { "id": "c", "text": "To convert an output parameter into an artifact" },
+        { "id": "d", "text": "To stream logs from all pods into a single artifact" }
+      ],
+      "answer": ["a"],
+      "explanation": "A `data` template has a `source` (e.g. `artifactPaths` on a bucket prefix) and `transformation` steps using expression syntax (e.g. filter by suffix). The result is emitted as `outputs.result` for use with `withParam`.",
+      "references": [
+        { "title": "Argo Workflows — Data Sourcing and Transformation", "url": "https://argo-workflows.readthedocs.io/en/latest/data-sourcing-and-transformation/" }
+      ]
+    },
+    {
+      "id": "cd-01",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Understand Argo CD Fundamentals",
+      "stem": "Which statement best describes the GitOps principle Argo CD is built on?",
+      "choices": [
+        { "id": "a", "text": "The desired application state is declared in a Git repository, and the cluster is continuously reconciled toward it" },
+        { "id": "b", "text": "A CI pipeline pushes manifests to the cluster with `kubectl apply` after every commit" },
+        { "id": "c", "text": "Cluster state is exported to Git nightly so it can be restored after failures" },
+        { "id": "d", "text": "Developers run `helm install` from their workstations against production" }
+      ],
+      "answer": ["a"],
+      "explanation": "Argo CD treats Git as the source of truth for desired state and pulls/compares that state against the live cluster, reporting drift and (optionally) syncing automatically.",
+      "references": [
+        { "title": "Argo CD — Core Concepts", "url": "https://argo-cd.readthedocs.io/en/stable/core_concepts/" }
+      ]
+    },
+    {
+      "id": "cd-02",
+      "type": "multi",
+      "domain": "cd",
+      "objective": "Understand Argo CD Fundamentals",
+      "stem": "Which three of the following are core Argo CD components?",
+      "selectCount": 3,
+      "choices": [
+        { "id": "a", "text": "API server (`argocd-server`)" },
+        { "id": "b", "text": "Repository server (`argocd-repo-server`)" },
+        { "id": "c", "text": "Application controller (`argocd-application-controller`)" },
+        { "id": "d", "text": "EventBus controller (`argocd-eventbus`)" },
+        { "id": "e", "text": "Rollout controller (`argocd-rollouts-controller`)" }
+      ],
+      "answer": ["a", "b", "c"],
+      "explanation": "Argo CD's core architecture is the API server (UI/CLI/API), the repo server (clones repos and generates manifests), and the application controller (compares live vs. desired state and syncs). EventBus belongs to Argo Events and the rollout controller to Argo Rollouts.",
+      "references": [
+        { "title": "Argo CD — Architectural Overview", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/architecture/" }
+      ]
+    },
+    {
+      "id": "cd-03",
+      "type": "fill",
+      "domain": "cd",
+      "objective": "Understand Argo CD Fundamentals",
+      "stem": "Which Argo CD component clones Git repositories and renders Helm/Kustomize/plain manifests? (short component name)",
+      "answer": ["repo-server", "argocd-repo-server", "repo server", "repository server"],
+      "explanation": "The repository server maintains a local cache of Git repositories and generates the Kubernetes manifests that the application controller compares against the cluster.",
+      "references": [
+        { "title": "Argo CD — Architectural Overview", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/architecture/" }
+      ]
+    },
+    {
+      "id": "cd-04",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Understand Argo CD Fundamentals",
+      "stem": "An Application shows sync status `OutOfSync` but health status `Healthy`. What does this mean?",
+      "choices": [
+        { "id": "a", "text": "The live resources differ from the manifests in Git, but the running workloads are functioning normally" },
+        { "id": "b", "text": "The Git repository is unreachable, but the pods are running" },
+        { "id": "c", "text": "The last sync failed and pods are crash-looping" },
+        { "id": "d", "text": "The Application has been deleted from Git but not from the cluster" }
+      ],
+      "answer": ["a"],
+      "explanation": "Sync status compares desired (Git) vs. live state; health status reflects whether resources such as Deployments are progressing/available. The two are independent, so a healthy app can still be out of sync.",
+      "references": [
+        { "title": "Argo CD — Core Concepts", "url": "https://argo-cd.readthedocs.io/en/stable/core_concepts/" },
+        { "title": "Argo CD — Resource Health", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/health/" }
+      ]
+    },
+    {
+      "id": "cd-05",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Synchronize Applications Using Argo CD",
+      "stem": "An Application has `syncPolicy.automated.prune: true`. A Deployment manifest is removed from the Git repository. What happens?",
+      "choices": [
+        { "id": "a", "text": "Argo CD deletes the Deployment from the cluster on the next automated sync" },
+        { "id": "b", "text": "The Deployment is left running and marked `OutOfSync` until deleted manually" },
+        { "id": "c", "text": "Argo CD restores the manifest to Git from the live cluster" },
+        { "id": "d", "text": "The Application is marked `Degraded` and syncing stops" }
+      ],
+      "answer": ["a"],
+      "explanation": "Pruning deletes live resources that are no longer defined in Git. Without `prune: true`, automated sync never deletes resources, and they show as `OutOfSync` (requires pruning).",
+      "references": [
+        { "title": "Argo CD — Automated Sync Policy", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/" }
+      ]
+    },
+    {
+      "id": "cd-06",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Synchronize Applications Using Argo CD",
+      "stem": "Someone runs `kubectl scale deployment web --replicas=10` in a cluster managed by Argo CD, but Git says 3 replicas. Which automated sync setting causes Argo CD to revert this change on its own?",
+      "choices": [
+        { "id": "a", "text": "`syncPolicy.automated.selfHeal: true`" },
+        { "id": "b", "text": "`syncPolicy.automated.prune: true`" },
+        { "id": "c", "text": "`syncPolicy.syncOptions: [\"Replace=true\"]`" },
+        { "id": "d", "text": "`spec.source.targetRevision: HEAD`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`selfHeal` makes Argo CD sync again whenever the live state drifts from Git, even without a new commit. `prune` only concerns deleted manifests, and `Replace=true` changes how objects are applied.",
+      "references": [
+        { "title": "Argo CD — Automated Sync Policy (Self Heal)", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/" }
+      ]
+    },
+    {
+      "id": "cd-07",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Synchronize Applications Using Argo CD",
+      "stem": "Which annotation protects a single resource from being deleted by Argo CD pruning, even when the Application has pruning enabled?",
+      "choices": [
+        { "id": "a", "text": "`argocd.argoproj.io/sync-options: Prune=false`" },
+        { "id": "b", "text": "`argocd.argoproj.io/compare-options: IgnoreExtraneous`" },
+        { "id": "c", "text": "`argocd.argoproj.io/hook: Skip`" },
+        { "id": "d", "text": "`argocd.argoproj.io/sync-wave: \"-1\"`" }
+      ],
+      "answer": ["a"],
+      "explanation": "The `Prune=false` sync option on a resource excludes it from pruning. `IgnoreExtraneous` only hides the resource from sync-status calculation, `Skip` hooks exclude a resource from being applied, and sync waves control ordering.",
+      "references": [
+        { "title": "Argo CD — Sync Options", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/" }
+      ]
+    },
+    {
+      "id": "cd-08",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Synchronize Applications Using Argo CD",
+      "stem": "A Namespace must be created before a Deployment in the same Application. Given both resources use the default sync wave, which change enforces the order?",
+      "choices": [
+        { "id": "a", "text": "Annotate the Deployment with `argocd.argoproj.io/sync-wave: \"1\"` so it applies after the Namespace in wave 0" },
+        { "id": "b", "text": "Annotate the Namespace with `argocd.argoproj.io/hook: PostSync`" },
+        { "id": "c", "text": "Set `syncPolicy.automated.prune: true` on the Application" },
+        { "id": "d", "text": "Place the Deployment manifest earlier in the directory listing" }
+      ],
+      "answer": ["a"],
+      "explanation": "Sync waves run in ascending numeric order (default wave is 0), and Argo CD waits for each wave to be healthy before starting the next. A `PostSync` hook would run the Namespace *after* the main sync, which is the wrong direction.",
+      "references": [
+        { "title": "Argo CD — Sync Phases and Waves", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/sync-waves/" },
+        { "title": "Argo CD — Resource Hooks", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/" }
+      ]
+    },
+    {
+      "id": "cd-09",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Use Argo CD Application",
+      "stem": "Which two fields are required under `spec.destination` in an Application manifest to identify where manifests are deployed?",
+      "choices": [
+        { "id": "a", "text": "`server` (or `name`) and `namespace`" },
+        { "id": "b", "text": "`repoURL` and `path`" },
+        { "id": "c", "text": "`cluster` and `context`" },
+        { "id": "d", "text": "`project` and `namespace`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`spec.destination` names the target cluster via `server` URL (e.g. `https://kubernetes.default.svc`) or the registered cluster `name`, plus the target `namespace`. `repoURL` and `path` belong to `spec.source`.",
+      "references": [
+        { "title": "Argo CD — Application Specification", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/application-specification/" }
+      ]
+    },
+    {
+      "id": "cd-10",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Use Argo CD Application",
+      "stem": "For a Git-based source, which values are valid for `spec.source.targetRevision`?",
+      "choices": [
+        { "id": "a", "text": "A branch name, a tag, a commit SHA, or `HEAD`" },
+        { "id": "b", "text": "Only a full 40-character commit SHA" },
+        { "id": "c", "text": "Only semantic version ranges such as `1.2.*`" },
+        { "id": "d", "text": "A Kubernetes resource version number" }
+      ],
+      "answer": ["a"],
+      "explanation": "Git sources can track a branch, tag, or commit (or `HEAD` for the default branch). Semantic version constraints apply to Helm chart repository sources, not plain Git.",
+      "references": [
+        { "title": "Argo CD — Tracking and Deployment Strategies", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/tracking_strategies/" }
+      ]
+    },
+    {
+      "id": "cd-11",
+      "type": "truefalse",
+      "domain": "cd",
+      "objective": "Use Argo CD Application",
+      "stem": "Running `argocd app delete myapp --cascade=false` removes the Application resource but leaves its deployed Kubernetes resources running in the cluster.",
+      "choices": [
+        { "id": "t", "text": "True" },
+        { "id": "f", "text": "False" }
+      ],
+      "answer": ["t"],
+      "explanation": "A non-cascading delete removes only the Application object. The default (cascading) delete adds a finalizer so the managed resources are deleted too.",
+      "references": [
+        { "title": "Argo CD — App Deletion", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/app_deletion/" }
+      ]
+    },
+    {
+      "id": "cd-12",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Configure Argo CD with Helm and Kustomize",
+      "stem": "You deploy a Helm chart with Argo CD and later run `helm list` on the cluster. Why does the release not appear?",
+      "choices": [
+        { "id": "a", "text": "Argo CD renders charts with `helm template` and applies the output; it does not create Helm release records" },
+        { "id": "b", "text": "Argo CD stores releases in its own Redis rather than in Secrets" },
+        { "id": "c", "text": "`helm list` only shows releases installed with Tiller" },
+        { "id": "d", "text": "The release is hidden until the Application is `Synced`" }
+      ],
+      "answer": ["a"],
+      "explanation": "Argo CD treats Helm as a templating tool. Rendered manifests are applied and tracked by Argo CD itself, so no Helm release metadata exists and `helm list` shows nothing.",
+      "references": [
+        { "title": "Argo CD — Helm", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/helm/" }
+      ]
+    },
+    {
+      "id": "cd-13",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Configure Argo CD with Helm and Kustomize",
+      "stem": "Which Application field overrides a single Helm value, for example `image.tag=2.0`, without editing a values file?",
+      "choices": [
+        { "id": "a", "text": "`spec.source.helm.parameters`" },
+        { "id": "b", "text": "`spec.source.kustomize.images`" },
+        { "id": "c", "text": "`spec.source.directory.recurse`" },
+        { "id": "d", "text": "`spec.syncPolicy.syncOptions`" }
+      ],
+      "answer": ["a"],
+      "explanation": "`helm.parameters` is a list of `name`/`value` overrides equivalent to `--set`. `helm.valueFiles` and `helm.values`/`valuesObject` are the other ways to supply values.",
+      "references": [
+        { "title": "Argo CD — Helm (Values Files and Parameters)", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/helm/" }
+      ]
+    },
+    {
+      "id": "cd-14",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Configure Argo CD with Helm and Kustomize",
+      "stem": "How does Argo CD decide to treat an Application source directory as a Kustomize application?",
+      "choices": [
+        { "id": "a", "text": "It finds a `kustomization.yaml`, `kustomization.yml`, or `Kustomization` file in the path" },
+        { "id": "b", "text": "The Application must set `spec.source.tool: kustomize`" },
+        { "id": "c", "text": "The repository URL must end in `-kustomize`" },
+        { "id": "d", "text": "All directories are treated as Kustomize unless a `Chart.yaml` exists" }
+      ],
+      "answer": ["a"],
+      "explanation": "Tool detection is automatic: a `Chart.yaml` means Helm, a kustomization file means Kustomize, otherwise plain directory manifests. `spec.source.kustomize` options (e.g. `namePrefix`, `images`) then apply.",
+      "references": [
+        { "title": "Argo CD — Kustomize", "url": "https://argo-cd.readthedocs.io/en/stable/user-guide/kustomize/" }
+      ]
+    },
+    {
+      "id": "cd-15",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Identify Common Reconciliation Patterns",
+      "stem": "What is the \"App of Apps\" pattern?",
+      "choices": [
+        { "id": "a", "text": "A parent Application whose source directory contains other Argo CD Application manifests, so syncing the parent creates the children" },
+        { "id": "b", "text": "A single Application that points at multiple Git repositories at once" },
+        { "id": "c", "text": "A Kustomize overlay that merges several Helm charts into one release" },
+        { "id": "d", "text": "An Argo Rollouts strategy for deploying many apps in waves" }
+      ],
+      "answer": ["a"],
+      "explanation": "In App of Apps, a root Application manages a folder of Application resources, which Argo CD then reconciles in turn. It is commonly used to bootstrap a cluster declaratively.",
+      "references": [
+        { "title": "Argo CD — Cluster Bootstrapping (App of Apps)", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/cluster-bootstrapping/" }
+      ]
+    },
+    {
+      "id": "cd-16",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Identify Common Reconciliation Patterns",
+      "stem": "You must deploy the same application to 20 clusters and keep the Application definitions consistent. Which Argo CD resource is designed for this?",
+      "choices": [
+        { "id": "a", "text": "`ApplicationSet` with a generator (e.g. cluster or list) and an Application template" },
+        { "id": "b", "text": "`AppProject` with 20 destinations" },
+        { "id": "c", "text": "A single `Application` with `spec.destination.server: \"*\"`" },
+        { "id": "d", "text": "A `WorkflowTemplate` that loops over clusters" }
+      ],
+      "answer": ["a"],
+      "explanation": "ApplicationSet generators (List, Cluster, Git, Matrix, Pull Request, SCM Provider, etc.) produce parameters that are rendered into an Application template, creating one Application per generated item.",
+      "references": [
+        { "title": "Argo CD — ApplicationSet", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/" }
+      ]
+    },
+    {
+      "id": "cd-17",
+      "type": "single",
+      "domain": "cd",
+      "objective": "Identify Common Reconciliation Patterns",
+      "stem": "By default, how often does Argo CD poll a Git repository to detect new commits, and how can you reduce the delay?",
+      "choices": [
+        { "id": "a", "text": "Every 3 minutes; configure a Git webhook to notify Argo CD immediately" },
+        { "id": "b", "text": "Every 30 seconds; increase the number of repo-server replicas" },
+        { "id": "c", "text": "Only on manual sync; enable `selfHeal` to start polling" },
+        { "id": "d", "text": "Every 24 hours; set `syncPolicy.automated` to poll continuously" }
+      ],
+      "answer": ["a"],
+      "explanation": "The default reconciliation timeout (`timeout.reconciliation`) is 180 seconds. Webhooks from GitHub/GitLab/Bitbucket etc. trigger a refresh as soon as a push happens.",
+      "references": [
+        { "title": "Argo CD — Git Webhook Configuration", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/" },
+        { "title": "Argo CD — Declarative Setup (argocd-cm)", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/" }
+      ]
+    },
+    {
+      "id": "ro-01",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Understand Argo Rollouts Fundamentals",
+      "stem": "How does the Argo Rollouts `Rollout` resource relate to a standard Kubernetes `Deployment`?",
+      "choices": [
+        { "id": "a", "text": "It is a drop-in replacement CRD that manages ReplicaSets itself and adds progressive delivery strategies" },
+        { "id": "b", "text": "It is an annotation added to a Deployment to enable canary releases" },
+        { "id": "c", "text": "It wraps a Deployment in an Argo Workflow that runs the update steps" },
+        { "id": "d", "text": "It is a Service type that splits traffic between two Deployments" }
+      ],
+      "answer": ["a"],
+      "explanation": "A Rollout has the same pod template semantics as a Deployment but its controller manages ReplicaSets directly, allowing blue-green and canary strategies with pauses, analysis, and traffic shaping.",
+      "references": [
+        { "title": "Argo Rollouts — Concepts", "url": "https://argo-rollouts.readthedocs.io/en/stable/concepts/" }
+      ]
+    },
+    {
+      "id": "ro-02",
+      "type": "fill",
+      "domain": "rollouts",
+      "objective": "Understand Argo Rollouts Fundamentals",
+      "stem": "Complete the kubectl plugin command that manually advances a paused rollout: `kubectl argo rollouts ______ my-rollout`",
+      "answer": ["promote"],
+      "explanation": "`kubectl argo rollouts promote <name>` skips the current pause step (add `--full` to skip all remaining steps). Related commands are `abort`, `retry`, `undo`, and `get rollout --watch`.",
+      "references": [
+        { "title": "Argo Rollouts — Kubectl Plugin", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/kubectl-plugin/" }
+      ]
+    },
+    {
+      "id": "ro-03",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Understand Argo Rollouts Fundamentals",
+      "stem": "You want a Rollout to adopt an existing Deployment's pod template without duplicating it. Which field do you use?",
+      "choices": [
+        { "id": "a", "text": "`spec.workloadRef` pointing at the Deployment" },
+        { "id": "b", "text": "`spec.template.from: deployment/<name>`" },
+        { "id": "c", "text": "`spec.strategy.blueGreen.activeService`" },
+        { "id": "d", "text": "`spec.selector.matchLabels` set to the Deployment's labels" }
+      ],
+      "answer": ["a"],
+      "explanation": "`workloadRef` lets a Rollout reference a Deployment (apiVersion/kind/name) for its pod template. The alternative migration path is converting the Deployment manifest to `kind: Rollout`.",
+      "references": [
+        { "title": "Argo Rollouts — Migrating to Rollouts", "url": "https://argo-rollouts.readthedocs.io/en/stable/migrating/" }
+      ]
+    },
+    {
+      "id": "ro-04",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Use Common Progressive Rollout Strategies",
+      "stem": "In a blue-green Rollout, what does `strategy.blueGreen.autoPromotionEnabled: false` do?",
+      "choices": [
+        { "id": "a", "text": "The new ReplicaSet is brought up behind the preview Service but the active Service is not switched until a user promotes the rollout" },
+        { "id": "b", "text": "The rollout skips creating a preview Service" },
+        { "id": "c", "text": "Traffic is shifted gradually from 0% to 100% over several steps" },
+        { "id": "d", "text": "The old ReplicaSet is deleted immediately after the switch" }
+      ],
+      "answer": ["a"],
+      "explanation": "Blue-green uses `activeService` and `previewService`. With auto-promotion disabled, the rollout pauses after the preview stack is ready, giving time for testing before the active selector is flipped.",
+      "references": [
+        { "title": "Argo Rollouts — BlueGreen Deployment Strategy", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/bluegreen/" }
+      ]
+    },
+    {
+      "id": "ro-05",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Use Common Progressive Rollout Strategies",
+      "stem": "A canary strategy contains the step `- pause: {}` with no duration. What happens when the rollout reaches it?",
+      "choices": [
+        { "id": "a", "text": "The rollout pauses indefinitely until it is manually promoted" },
+        { "id": "b", "text": "The rollout pauses for a default of 60 seconds" },
+        { "id": "c", "text": "The step is ignored and the rollout continues" },
+        { "id": "d", "text": "The rollout is aborted and rolled back" }
+      ],
+      "answer": ["a"],
+      "explanation": "A `pause` step without `duration` is an indefinite pause requiring `kubectl argo rollouts promote` (or an API/UI promotion). Adding `duration: 10m` makes it resume automatically.",
+      "references": [
+        { "title": "Argo Rollouts — Canary Deployment Strategy", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/canary/" }
+      ]
+    },
+    {
+      "id": "ro-06",
+      "type": "multi",
+      "domain": "rollouts",
+      "objective": "Use Common Progressive Rollout Strategies",
+      "stem": "Which two of the following can Argo Rollouts use as a traffic router to shift precise canary weights?",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "Istio" },
+        { "id": "b", "text": "NGINX Ingress Controller" },
+        { "id": "c", "text": "kube-proxy" },
+        { "id": "d", "text": "CoreDNS" }
+      ],
+      "answer": ["a", "b"],
+      "explanation": "Supported traffic routing providers include Istio, NGINX Ingress, AWS ALB, SMI, Traefik, Apache APISIX, and Gateway API. Without a traffic router, canary weight is approximated by scaling ReplicaSets.",
+      "references": [
+        { "title": "Argo Rollouts — Traffic Management", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/traffic-management/" }
+      ]
+    },
+    {
+      "id": "ro-07",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Describe Analysis Template and AnalysisRun",
+      "stem": "What is the relationship between an `AnalysisTemplate` and an `AnalysisRun`?",
+      "choices": [
+        { "id": "a", "text": "An AnalysisTemplate defines metrics and success criteria; an AnalysisRun is an instance of that template created and executed during a rollout" },
+        { "id": "b", "text": "An AnalysisRun defines the metrics; an AnalysisTemplate stores the historical results" },
+        { "id": "c", "text": "They are aliases for the same CRD in different API versions" },
+        { "id": "d", "text": "AnalysisTemplates are cluster-scoped while AnalysisRuns are Argo Workflows" }
+      ],
+      "answer": ["a"],
+      "explanation": "The template is reusable and parameterizable; each rollout step (or background analysis) instantiates an AnalysisRun, which queries providers (Prometheus, Datadog, Kubernetes Job, web, etc.) and records measurements.",
+      "references": [
+        { "title": "Argo Rollouts — Analysis & Progressive Delivery", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/analysis/" }
+      ]
+    },
+    {
+      "id": "ro-08",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Describe Analysis Template and AnalysisRun",
+      "stem": "A Prometheus metric in an AnalysisTemplate has `successCondition: result[0] >= 0.95` and `failureLimit: 2`. During a canary the AnalysisRun fails. What does the Rollout controller do?",
+      "choices": [
+        { "id": "a", "text": "Aborts the rollout, scaling the canary down so the stable version serves all traffic" },
+        { "id": "b", "text": "Pauses the rollout and waits for manual promotion" },
+        { "id": "c", "text": "Retries the entire rollout from the first step" },
+        { "id": "d", "text": "Deletes the stable ReplicaSet and keeps the canary" }
+      ],
+      "answer": ["a"],
+      "explanation": "A failed (or errored beyond limits) AnalysisRun causes the rollout to abort: traffic weight returns to the stable ReplicaSet and the Rollout reports `Degraded` until retried or a new revision is pushed.",
+      "references": [
+        { "title": "Argo Rollouts — Analysis & Progressive Delivery", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/analysis/" }
+      ]
+    },
+    {
+      "id": "ro-09",
+      "type": "single",
+      "domain": "rollouts",
+      "objective": "Describe Analysis Template and AnalysisRun",
+      "stem": "You want analysis to run continuously in the background alongside the canary steps rather than as a discrete step. Where do you configure it?",
+      "choices": [
+        { "id": "a", "text": "`strategy.canary.analysis`, optionally with `startingStep` to delay when it begins" },
+        { "id": "b", "text": "As `- analysis:` entries inside `strategy.canary.steps`" },
+        { "id": "c", "text": "`strategy.blueGreen.prePromotionAnalysis`" },
+        { "id": "d", "text": "In a separate `Experiment` resource referenced by the Rollout" }
+      ],
+      "answer": ["a"],
+      "explanation": "Background analysis is set at `strategy.canary.analysis` and runs for the duration of the rollout (from `startingStep`). In-line `analysis` steps run at a specific point and block progression until they finish.",
+      "references": [
+        { "title": "Argo Rollouts — Analysis (Background Analysis)", "url": "https://argo-rollouts.readthedocs.io/en/stable/features/analysis/" }
+      ]
+    },
+    {
+      "id": "ev-01",
+      "type": "single",
+      "domain": "events",
+      "objective": "Understand Argo Events Fundamentals",
+      "stem": "What is the primary purpose of Argo Events?",
+      "choices": [
+        { "id": "a", "text": "To consume events from external sources (webhooks, message queues, cloud storage, etc.) and trigger Kubernetes actions such as creating Workflows" },
+        { "id": "b", "text": "To replace Kubernetes Events with a persistent audit log" },
+        { "id": "c", "text": "To schedule Argo Workflows on a cron timetable" },
+        { "id": "d", "text": "To route HTTP traffic between canary and stable ReplicaSets" }
+      ],
+      "answer": ["a"],
+      "explanation": "Argo Events is an event-driven automation framework: it ingests events from many sources and, through sensors and triggers, creates or patches Kubernetes objects, submits Argo Workflows, calls HTTP endpoints, and more.",
+      "references": [
+        { "title": "Argo Events — Architecture", "url": "https://argoproj.github.io/argo-events/concepts/architecture/" }
+      ]
+    },
+    {
+      "id": "ev-02",
+      "type": "truefalse",
+      "domain": "events",
+      "objective": "Understand Argo Events Fundamentals",
+      "stem": "Argo Events can only trigger Argo Workflows; it cannot act on other Kubernetes resources or external systems.",
+      "choices": [
+        { "id": "t", "text": "True" },
+        { "id": "f", "text": "False" }
+      ],
+      "answer": ["f"],
+      "explanation": "Triggers include Argo Workflow, generic Kubernetes object (create/patch/delete any resource), HTTP, AWS Lambda, Kafka, NATS, Slack, Argo Rollouts, and custom triggers. Argo Workflows is a common target but not required.",
+      "references": [
+        { "title": "Argo Events — Trigger", "url": "https://argoproj.github.io/argo-events/concepts/trigger/" }
+      ]
+    },
+    {
+      "id": "ev-03",
+      "type": "fill",
+      "domain": "events",
+      "objective": "Understand Argo Events Fundamentals",
+      "stem": "Which Argo Events custom resource defines event dependencies and the triggers to execute when those dependencies are satisfied?",
+      "answer": ["Sensor", "sensor"],
+      "explanation": "A `Sensor` lists `dependencies` (which EventSource and event name it waits for, with optional filters) and `triggers` (what to do when the dependencies resolve).",
+      "references": [
+        { "title": "Argo Events — Sensor", "url": "https://argoproj.github.io/argo-events/concepts/sensor/" }
+      ]
+    },
+    {
+      "id": "ev-04",
+      "type": "single",
+      "domain": "events",
+      "objective": "Understand Argo Event Components and Architecture",
+      "stem": "In the Argo Events architecture, which component sits between EventSources and Sensors and transports events?",
+      "choices": [
+        { "id": "a", "text": "EventBus" },
+        { "id": "b", "text": "Gateway" },
+        { "id": "c", "text": "Argo CD repo-server" },
+        { "id": "d", "text": "Workflow controller" }
+      ],
+      "answer": ["a"],
+      "explanation": "EventSources publish events to the EventBus; Sensors subscribe to the EventBus and fire triggers. The older `Gateway` CRD was removed in favour of EventSource + EventBus.",
+      "references": [
+        { "title": "Argo Events — EventBus", "url": "https://argoproj.github.io/argo-events/concepts/eventbus/" },
+        { "title": "Argo Events — Architecture", "url": "https://argoproj.github.io/argo-events/concepts/architecture/" }
+      ]
+    },
+    {
+      "id": "ev-05",
+      "type": "multi",
+      "domain": "events",
+      "objective": "Understand Argo Event Components and Architecture",
+      "stem": "Which two of the following are supported EventBus implementations?",
+      "selectCount": 2,
+      "choices": [
+        { "id": "a", "text": "NATS JetStream" },
+        { "id": "b", "text": "Kafka" },
+        { "id": "c", "text": "RabbitMQ" },
+        { "id": "d", "text": "Redis" }
+      ],
+      "answer": ["a", "b"],
+      "explanation": "EventBus back ends are NATS (Streaming, deprecated), NATS JetStream, and Kafka. RabbitMQ (AMQP) and Redis exist as *EventSource* types, not as EventBus implementations.",
+      "references": [
+        { "title": "Argo Events — JetStream EventBus", "url": "https://argoproj.github.io/argo-events/eventbus/jetstream/" },
+        { "title": "Argo Events — EventBus", "url": "https://argoproj.github.io/argo-events/concepts/eventbus/" }
+      ]
+    },
+    {
+      "id": "ev-06",
+      "type": "single",
+      "domain": "events",
+      "objective": "Understand Argo Event Components and Architecture",
+      "stem": "A webhook EventSource named `github` emits an event called `push`. How does a Sensor declare that it depends on this event?",
+      "choices": [
+        { "id": "a", "text": "A `dependencies` entry with `eventSourceName: github` and `eventName: push`" },
+        { "id": "b", "text": "A `triggers` entry with `source: github/push`" },
+        { "id": "c", "text": "An `eventBusName: github-push` at the top of the Sensor spec" },
+        { "id": "d", "text": "A `subscriptions` entry with `topic: github.push`" }
+      ],
+      "answer": ["a"],
+      "explanation": "Sensor `dependencies[]` reference an EventSource by name and one of its event names (the key under `spec.<type>` in the EventSource). Optional `filters` narrow which events satisfy the dependency, and `eventBusName` only selects which bus to read from.",
+      "references": [
+        { "title": "Argo Events — Sensor", "url": "https://argoproj.github.io/argo-events/concepts/sensor/" },
+        { "title": "Argo Events — Webhook EventSource", "url": "https://argoproj.github.io/argo-events/eventsources/setup/webhook/" }
+      ]
+    }
+  ]
+}

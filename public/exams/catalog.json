@@ -29,6 +29,22 @@
         "Configure virtual machine networking",
         "Manage virtual machine storage"
       ]
+    },
+    {
+      "id": "capa",
+      "title": "Certified Argo Project Associate (CAPA)",
+      "vendor": "CNCF / Linux Foundation",
+      "version": "2024-10",
+      "path": "capa/exam.json",
+      "questionCount": 51,
+      "timeLimitMinutes": 90,
+      "passPercent": 75,
+      "domains": [
+        "Argo Workflows",
+        "Argo CD",
+        "Argo Rollouts",
+        "Argo Events"
+      ]
     }
   ]
 }
