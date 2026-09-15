@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, Route, Routes } from "react-router-dom";
+import ThemeToggle from "./components/ThemeToggle";
 import ExamSetup from "./pages/ExamSetup";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
@@ -14,6 +15,7 @@ function Layout({ children }: { children: ReactNode }) {
           ExamHelper
           <span>Practice</span>
         </Link>
+        <ThemeToggle />
       </header>
       {children}
     </div>

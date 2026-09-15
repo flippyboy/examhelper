@@ -1,0 +1,4607 @@
+{
+  "id": "ex280",
+  "title": "Red Hat Certified System Administrator in OpenShift",
+  "vendor": "Red Hat",
+  "code": "EX280",
+  "version": "OCP 4.22",
+  "description": "Unofficial knowledge practice for EX280 (Red Hat Certified System Administrator in OpenShift) on OpenShift Container Platform 4.22. Mapped to Red Hat's published exam objectives. The real exam is a 3-hour performance-based lab with product docs only; these items are not Red Hat exam questions.",
+  "unofficial": true,
+  "passPercent": 70,
+  "timeLimitMinutes": 180,
+  "domains": [
+    {
+      "id": "manage",
+      "name": "Manage OpenShift Container Platform",
+      "weight": 18
+    },
+    {
+      "id": "declarative",
+      "name": "Declarative Resource Management",
+      "weight": 14
+    },
+    {
+      "id": "deploy",
+      "name": "Deploy applications",
+      "weight": 14
+    },
+    {
+      "id": "auth",
+      "name": "Manage authentication and authorization",
+      "weight": 12
+    },
+    {
+      "id": "network",
+      "name": "Configure network security",
+      "weight": 16
+    },
+    {
+      "id": "selfservice",
+      "name": "Enable developer self-service",
+      "weight": 10
+    },
+    {
+      "id": "operators",
+      "name": "Manage OpenShift operators",
+      "weight": 8
+    },
+    {
+      "id": "appsec",
+      "name": "Configure application security",
+      "weight": 8
+    }
+  ],
+  "questions": [
+    {
+      "id": "manage-console-cli-tools",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Use the web console to manage and configure an OpenShift cluster",
+      "stem": "You are logged into the OpenShift 4.22 web console on a jump host that has no matching client binaries. You need `oc` built for this cluster version. Where do you download it from the console?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Administration → Cluster Settings → Configuration → Console"
+        },
+        {
+          "id": "b",
+          "text": "Help (?) → Command Line Tools"
+        },
+        {
+          "id": "c",
+          "text": "User menu → Copy login command"
+        },
+        {
+          "id": "d",
+          "text": "Observe → Dashboards → API Performance"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "The Help menu (?) opens **Command Line Tools**, which offers `oc` (and related) binaries for the cluster version. Administration → Cluster Settings → Console edits the Console Operator resource; it does not host client downloads. **Copy login command** emits an `oc login --token=...` string after you already have a client. Observe dashboards graph metrics and do not ship CLI archives.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Installing the OpenShift CLI from the web console",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Web console overview",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/web_console/web-console-overview"
+        }
+      ]
+    },
+    {
+      "id": "manage-cluster-settings",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Use the web console to manage and configure an OpenShift cluster",
+      "stem": "A cluster-admin must review the update channel, ClusterOperators, and globally configured resources such as Ingress and Authentication in the web console. Which navigation path opens that page?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Administration → Cluster Settings"
+        },
+        {
+          "id": "b",
+          "text": "Workloads → ConfigMaps → kube-root-ca.crt"
+        },
+        {
+          "id": "c",
+          "text": "Home → Projects → default"
+        },
+        {
+          "id": "d",
+          "text": "User Management → Users → kubeadmin"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "**Administration → Cluster Settings** is the console page for cluster version, update channel, ClusterOperators, and the Configuration tab of global CRs. Home → Projects is namespaced project dashboards, not cluster-wide settings. A ConfigMap in Workloads is application or generated data, not the Cluster Settings UI. User Management lists identities; it does not expose update channel or Ingress/Authentication CRs.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Web console overview",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/web_console/web-console-overview"
+        },
+        {
+          "title": "OCP 4.22 — Day 2 operations for clusters",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        }
+      ]
+    },
+    {
+      "id": "manage-login-token",
+      "type": "fill",
+      "domain": "manage",
+      "objective": "Use the command-line interface to manage and configure an OpenShift cluster",
+      "stem": "You opened a new terminal and must authenticate to the API server so that a session token is stored in your kubeconfig. Which `oc` subcommand starts that interactive flow? Enter only the subcommand.",
+      "answer": [
+        "login"
+      ],
+      "explanation": "`oc login` (optionally with `-u`, `--token`, or `--web`) authenticates to the API server and writes the token into kubeconfig. Nearby subcommands do not: `whoami` reports the already-authenticated user, `project` switches namespaces, and `logout` discards the saved token.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Logging in to the OpenShift CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-whoami",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Use the command-line interface to manage and configure an OpenShift cluster",
+      "stem": "You inherited a workstation kubeconfig and must confirm which identity the CLI will present to the API server before you change anything. Which command prints that username?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc whoami`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get users`"
+        },
+        {
+          "id": "c",
+          "text": "`oc project`"
+        },
+        {
+          "id": "d",
+          "text": "`oc auth can-i '*' '*' --all-namespaces`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc whoami` prints the current user (and with flags can show token or console URL). `oc project` reports the current project, not the user. `oc get users` lists User objects and requires extra RBAC; it does not tell you which credential is active. `oc auth can-i` tests authorization, not identity.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Getting started with the OpenShift CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Understanding authentication",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/understanding-authentication"
+        }
+      ]
+    },
+    {
+      "id": "manage-delete-project",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Create and delete projects",
+      "stem": "Project `lab-scratch` and every namespaced object in it must be removed. The project should enter Terminating and then disappear. Which command does that?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc delete all --all -n lab-scratch`"
+        },
+        {
+          "id": "b",
+          "text": "`oc scale deploy --all --replicas=0 -n lab-scratch`"
+        },
+        {
+          "id": "c",
+          "text": "`oc project delete lab-scratch`"
+        },
+        {
+          "id": "d",
+          "text": "`oc delete project lab-scratch`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`oc delete project` requests deletion of the Project; the API sets status Terminating, garbage-collects namespaced content, then removes the project. `oc delete all --all` matches only some kinds (not Secrets, PVC, RoleBindings, and others) and leaves the project. `oc scale` stops Deployments but does not delete the project. `oc project delete` is not a valid subcommand (`oc project` switches or prints the current project).",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with projects",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        },
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-switch-project",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Create and delete projects",
+      "stem": "You already have access to an existing project named `payments`. Which command makes `payments` the current project in your CLI context without creating a new one?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-project payments`"
+        },
+        {
+          "id": "b",
+          "text": "`oc project payments`"
+        },
+        {
+          "id": "c",
+          "text": "`oc login payments`"
+        },
+        {
+          "id": "d",
+          "text": "`oc adm new-project payments`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc project <name>` switches the current namespace/project in kubeconfig. `oc new-project` tries to create a project (and fails if `payments` already exists). `oc login` authenticates to an API server, not to a project name. `oc adm new-project` is an administrator create path and does not switch your current context.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Viewing the current project",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Working with projects",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        }
+      ]
+    },
+    {
+      "id": "manage-describe-is",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Locate and examine container images",
+      "stem": "S2I builder images ship as image streams in the `openshift` project. You need the tag list, pull spec, and which digest each tag currently points to. Which command provides that detail?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc get pods -n openshift`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get bc -n openshift`"
+        },
+        {
+          "id": "c",
+          "text": "`oc describe is -n openshift`"
+        },
+        {
+          "id": "d",
+          "text": "`oc get deploy -n openshift`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc describe is` (ImageStream) prints tags, the docker pull spec, and the digest history for each tag. `oc get is` is a one-line summary without tag/digest detail. Pods, BuildConfigs, and Deployments in `openshift` are not the catalog of builder images; those live on ImageStream objects.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing image streams",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-image-streams"
+        },
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-image-info",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Locate and examine container images",
+      "stem": "You have a registry pull spec and must inspect architecture, labels, config, and digest **before** any pod is created. Which `oc` command talks to the registry and prints that metadata?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc image info registry.redhat.io/ubi9/ubi:latest`"
+        },
+        {
+          "id": "b",
+          "text": "`oc describe pod ubi9`"
+        },
+        {
+          "id": "c",
+          "text": "`oc debug --image=registry.redhat.io/ubi9/ubi:latest`"
+        },
+        {
+          "id": "d",
+          "text": "`oc logs deployment/ubi9`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc image info` inspects a container image in a registry (or a local store) and prints digest, architecture, and labels without scheduling a pod. `oc describe pod` requires an existing pod. `oc debug --image=` starts a debug pod, which is heavier and changes cluster state. `oc logs` reads container stdout, not image metadata.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI developer command reference",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Managing image streams",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-image-streams"
+        }
+      ]
+    },
+    {
+      "id": "manage-pin-digest",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Identify images using tags and digests",
+      "stem": "Deployment `store` currently pulls `image-registry.openshift-image-registry.svc:5000/shop/store:latest`. You must pin the running content so a later retag of `latest` cannot change what the kubelet pulls. Which reference style does that?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`shop/store:latest` on an ImageStreamTag only"
+        },
+        {
+          "id": "b",
+          "text": "`store:v2` after you retag the same mutable tag name"
+        },
+        {
+          "id": "c",
+          "text": "`image-registry.openshift-image-registry.svc:5000/shop/store@sha256:<digest>`"
+        },
+        {
+          "id": "d",
+          "text": "`shop/store` with no tag and no digest"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "A digest (`@sha256:...`) is a content-addressable, immutable id; the kubelet pulls that exact manifest. ImageStreamTags such as `:latest` or `:v2` are mutable pointers that can be moved to another image. An untagged name typically resolves to `:latest`, which is still mutable. Pinning production workloads uses the digest (or an ImageStreamImage `isimage` reference that embeds the digest).",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing image streams",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-image-streams"
+        },
+        {
+          "title": "OCP 4.22 — ImageStreamTag API",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/image_apis/imagestreamtag-image-openshift-io-v1"
+        }
+      ]
+    },
+    {
+      "id": "manage-istag-mutable",
+      "type": "truefalse",
+      "domain": "manage",
+      "objective": "Identify images using tags and digests",
+      "stem": "An ImageStreamTag is a named pointer. After a new import or build, the same tag name can resolve to a different `sha256` digest.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "True. Tags are mutable pointers (a stack of historical images) so `python:latest` can move. The digest identifies one immutable Image. The common misconception is that a tag is as stable as a digest; only the digest (or an ImageStreamImage named by digest) is immutable.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing image streams",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-image-streams"
+        }
+      ]
+    },
+    {
+      "id": "manage-jsonpath-clusterip",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Query, format, and filter attributes of Kubernetes resources",
+      "stem": "A script must print **only** the cluster IP of Service `store` in the current project, with no headers or other fields. Which command does that?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc get svc store -o yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get svc store -o jsonpath='{.spec.clusterIP}'`"
+        },
+        {
+          "id": "c",
+          "text": "`oc describe svc store`"
+        },
+        {
+          "id": "d",
+          "text": "`oc get svc store -o wide`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`-o jsonpath` extracts a single field from the object. `-o yaml` dumps the whole Service. `oc describe` is a human-readable multi-section report, not a single token. `-o wide` still prints a table (NAME, TYPE, CLUSTER-IP, plus extra columns). `-o custom-columns` would include a header unless you post-process it.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Day 2 operations for clusters",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        }
+      ]
+    },
+    {
+      "id": "manage-filter-pods",
+      "type": "multi",
+      "domain": "manage",
+      "objective": "Query, format, and filter attributes of Kubernetes resources",
+      "stem": "You must list only pods that both carry label `app=store` **and** are in phase Running. Which two flags belong on `oc get pods` for that selection?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`-l app=store`"
+        },
+        {
+          "id": "b",
+          "text": "`-o yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`--field-selector=status.phase=Running`"
+        },
+        {
+          "id": "d",
+          "text": "`--show-labels`"
+        },
+        {
+          "id": "e",
+          "text": "`--watch`"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "`-l` is the label selector; `--field-selector` filters object fields such as `status.phase`. Together they restrict **which** pods are returned. `-o yaml` only changes output format. `--show-labels` adds a LABELS column without filtering. `--watch` streams later events; it does not apply the two selection criteria.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-apply-manifest",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Import, export, and configure Kubernetes resources",
+      "stem": "File `quota.yaml` may be new on the cluster or may already exist and need its spec updated from Git. Which command creates the object if it is missing and patches it if it is present?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc apply -f quota.yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc replace --force -f quota.yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create -f quota.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc delete -f quota.yaml`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc apply` is declarative: it creates or updates from the file and records last-applied-configuration. `oc create` fails if the object already exists. `oc replace --force` deletes and recreates, which drops status and can interrupt workloads. `oc delete -f` removes the object instead of configuring it.",
+      "references": [
+        {
+          "title": "OCP 4.22 — oc apply",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-roundtrip-yaml",
+      "type": "multi",
+      "domain": "manage",
+      "objective": "Import, export, and configure Kubernetes resources",
+      "stem": "You must capture Deployment `web` from project `shop` into a Git-tracked manifest, then create or update it on another cluster from that file. Which two commands form that workflow?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc get deploy/web -n shop -o yaml > web.yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc apply -f web.yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`oc logs deploy/web -n shop > web.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc explain deploy > web.yaml`"
+        },
+        {
+          "id": "e",
+          "text": "`oc project shop --export=web.yaml`"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "`oc get ... -o yaml` serializes the live object (you then strip `status`, `resourceVersion`, and cluster-specific fields before commit). `oc apply -f` imports that manifest on the target. `oc logs` writes container stdout, not YAML. `oc explain` writes API schema, not an instance. `oc project` has no `--export` flag (`--export` was removed from `oc get` as well).",
+      "references": [
+        {
+          "title": "OCP 4.22 — oc apply and oc get",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-project-status",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Examine resources and cluster status",
+      "stem": "You just ran `oc new-app` in the current project and want a high-level overview of services, deployments, builds, and suggested next steps. Which command prints that overview?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc get events --all-namespaces`"
+        },
+        {
+          "id": "b",
+          "text": "`oc adm top nodes`"
+        },
+        {
+          "id": "c",
+          "text": "`oc get clusteroperators`"
+        },
+        {
+          "id": "d",
+          "text": "`oc status`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`oc status` summarizes the current project (services, deployments/DCs, builds, image streams) and can `--suggest` follow-up commands. `oc get events -A` is cluster-wide event spam, not an app overview. `oc adm top nodes` is node CPU/memory. `oc get clusteroperators` is platform Operator health, not the project you just built.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Viewing the status of the current project",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Creating applications",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/creating-applications"
+        }
+      ]
+    },
+    {
+      "id": "manage-clusterversion",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Examine resources and cluster status",
+      "stem": "After a maintenance window you need the Cluster Version Operator summary: desired release, AVAILABLE, and PROGRESSING. Which command lists that object?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc get csv -A`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get clusterversion`"
+        },
+        {
+          "id": "c",
+          "text": "`oc get subscriptions -A`"
+        },
+        {
+          "id": "d",
+          "text": "`oc get packagemanifests`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc get clusterversion` (often `version`) is the CVO object with VERSION, AVAILABLE, PROGRESSING, and STATUS. `csv` (ClusterServiceVersion) and Subscriptions are OLM Operator Lifecycle Manager objects, not the platform ClusterVersion. PackageManifests are OperatorHub catalog metadata.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Day 2 operations for clusters",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        },
+        {
+          "title": "OCP 4.22 — Troubleshooting a cluster update",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/updating_clusters/troubleshooting-a-cluster-update"
+        }
+      ]
+    },
+    {
+      "id": "manage-observe-alerting",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Monitor cluster events and alerts",
+      "stem": "A platform alert is firing and you need the console pages that list alerts, silences, and alerting rules. Which path opens that UI?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Observe → Alerting"
+        },
+        {
+          "id": "b",
+          "text": "Administration → Cluster Settings → Global Configuration → Alertmanager YAML only"
+        },
+        {
+          "id": "c",
+          "text": "Workloads → CronJobs"
+        },
+        {
+          "id": "d",
+          "text": "Networking → Routes"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "**Observe → Alerting** is the Alerting UI (Alerts, Silences, Alerting rules). CronJobs are batch workloads, not Alertmanager. Editing the Alertmanager configuration YAML is a different Cluster Settings task and is not the firing-alert list. Routes show application ingress hostnames, not Prometheus alerts.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Web console overview",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/web_console/web-console-overview"
+        },
+        {
+          "title": "OCP 4.22 — Managing alerts",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/monitoring/managing-alerts"
+        }
+      ]
+    },
+    {
+      "id": "manage-events-sort",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Monitor cluster events and alerts",
+      "stem": "Pods in project `shop` fail to start. You want Kubernetes events for that project with the oldest first and the newest at the end of the list. Which command produces that order?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc logs -n shop --all-containers --tail=20`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get events -n shop --sort-by=.metadata.creationTimestamp`"
+        },
+        {
+          "id": "c",
+          "text": "`oc adm top pods -n shop`"
+        },
+        {
+          "id": "d",
+          "text": "`oc describe namespace shop`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc get events --sort-by=.metadata.creationTimestamp` lists namespaced events in creation order (newest last). `oc logs` is container stdout, not the Events API. `oc adm top pods` is live CPU/memory from metrics. `oc describe namespace` shows namespace metadata and quota; it is not a sorted event list.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Reviewing events",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        },
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-logs-subcommand",
+      "type": "fill",
+      "domain": "manage",
+      "objective": "View logs",
+      "stem": "Which `oc` subcommand prints stdout and stderr from a container in a pod or from a workload controller such as `deployment/store`? Enter only the subcommand.",
+      "answer": [
+        "logs"
+      ],
+      "explanation": "`oc logs` (optionally `-f`, `-c`, `--previous`, or `deployment/<name>`) prints container output. `describe` shows Events and status, `exec`/`rsh` open a shell, and `debug` starts a copy of the pod. None of those is the log printer.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Viewing pod logs",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Viewing resource logs",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "manage-logs-previous",
+      "type": "single",
+      "domain": "manage",
+      "objective": "View logs",
+      "stem": "Pod `api-7d9f8` is in CrashLoopBackOff. `oc exec` fails because the container is not running, and the current container has almost no output. Which command shows stdout from the last terminated container in that pod?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc rsh api-7d9f8`"
+        },
+        {
+          "id": "b",
+          "text": "`oc expose pod/api-7d9f8`"
+        },
+        {
+          "id": "c",
+          "text": "`oc scale deploy/api --replicas=0`"
+        },
+        {
+          "id": "d",
+          "text": "`oc logs api-7d9f8 --previous`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`oc logs --previous` (`-p`) reads the previous terminated container, which is the usual first look at a crash loop. `oc rsh`/`oc exec` require a running container. `oc expose` creates a Service/Route and does not retrieve logs. Scaling to 0 stops the workload; it does not show why the process exited.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Viewing resource logs",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        },
+        {
+          "title": "OCP 4.22 — oc logs",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-co-healthy",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Assess the health of an OpenShift cluster",
+      "stem": "You run `oc get clusteroperators` (short name `co`). Which condition set indicates that a ClusterOperator is healthy?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "AVAILABLE=False, PROGRESSING=True, DEGRADED=True"
+        },
+        {
+          "id": "b",
+          "text": "AVAILABLE=True, PROGRESSING=True, DEGRADED=True"
+        },
+        {
+          "id": "c",
+          "text": "AVAILABLE=True, PROGRESSING=False, DEGRADED=False"
+        },
+        {
+          "id": "d",
+          "text": "AVAILABLE=False, PROGRESSING=False, DEGRADED=False"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "A healthy Operator is **Available**, not **Progressing**, and not **Degraded**. AVAILABLE=False means the component is not serving. PROGRESSING=True means a rollout or reconciliation is still underway. DEGRADED=True means the Operator is reporting a problem even if it remains Available. AVAILABLE=False with DEGRADED=False is still not a working control-plane component.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Understanding cluster Operator condition types",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/updating_clusters/understanding-openshift-updates-1"
+        },
+        {
+          "title": "OCP 4.22 — Day 2 operations for clusters",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        }
+      ]
+    },
+    {
+      "id": "manage-adm-top",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Assess the health of an OpenShift cluster",
+      "stem": "Several nodes look Ready, but you suspect CPU pressure. You need a table of **live** CPU and memory usage per node from the metrics stack. Which command prints that table?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc adm top nodes`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get nodes -o wide`"
+        },
+        {
+          "id": "c",
+          "text": "`oc get clusteroperators`"
+        },
+        {
+          "id": "d",
+          "text": "`oc get --raw /healthz`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc adm top nodes` queries Metrics and prints CPU/memory usage. `oc get nodes -o wide` shows Ready/IP/OS image, not live usage. `oc get clusteroperators` is Operator health. `/healthz` is a kube-apiserver liveness probe, not per-node utilization. `oc describe node` shows capacity and allocatable, not the current metrics snapshot.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI administrator command reference",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Day 2 operations for clusters",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        }
+      ]
+    },
+    {
+      "id": "manage-imagepullbackoff",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Troubleshoot common container, pod, and cluster events and alerts",
+      "stem": "A new Deployment’s pods show STATUS `ImagePullBackOff`. Events mention `manifest unknown` for tag `v3` on a private registry. What do you fix first?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Create a Route so kubelet can pull over Ingress"
+        },
+        {
+          "id": "b",
+          "text": "Correct the image reference and link a pull secret to the service account"
+        },
+        {
+          "id": "c",
+          "text": "Increase `spec.replicas` so another replica can pull"
+        },
+        {
+          "id": "d",
+          "text": "Delete the ReplicaSet so kubelet stops using ImageStreams"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`ImagePullBackOff` with `manifest unknown` means kubelet cannot fetch that name/tag, often plus missing registry credentials. Fix the pull spec and/or create and link a `kubernetes.io/dockerconfigjson` pull secret. A Route does not participate in image pull. Extra replicas repeat the same pull. Deleting the ReplicaSet does not change the Deployment’s `image:` field; ImageStreams are not required for a plain image name.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        },
+        {
+          "title": "OCP 4.22 — Managing image streams",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-image-streams"
+        }
+      ]
+    },
+    {
+      "id": "manage-pending-causes",
+      "type": "multi",
+      "domain": "manage",
+      "objective": "Troubleshoot common container, pod, and cluster events and alerts",
+      "stem": "Pod `worker-0` stays Pending. `oc describe pod worker-0` lists FailedScheduling events and the container has never started. Which two conditions commonly produce that combination?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "The pod `nodeSelector` matches no Ready node"
+        },
+        {
+          "id": "b",
+          "text": "The container command exits with status 1 immediately"
+        },
+        {
+          "id": "c",
+          "text": "The referenced PersistentVolumeClaim is still unbound"
+        },
+        {
+          "id": "d",
+          "text": "The liveness probe HTTP path returns 404"
+        },
+        {
+          "id": "e",
+          "text": "The image tag was retagged after the pod reached Running"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "Pending plus FailedScheduling means the scheduler never placed the pod: no matching node (selector/taint/resources) or a volume that is not bound yet. A command that exits 1 is CrashLoopBackOff **after** scheduling. A failing liveness probe affects a Running pod. Retagging an image of an already Running pod does not move it back to Pending.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        },
+        {
+          "title": "OCP 4.22 — Reviewing events",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/postinstallation_configuration/day-2-operations-for-openshift-container-platform-clusters"
+        }
+      ]
+    },
+    {
+      "id": "manage-explain-subcommand",
+      "type": "fill",
+      "domain": "manage",
+      "objective": "Use product documentation",
+      "stem": "Which `oc` subcommand prints the live API schema and field descriptions for a resource kind from the cluster, without describing a live object? Enter only the subcommand.",
+      "answer": [
+        "explain"
+      ],
+      "explanation": "`oc explain <resource>[.<field>]` reads OpenAPI from the API server (for example `oc explain route.spec.tls`). `describe` shows one instance, `help`/`--help` document the CLI, and `get -o yaml` dumps an object rather than field documentation.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Getting help (oc explain)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-product-docs",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Use product documentation",
+      "stem": "You are preparing for an OpenShift administrator performance exam that allows vendor product manuals only. Which source hosts the official OpenShift Container Platform 4.22 documentation?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Kubernetes manuals on kubernetes.io/docs for the matching minor version"
+        },
+        {
+          "id": "b",
+          "text": "OpenShift API Go types on github.com/openshift/api for the release branch"
+        },
+        {
+          "id": "c",
+          "text": "Red Hat product manuals on docs.redhat.com for OpenShift Container Platform 4.22"
+        },
+        {
+          "id": "d",
+          "text": "Customer Portal knowledge-base solutions that are not the product manuals"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Official OCP 4.22 manuals live on docs.redhat.com. kubernetes.io is upstream Kubernetes and omits Routes, ImageStreams, and ClusterOperators. GitHub API types are for developers, not the procedure manuals used in the exam. Knowledge-base solutions can help in production but are not the product manuals provided during the exam. In a live cluster you also use `oc explain` and the console Help menu.",
+      "references": [
+        {
+          "title": "OCP 4.22 documentation landing page",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/overview/welcome-index"
+        },
+        {
+          "title": "OCP 4.22 — Getting help",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-new-app-git",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Be prepared to perform all tasks of a Red Hat Certified Technologist in OpenShift (DO180-level: oc new-app, oc status, oc project, pods/deployments/services/routes/builds/imagestreams)",
+      "stem": "Project `demo` is already selected. You have a public Git URL for an application and want the CLI to detect language/builder, start a build, and deploy it. Which command starts that flow?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-build --binary`"
+        },
+        {
+          "id": "b",
+          "text": "`oc new-app https://github.com/sclorg/cakephp-ex`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create -f https://github.com/sclorg/cakephp-ex`"
+        },
+        {
+          "id": "d",
+          "text": "`oc apply -k https://github.com/sclorg/cakephp-ex`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc new-app` with a Git URL creates the Source-to-Image (or Docker) pipeline and application objects in the current project. `oc new-build --binary` only prepares a BuildConfig for a later binary upload; it does not deploy from Git. `oc create -f` expects a YAML/JSON manifest, not a Git repository. `oc apply -k` expects a Kustomize directory, not application source.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating applications by using the CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/creating-applications"
+        },
+        {
+          "title": "OCP 4.22 — Creating a new application",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-expose-svc",
+      "type": "single",
+      "domain": "manage",
+      "objective": "Be prepared to perform all tasks of a Red Hat Certified Technologist in OpenShift (DO180-level: oc new-app, oc status, oc project, pods/deployments/services/routes/builds/imagestreams)",
+      "stem": "In an empty project you must deploy the image `registry.access.redhat.com/ubi9/httpd-24:latest` and let OpenShift create the matching workload objects. Which command starts that flow?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-app registry.access.redhat.com/ubi9/httpd-24:latest`"
+        },
+        {
+          "id": "b",
+          "text": "`oc new-build registry.access.redhat.com/ubi9/httpd-24:latest`"
+        },
+        {
+          "id": "c",
+          "text": "`oc start-build httpd-24 --from-image=ubi9/httpd-24`"
+        },
+        {
+          "id": "d",
+          "text": "`oc import-image httpd-24 --from=ubi9/httpd-24 --confirm`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc new-app` inspects the image and creates a Deployment (or DeploymentConfig), Service, and ImageStream as needed. `oc new-build` / `oc start-build` create or run a BuildConfig; they do not deploy a ready image as an application. `oc import-image` only imports an ImageStreamTag; it does not create a running workload.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating applications using the CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/creating-applications"
+        }
+      ]
+    },
+    {
+      "id": "manage-api-port",
+      "type": "truefalse",
+      "domain": "manage",
+      "objective": "Use the command-line interface to manage and configure an OpenShift cluster",
+      "stem": "On OpenShift Container Platform 4.22 the Kubernetes API server accepts `oc` and `kubectl` client traffic on TCP port 8443 by default.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "False. OCP 4 API URLs look like `https://api.<cluster>:6443`. Port 8443 was typical of OpenShift 3 masters; that is the usual mix-up on 4.x. Application Ingress is `*.apps.<cluster>` on 80/443, which is not the API server.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Logging in to the OpenShift CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "manage-new-app-objects",
+      "type": "multi",
+      "domain": "manage",
+      "objective": "Be prepared to perform all tasks of a Red Hat Certified Technologist in OpenShift (DO180-level: oc new-app, oc status, oc project, pods/deployments/services/routes/builds/imagestreams)",
+      "stem": "You run `oc new-app https://github.com/sclorg/cakephp-ex` in an empty project. Which two OpenShift objects are created so the source can be built into an image stream?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "BuildConfig"
+        },
+        {
+          "id": "b",
+          "text": "Ingress"
+        },
+        {
+          "id": "c",
+          "text": "ImageStream"
+        },
+        {
+          "id": "d",
+          "text": "StorageClass"
+        },
+        {
+          "id": "e",
+          "text": "MachineSet"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "A Git-based `oc new-app` creates a BuildConfig (to build from source) and an ImageStream (to tag the output), plus typically a Deployment and Service. It does **not** create an Ingress (OpenShift uses Route; you still `oc expose svc` for HTTP). StorageClass and MachineSet are cluster infrastructure, not application scaffolding.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating applications by using the CLI",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/creating-applications"
+        },
+        {
+          "title": "OCP 4.22 — Creating a new application",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-apply-merge",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Work with resource manifests",
+      "stem": "Project `quotes` already has the Deployment, Service, and Route from `quotes.yaml`. You rewrote the file as the complete desired spec and must overwrite those objects in place, including fields `oc apply` would leave untouched. Which command does that full replacement?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create -f quotes.yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc apply -f quotes.yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`oc replace -f quotes.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc rollout -f quotes.yaml`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc replace -f` sends the file as the new spec for an existing object. `oc apply -f` three-way-merges and keeps cluster-generated fields you omitted. `oc create -f` fails with AlreadyExists. `oc rollout` operates on a named Deployment; it does not take a multi-resource file.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-get-yaml",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Work with resource manifests",
+      "stem": "ConfigMap `app-config` exists in project `shop`. You must create an equivalent ConfigMap in project `lab` from the live object. After you copy YAML and change `metadata.namespace` to `lab`, which command creates it there?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc logs cm/app-config -n shop > app-config.yaml` then `oc apply -n lab -f app-config.yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc get cm/app-config -n shop -o yaml > app-config.yaml` then `oc apply -f app-config.yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`oc explain cm > app-config.yaml` then `oc create -n lab -f app-config.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc project lab --from=shop/app-config`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc get -o yaml` serializes the live ConfigMap. After you set `metadata.namespace: lab` (and strip `resourceVersion`/`uid`/`status`), `oc apply -f` creates it in `lab`. `oc logs` does not dump ConfigMaps. `oc explain` writes API schema, not instance data. `oc project` only switches the current project; it has no `--from` copy flag.",
+      "references": [
+        {
+          "title": "OCP 4.22 — oc apply and oc get",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-apply-token",
+      "type": "fill",
+      "domain": "declarative",
+      "objective": "Work with resource manifests",
+      "stem": "Complete the command that creates or updates objects from a file using a three-way merge: `oc ______ -f catalog.yaml`",
+      "answer": [
+        "apply"
+      ],
+      "explanation": "`oc apply -f` is the declarative create-or-update path. `oc create -f` only creates and fails if the name exists. `oc replace -f` fully replaces an existing object and fails if it is missing.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-apply-dir",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Deploy applications from YAML resource manifests",
+      "stem": "Directory `manifests/` holds `deploy.yaml`, `svc.yaml`, and `route.yaml`. There is no `kustomization.yaml`. You must create all three objects in project `shop`.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-app manifests/`"
+        },
+        {
+          "id": "b",
+          "text": "`oc apply -k manifests/`"
+        },
+        {
+          "id": "c",
+          "text": "`oc apply -f manifests/`"
+        },
+        {
+          "id": "d",
+          "text": "`oc start-build manifests/`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc apply -f manifests/` walks the directory and applies each YAML file. `-k` is only for a directory that contains `kustomization.yaml`. `oc new-app` expects a source repo, image, or template name, not a folder of mixed manifests. `oc start-build` starts a BuildConfig build.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "decl-create-or-apply",
+      "type": "multi",
+      "domain": "declarative",
+      "objective": "Deploy applications from YAML resource manifests",
+      "stem": "`store.yaml` defines a Deployment and a Service that do not exist yet in project `retail`. Which two commands create those objects from the file?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc apply -f store.yaml`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create -f store.yaml`"
+        },
+        {
+          "id": "c",
+          "text": "`oc replace -f store.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc rollout undo -f store.yaml`"
+        },
+        {
+          "id": "e",
+          "text": "`oc set image -f store.yaml`"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "On a first deploy both `oc apply -f` and `oc create -f` create the objects. `oc replace -f` requires the objects to already exist. `oc rollout undo` rolls a Deployment back to a previous revision; it does not read a create manifest. `oc set image` changes a container image on a named workload, not from `-f` YAML.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-set-image",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Update application deployments",
+      "stem": "Deployment `invoice` runs container `api` from `registry.example.com/invoice:1.3`. You must roll out `:1.4` of the same image without opening an editor.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc set env deployment/invoice api=registry.example.com/invoice:1.4`"
+        },
+        {
+          "id": "b",
+          "text": "`oc tag invoice:1.4 api=registry.example.com/invoice:1.4`"
+        },
+        {
+          "id": "c",
+          "text": "`oc set image deployment/invoice api=registry.example.com/invoice:1.4`"
+        },
+        {
+          "id": "d",
+          "text": "`oc import-image invoice:1.4 --from=registry.example.com/invoice:1.4 --confirm`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc set image deployment/<name> <container>=<image>` updates the pod template image and triggers a rollout. `oc set env` writes environment variables, not the image field. `oc tag` retags an ImageStream. `oc import-image` imports a tag into an ImageStream; it does not patch the Deployment.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        },
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-rollout-undo",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Update application deployments",
+      "stem": "You changed the image on Deployment `checkout`. The new pods crash-loop. You must put the Deployment back on the previous ReplicaSet.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc rollout status deployment/checkout`"
+        },
+        {
+          "id": "b",
+          "text": "`oc rollout undo deployment/checkout`"
+        },
+        {
+          "id": "c",
+          "text": "`oc rollout restart deployment/checkout`"
+        },
+        {
+          "id": "d",
+          "text": "`oc rollback dc/checkout --to-version=1`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc rollout undo deployment/checkout` rolls the Deployment back to the prior revision. `oc rollout status` only waits/reports on the current rollout. `oc rollout restart` starts a new rollout of the current spec, which is still the bad image. `oc rollback` targets legacy DeploymentConfig (`dc`), not `apps/v1` Deployment.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "decl-kustomize-k",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Deploy applications using Kustomize",
+      "stem": "Directory `base` contains `kustomization.yaml`, `deploy.yaml`, and `svc.yaml`. Which command builds that directory and applies the result?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc apply -f base`"
+        },
+        {
+          "id": "b",
+          "text": "`oc apply -k base`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create -f base/kustomization.yaml`"
+        },
+        {
+          "id": "d",
+          "text": "`oc replace -f base`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc apply -k <dir>` runs Kustomize on a directory that contains `kustomization.yaml` and applies the built resources. `oc apply -f` treats files as raw manifests and does not process `kustomization.yaml`. `oc create -f base/kustomization.yaml` would try to create a Kustomization object, which is not an API kind on the cluster. `oc replace -f` replaces existing objects from raw YAML and still skips the Kustomize build.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc) apply",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "Kubernetes — Declarative Management of Kubernetes Objects Using Kustomize",
+          "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+        }
+      ]
+    },
+    {
+      "id": "decl-common-labels",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Deploy applications using Kustomize",
+      "stem": "`base/kustomization.yaml` lists `deployment.yaml` and `service.yaml` under `resources`. You want every generated object to receive label `app.kubernetes.io/part-of=shop` without editing those two files.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`namePrefix` (string)"
+        },
+        {
+          "id": "b",
+          "text": "`images` (rewrite list)"
+        },
+        {
+          "id": "c",
+          "text": "`namespace` (string)"
+        },
+        {
+          "id": "d",
+          "text": "`commonLabels` (map)"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`commonLabels` adds the given labels to every resource Kustomize emits (and, historically, to selectors). `namePrefix` rewrites object names, not labels. `images` rewrites container image names/tags. `namespace` sets `metadata.namespace` on the built objects.",
+      "references": [
+        {
+          "title": "Kubernetes docs — Declarative management with Kustomize",
+          "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+        }
+      ]
+    },
+    {
+      "id": "decl-overlay-resources",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Work with Kustomize overlays",
+      "stem": "Repo layout is `app/base/kustomization.yaml` and `app/overlays/prod/kustomization.yaml`. Prod must reuse the base and only change replica count. What belongs in the prod overlay file?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A full copy of every base manifest with prod replicas typed in"
+        },
+        {
+          "id": "b",
+          "text": "A Helm `values.yaml` that Kustomize loads as a chart"
+        },
+        {
+          "id": "c",
+          "text": "`resources: [../../base]` plus a patch that sets replicas"
+        },
+        {
+          "id": "d",
+          "text": "Only the patch file; apply the base with a second command"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "An overlay lists the base under `resources` (legacy key `bases`) and adds patches, `namePrefix`, or `commonLabels` for that environment. Copying every manifest defeats overlays and drifts from the base. Helm values files are for charts, not Kustomize. Listing only the patch omits the base objects; `oc apply -k overlays/prod` must build the full set.",
+      "references": [
+        {
+          "title": "Kubernetes docs — Declarative management with Kustomize",
+          "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+        }
+      ]
+    },
+    {
+      "id": "decl-overlay-full-build",
+      "type": "truefalse",
+      "domain": "declarative",
+      "objective": "Work with Kustomize overlays",
+      "stem": "Running `oc apply -k overlays/prod` sends only the patch files from that overlay to the API; objects defined solely in the base are not applied.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Kustomize builds a complete set of resources: it loads the base listed under `resources`/`bases`, applies the overlay patches, then `oc apply -k` submits those built objects. True would describe applying the patch files with `-f`, which is not how `-k` works. False is correct.",
+      "references": [
+        {
+          "title": "Kubernetes docs — Declarative management with Kustomize",
+          "url": "https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/"
+        }
+      ]
+    },
+    {
+      "id": "decl-secret-generic",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Create and use secrets",
+      "stem": "You must store database password `S3cret!` as key `password` in an opaque Secret named `db-auth` in the current project.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create secret tls db-auth --from-literal=password=S3cret!`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create configmap db-auth --from-literal=password=S3cret!`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create secret generic db-auth --from-literal=password=S3cret!`"
+        },
+        {
+          "id": "d",
+          "text": "`oc create secret docker-registry db-auth --from-literal=password=S3cret!`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc create secret generic` creates an opaque Secret from literals or files. `secret tls` expects `--cert` and `--key`, not a password literal. A ConfigMap is not a Secret and is the wrong place for credentials. `docker-registry` builds a `kubernetes.io/dockerconfigjson` pull Secret, not an opaque password key.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "decl-secret-file-key",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Create and use secrets",
+      "stem": "You ran `oc create secret generic htpasswd-secret --from-file=htpasswd=/tmp/users.htpasswd`. A pod mounts that Secret as a volume. Which filename appears in the mount for the file content?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`users.htpasswd`"
+        },
+        {
+          "id": "b",
+          "text": "`htpasswd-secret`"
+        },
+        {
+          "id": "c",
+          "text": "`from-file`"
+        },
+        {
+          "id": "d",
+          "text": "`htpasswd`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "With `--from-file=<key>=<path>`, `<key>` becomes the Secret data key and therefore the filename in a volume mount. Here the key is `htpasswd`. `users.htpasswd` would be the key only if you used `--from-file=/tmp/users.htpasswd` with no `key=` prefix. `htpasswd-secret` is the object name. `from-file` is a flag, not a key.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "decl-secret-inject",
+      "type": "multi",
+      "domain": "declarative",
+      "objective": "Create and use secrets",
+      "stem": "Deployment `pay` must read Secret `db-auth` in the container. Which two pod spec patterns inject that Secret?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`envFrom.configMapRef` named `db-auth`"
+        },
+        {
+          "id": "b",
+          "text": "`env.valueFrom.secretKeyRef` for a key in `db-auth`"
+        },
+        {
+          "id": "c",
+          "text": "Copy the Secret YAML into a ConfigMap, then mount the ConfigMap"
+        },
+        {
+          "id": "d",
+          "text": "A `secret` volume plus a matching `volumeMount`"
+        },
+        {
+          "id": "e",
+          "text": "`spec.serviceName: db-auth` on the Deployment"
+        }
+      ],
+      "answer": [
+        "b",
+        "d"
+      ],
+      "explanation": "Pods consume Secrets with `env.valueFrom.secretKeyRef` (one key as an env var), `envFrom.secretRef` (all keys as env vars), or a `secret` volume mount (keys as files). `configMapRef` reads a ConfigMap, not a Secret. Copying credentials into a ConfigMap stores them unencrypted in etcd as ConfigMap data. `spec.serviceName` is a StatefulSet field, not a Secret injection method.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "decl-cm-from-file",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Create and use configuration maps",
+      "stem": "File `app.properties` holds non-sensitive settings. You need ConfigMap `store-config` whose key `app.properties` is that file's contents.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create secret generic store-config --from-file=app.properties`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create configmap store-config --from-literal=app.properties`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create configmap store-config --from-env-file=app.properties`"
+        },
+        {
+          "id": "d",
+          "text": "`oc create configmap store-config --from-file=app.properties`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`--from-file=app.properties` (or `--from-file=app.properties=<path>`) stores the file bytes under key `app.properties`. A Secret is the wrong object for non-sensitive config. `--from-literal` needs `key=value` and would not read a file. `--from-env-file` parses `KEY=VALUE` lines into separate keys, so the ConfigMap would not have a single `app.properties` key.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "decl-cm-keyref",
+      "type": "single",
+      "domain": "declarative",
+      "objective": "Create and use configuration maps",
+      "stem": "ConfigMap `store-config` has several keys. Container `web` should get only key `LOG_LEVEL` as an environment variable of the same name.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`envFrom.configMapRef` named `store-config` (all keys)"
+        },
+        {
+          "id": "b",
+          "text": "`env.valueFrom.secretKeyRef` for key `LOG_LEVEL`"
+        },
+        {
+          "id": "c",
+          "text": "`env.valueFrom.configMapKeyRef` for key `LOG_LEVEL`"
+        },
+        {
+          "id": "d",
+          "text": "A volume mount of ConfigMap `store-config` at `/etc/config`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`env.valueFrom.configMapKeyRef` injects one ConfigMap key as one env var. `envFrom.configMapRef` imports every key in the ConfigMap. `secretKeyRef` reads a Secret, not a ConfigMap. A volume mount exposes keys as files, not as a single environment variable.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "deploy-helm-install",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Deploy applications from templates and Helm charts",
+      "stem": "Chart directory `./charts/quote` should be installed as release `quote` in existing namespace `shop`.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-app --template=quote -n shop`"
+        },
+        {
+          "id": "b",
+          "text": "`oc apply -k ./charts/quote -n shop`"
+        },
+        {
+          "id": "c",
+          "text": "`helm install quote ./charts/quote -n shop`"
+        },
+        {
+          "id": "d",
+          "text": "`helm repo add quote ./charts/quote -n shop`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`helm install <release> <chart> -n <namespace>` creates a new release from a chart path or repo chart. `oc new-app --template` instantiates an OpenShift Template, not a Helm chart. `oc apply -k` builds a Kustomize directory. `helm repo add` only registers a chart repository; it does not install a release. OpenShift can also install charts from the Developer Catalog, but that is not this CLI path.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with Helm charts",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/working-with-helm-charts"
+        },
+        {
+          "title": "Helm docs — Using Helm",
+          "url": "https://helm.sh/docs/intro/using_helm/"
+        }
+      ]
+    },
+    {
+      "id": "deploy-template-instantiate",
+      "type": "multi",
+      "domain": "deploy",
+      "objective": "Deploy applications from templates and Helm charts",
+      "stem": "Template `postgresql-persistent` lives in namespace `openshift`. Which two commands instantiate it into objects in the current project, supplying `POSTGRESQL_USER=app`?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc new-app --template=postgresql-persistent -p POSTGRESQL_USER=app`"
+        },
+        {
+          "id": "b",
+          "text": "`helm upgrade --install pg openshift/postgresql-persistent --set POSTGRESQL_USER=app --wait`"
+        },
+        {
+          "id": "c",
+          "text": "`oc process -n openshift postgresql-persistent -p POSTGRESQL_USER=app | oc apply -f -`"
+        },
+        {
+          "id": "d",
+          "text": "`oc create -f postgresql-persistent.yaml -p POSTGRESQL_USER=app`"
+        },
+        {
+          "id": "e",
+          "text": "`oc apply -k openshift/postgresql-persistent -p POSTGRESQL_USER=app`"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "`oc new-app --template=NAME -p KEY=VAL` processes a Template and creates the resulting objects. `oc process ... | oc apply -f -` renders the Template (parameters substituted) and applies the output. `helm install` deploys a Helm chart, not an OpenShift Template. `oc create -f` on a Template manifest stores the Template object itself; `-p` is not a create flag. `oc apply -k` is Kustomize.",
+      "references": [
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        },
+        {
+          "title": "OCP 4.22 — Building applications / Projects",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        }
+      ]
+    },
+    {
+      "id": "deploy-helm-upgrade",
+      "type": "fill",
+      "domain": "deploy",
+      "objective": "Deploy applications from templates and Helm charts",
+      "stem": "Release `quote` already exists in namespace `shop`. Complete the command that applies chart changes in place: `helm ______ quote ./charts/quote -n shop`",
+      "answer": [
+        "upgrade"
+      ],
+      "explanation": "`helm upgrade <release> <chart>` updates an existing release. `helm install` fails when the release name already exists (unless you use `upgrade --install`). `helm uninstall` removes the release. `helm repo` manages chart repositories, not a release's objects.",
+      "references": [
+        {
+          "title": "Helm docs — Using Helm",
+          "url": "https://helm.sh/docs/intro/using_helm/"
+        },
+        {
+          "title": "OCP 4.22 — Working with Helm charts",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/working-with-helm-charts"
+        }
+      ]
+    },
+    {
+      "id": "deploy-scale-deployment",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Manage application deployments",
+      "stem": "An `apps/v1` Deployment named `web` currently has 1 replica. Peak traffic starts in ten minutes and you must have 4 pods.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc scale rs/web --replicas=4`"
+        },
+        {
+          "id": "b",
+          "text": "`oc scale deployment/web --replicas=4`"
+        },
+        {
+          "id": "c",
+          "text": "`oc scale dc/web --replicas=4`"
+        },
+        {
+          "id": "d",
+          "text": "`oc rollout undo deployment/web --replicas=4`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc scale deployment/web --replicas=4` changes `spec.replicas` on the Deployment; the controller then scales its ReplicaSet. Scaling the ReplicaSet (`rs`) is overwritten when the Deployment reconciles. `oc scale dc/web` targets a DeploymentConfig, which this workload is not. `oc rollout undo` rolls back a revision; it does not take `--replicas`.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "deploy-rollout-status",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Manage application deployments",
+      "stem": "You just ran `oc set image deployment/pay pay=registry.example.com/pay:2.1`. You must block until the new ReplicaSet is available or the command reports failure.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc rollout history deployment/pay`"
+        },
+        {
+          "id": "b",
+          "text": "`oc rollout status deployment/pay`"
+        },
+        {
+          "id": "c",
+          "text": "`oc rollout pause deployment/pay`"
+        },
+        {
+          "id": "d",
+          "text": "`oc rollout undo deployment/pay`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc rollout status deployment/pay` waits for the in-flight rollout (Deployments default to `RollingUpdate`) and exits non-zero on timeout or failure. `rollout history` lists revisions. `rollout pause` freezes further rollouts. `rollout undo` reverts to the previous revision instead of watching this one.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "deploy-rs-reconcile",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Work with replica sets",
+      "stem": "Deployment `web` owns ReplicaSet `web-7d9f8`. You run `oc scale rs/web-7d9f8 --replicas=5` while the Deployment still specifies 2 replicas. What happens after the next reconcile?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "The ReplicaSet stays at 5 because you scaled it directly"
+        },
+        {
+          "id": "b",
+          "text": "The Deployment controller sets the ReplicaSet back to 2 replicas"
+        },
+        {
+          "id": "c",
+          "text": "The scheduler deletes the ReplicaSet and creates a DaemonSet"
+        },
+        {
+          "id": "d",
+          "text": "The Service ClusterIP resets the replica count once a minute"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "The Deployment owns the ReplicaSet and reconciles `spec.replicas` to the Deployment value. Scaling the ReplicaSet directly is overwritten. The scheduler does not convert a ReplicaSet into a DaemonSet. A Service ClusterIP is a virtual IP; it does not change replica counts.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "deploy-rs-owner",
+      "type": "truefalse",
+      "domain": "deploy",
+      "objective": "Work with replica sets",
+      "stem": "After a ReplicaSet is created, its `spec.selector` field cannot be changed.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "ReplicaSet `spec.selector` is immutable. To change labels you create a new ReplicaSet (normally by changing the Deployment pod template so a new ReplicaSet is rolled out). Replica count remains mutable; the selector does not.",
+      "references": [
+        {
+          "title": "Kubernetes — ReplicaSet",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+        }
+      ]
+    },
+    {
+      "id": "deploy-selector-match",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Work with labels and selectors",
+      "stem": "Service `store` has `spec.selector: {app: store}`. The Deployment pod template labels are `app: shop`. `oc get endpoints store` lists no addresses.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Change the Service type from ClusterIP to NodePort"
+        },
+        {
+          "id": "b",
+          "text": "Make the Service selector match the pod labels"
+        },
+        {
+          "id": "c",
+          "text": "Create a Route that points at Service `store`"
+        },
+        {
+          "id": "d",
+          "text": "Scale the Deployment to 0 and then back to 1"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A Service load-balances only pods whose labels match `spec.selector`. Here `app=store` never matches `app=shop`, so Endpoints stay empty. NodePort only changes how the Service is reached, not which pods are selected. A Route needs a Service that already has endpoints. Scaling recreates the same mislabeled pods.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        },
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "deploy-matchlabels",
+      "type": "multi",
+      "domain": "deploy",
+      "objective": "Work with labels and selectors",
+      "stem": "You are writing Deployment `web`. Which two fields must carry the same label set so the Deployment adopts the pods it creates?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "`metadata.annotations` on the Deployment"
+        },
+        {
+          "id": "b",
+          "text": "`spec.selector.matchLabels`"
+        },
+        {
+          "id": "c",
+          "text": "`spec.strategy.rollingUpdate`"
+        },
+        {
+          "id": "d",
+          "text": "`spec.template.metadata.labels`"
+        },
+        {
+          "id": "e",
+          "text": "`spec.serviceName` on a StatefulSet"
+        }
+      ],
+      "answer": [
+        "b",
+        "d"
+      ],
+      "explanation": "A Deployment's `spec.selector.matchLabels` must match `spec.template.metadata.labels`. The controller uses the selector to adopt pods created from the template. Annotations are not the selector. `spec.strategy.rollingUpdate` only configures maxSurge/maxUnavailable. `spec.serviceName` belongs on a StatefulSet, not a Deployment.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Building applications / Deployments",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/deployments"
+        }
+      ]
+    },
+    {
+      "id": "deploy-svc-clusterip",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Configure services",
+      "stem": "You create a Service with a name, a selector, and a port. You do not set `spec.type`. How do other pods in the cluster reach it?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "On a high port on every node"
+        },
+        {
+          "id": "b",
+          "text": "On a cluster-internal virtual IP (ClusterIP)"
+        },
+        {
+          "id": "c",
+          "text": "On an OpenShift Route hostname under `*.apps`"
+        },
+        {
+          "id": "d",
+          "text": "On a cloud-provider external IP"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "The default Service type is `ClusterIP`, a virtual IP reachable inside the cluster. NodePort is a high port on nodes and must be set explicitly. A Route is a separate object created with `oc expose` or `oc create route`. LoadBalancer external IPs require `spec.type: LoadBalancer`.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "deploy-svc-nodeport",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Configure services",
+      "stem": "You need clients outside the cluster to reach Service `cache` on TCP 6379 without creating a Route. Which `spec.type` publishes that Service on each node’s IP?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`ClusterIP`"
+        },
+        {
+          "id": "b",
+          "text": "`ExternalName`"
+        },
+        {
+          "id": "c",
+          "text": "`NodePort`"
+        },
+        {
+          "id": "d",
+          "text": "`None`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`NodePort` allocates a high port on every node and forwards to the Service. ClusterIP is internal only. ExternalName is a DNS CNAME. `None` is not a Service type; a headless Service sets `clusterIP: None` and still does not publish node ports.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "deploy-svc-headless",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Configure services",
+      "stem": "StatefulSet `db` needs per-pod DNS names such as `db-0.db.shop.svc`. Service `db` must have no cluster virtual IP.",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`spec.type: NodePort`"
+        },
+        {
+          "id": "b",
+          "text": "`spec.clusterIP: None`"
+        },
+        {
+          "id": "c",
+          "text": "`spec.type: LoadBalancer`"
+        },
+        {
+          "id": "d",
+          "text": "`spec.type: ExternalName`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A headless Service is created with `spec.clusterIP: None`. CoreDNS then returns A records for each matching pod, which StatefulSet stable identities require. NodePort and LoadBalancer still get a cluster IP plus extra exposure. ExternalName is a CNAME alias to an outside hostname, not pod DNS.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with pods",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "deploy-expose-route",
+      "type": "fill",
+      "domain": "deploy",
+      "objective": "Expose applications to external access",
+      "stem": "Complete the command that creates an OpenShift Route targeting Service `store`: `oc ______ svc/store`",
+      "answer": [
+        "expose"
+      ],
+      "explanation": "`oc expose svc/store` creates a Route (typically `store.<namespace>.apps.<cluster>`). Confirm with `oc get route` or `oc describe route`. `oc create route edge|passthrough|reencrypt` is the explicit TLS form. Ingress objects exist, but EX280-style external HTTP(S) on OpenShift is a Route.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        },
+        {
+          "title": "OCP 4.22 — OpenShift CLI (oc)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/cli_tools/openshift-cli-oc"
+        }
+      ]
+    },
+    {
+      "id": "deploy-route-passthrough",
+      "type": "single",
+      "domain": "deploy",
+      "objective": "Expose applications to external access",
+      "stem": "Clients use HTTPS, and the application pod also speaks HTTPS. You want the router to decrypt at the edge and open a new TLS session to the pod. Which Route command matches that model?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create route edge shop --service=shop`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create route passthrough shop --service=shop`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create route reencrypt shop --service=shop --dest-ca-cert=ca.crt`"
+        },
+        {
+          "id": "d",
+          "text": "`oc expose svc/shop`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Re-encrypt termination decrypts at the router and re-encrypts to the backend; `--dest-ca-cert` is used so the router can health-check that TLS endpoint. Edge forwards HTTP to the pod after decrypting. Passthrough never decrypts. `oc expose` creates an insecure HTTP Route.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Securing routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "auth-htpass-create-file",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Configure the HTPasswd identity provider for authentication",
+      "stem": "You are preparing the first local login account for an OpenShift 4.22 HTPasswd identity provider. Which command creates `users.htpasswd` in the form the cluster expects, taking the password from the command line?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "htpasswd -c -B -b users.htpasswd appadmin S3cret"
+        },
+        {
+          "id": "a",
+          "text": "htpasswd -c -m -n users.htpasswd appadmin"
+        },
+        {
+          "id": "d",
+          "text": "openssl passwd -6 -salt ocp appadmin S3cret"
+        },
+        {
+          "id": "b",
+          "text": "oc create secret generic users.htpasswd --from-literal=appadmin=S3cret"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`htpasswd -c -B -b users.htpasswd appadmin S3cret` creates (and truncates) the file (`-c`), hashes with bcrypt (`-B`, required by OpenShift), and reads the password from the CLI (`-b`). `-m` uses MD5, and `-n` writes the hash to stdout instead of a file, so (a) is the wrong tool flags. `openssl passwd` is not the documented IdP workflow. A generic Secret from a plaintext literal is not an htpasswd file and is not how you bootstrap the provider. Red Hat documents HTPasswd for development, not production.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring an htpasswd identity provider",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-htpass-secret-ns",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Configure the HTPasswd identity provider for authentication",
+      "stem": "You created `users.htpasswd` and must store it as Secret `htpass-secret` for the cluster identity provider. In which namespace do you create that Secret?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`openshift-authentication`"
+        },
+        {
+          "id": "b",
+          "text": "`openshift-config`"
+        },
+        {
+          "id": "c",
+          "text": "`kube-system`"
+        },
+        {
+          "id": "d",
+          "text": "`openshift-ingress`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "The HTPasswd file Secret must live in `openshift-config`. `openshift-authentication` runs the OAuth server pods; putting the file there does not wire it into the `OAuth` cluster CR. `kube-system` is for Kubernetes system components. `openshift-ingress` holds router certificates, not identity-provider data.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating the htpasswd secret",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-oauth-not-user",
+      "type": "truefalse",
+      "domain": "auth",
+      "objective": "Configure the HTPasswd identity provider for authentication",
+      "stem": "On OpenShift 4.22 you enable an HTPasswd identity provider by creating a User or Identity object that references Secret htpass-secret.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Providers are listed on the cluster-scoped `OAuth` object (`apiVersion: config.openshift.io/v1`, `metadata.name: cluster`) with `type: HTPasswd`, typically `mappingMethod: claim`, and `htpasswd.fileData.name: htpass-secret`. A `User` is the account created after a successful login. An `Identity` maps `<idp>:<username>` to that `User`. Neither object is where you register the provider. The password file Secret lives in `openshift-config`, not on a `User`.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Sample htpasswd CR",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-idp-secret-key",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Configure the HTPasswd identity provider for authentication",
+      "stem": "You are creating the Secret in `openshift-config` that stores the hashed password file for a local identity provider. Which key name must you pass to `--from-file`?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`users.htpasswd`"
+        },
+        {
+          "id": "b",
+          "text": "`oauth`"
+        },
+        {
+          "id": "c",
+          "text": "`bindPassword`"
+        },
+        {
+          "id": "d",
+          "text": "`htpasswd`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "The Secret data key must be named `htpasswd` so the identity provider can find the file. Using the filename (`users.htpasswd`) as the key, or a name such as `oauth`, leaves the provider unable to read the password file. `bindPassword` is the LDAP bind-secret key, not the HTPasswd file key.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring an htpasswd identity provider",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-add-second-user",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Create and delete users",
+      "stem": "`users.htpasswd` already contains `developer1`. Which command adds `developer2` without removing `developer1`?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "htpasswd -B -b users.htpasswd developer2 P@ssw0rd"
+        },
+        {
+          "id": "c",
+          "text": "htpasswd -c -B -b users.htpasswd developer2 P@ssw0rd"
+        },
+        {
+          "id": "a",
+          "text": "htpasswd -D users.htpasswd developer1 developer2"
+        },
+        {
+          "id": "d",
+          "text": "oc create user developer2 --password=P@ssw0rd"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Omit `-c` when the file already exists: `htpasswd -B -b users.htpasswd developer2 P@ssw0rd` appends or updates that user. Repeating `-c` truncates the file and drops `developer1`. `-D` deletes an entry; it does not add `developer2`. `oc create user` creates a `User` object only and does not add credentials to the HTPasswd file.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating the htpasswd file",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-remove-user-objects",
+      "type": "multi",
+      "domain": "auth",
+      "objective": "Create and delete users",
+      "stem": "The HTPasswd provider is named `labidp`. You already ran `htpasswd -D users.htpasswd dana` and replaced Secret `htpass-secret`. Dana can still use an unexpired token. Which two deletes finish the removal?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "c",
+          "text": "oc delete user dana"
+        },
+        {
+          "id": "e",
+          "text": "oc delete identity labidp:dana"
+        },
+        {
+          "id": "a",
+          "text": "oc delete oauth cluster"
+        },
+        {
+          "id": "b",
+          "text": "oc delete secret htpass-secret -n openshift-config"
+        },
+        {
+          "id": "d",
+          "text": "oc delete group dana"
+        }
+      ],
+      "answer": [
+        "c",
+        "e"
+      ],
+      "explanation": "After the file and Secret no longer list Dana, you must still `oc delete user dana` and `oc delete identity labidp:dana` (provider name plus username). Otherwise the existing `User`/`Identity` pair keeps a valid token until it expires. Deleting `oauth/cluster` removes cluster OAuth configuration. Deleting `htpass-secret` breaks every HTPasswd login, not just Dana. There is no `Group` named after the user unless you created one.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Updating users for an htpasswd identity provider",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-replace-htpass-secret",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Modify user passwords",
+      "stem": "You changed hashes in `users.htpasswd` and need the running HTPasswd provider to pick up the new passwords. Secret `htpass-secret` already exists in `openshift-config`. Which command updates that Secret in place?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd -n openshift-config --save-config`"
+        },
+        {
+          "id": "b",
+          "text": "`oc delete user --all && oc apply -f users.htpasswd -n openshift-config`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create secret generic htpass-secret --from-file=htpasswd=users.htpasswd --dry-run=client -o yaml -n openshift-config | oc replace -f -`"
+        },
+        {
+          "id": "d",
+          "text": "`oc set data secret/htpasswd --from-file=users.htpasswd -n openshift-authentication`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Because the Secret name already exists, generate YAML with `--dry-run=client` and pipe it to `oc replace`. A plain `oc create` fails with AlreadyExists. `oc set data` against `secret/htpasswd` in `openshift-authentication` uses the wrong Secret name and the OAuth-server namespace, not `openshift-config`. Deleting all `User` objects and applying a raw htpasswd file is not a supported update path and does not refresh the Secret.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Updating users for an htpasswd identity provider",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-change-existing-password",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Modify user passwords",
+      "stem": "You already updated `users.htpasswd` and replaced Secret `htpass-secret`. User `labuser` can still use an old `oc` session. Which additional objects do you delete so that identity cannot keep using the previous token?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "The `OAuth` object named `cluster` and the `kubeadmin` Secret"
+        },
+        {
+          "id": "b",
+          "text": "The `User` object `labuser` and the matching `Identity` object"
+        },
+        {
+          "id": "c",
+          "text": "The `Group` named `system:authenticated` and RoleBinding `view`"
+        },
+        {
+          "id": "d",
+          "text": "The `CatalogSource` `redhat-operators` and its `PackageManifest`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Replacing the HTPasswd Secret changes future logins. An existing OAuth token stays valid until it expires unless you delete the `User` and the `Identity` (`<idp>:<username>`). Deleting the cluster `OAuth` object would drop all identity providers. `system:authenticated` is a virtual group you must not delete. CatalogSources are unrelated to user tokens.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Updating users for an htpasswd identity provider",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/configuring-identity-providers"
+        }
+      ]
+    },
+    {
+      "id": "auth-groups-new",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Create and manage groups",
+      "stem": "You need an OpenShift group named `qa-team` that you can later bind to roles. Which command creates that group?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "oc adm groups new qa-team"
+        },
+        {
+          "id": "c",
+          "text": "oc adm policy add-role-to-group edit qa-team"
+        },
+        {
+          "id": "a",
+          "text": "oc new-project qa-team --display-name='QA Team'"
+        },
+        {
+          "id": "d",
+          "text": "oc create serviceaccount qa-team -n openshift-config"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc adm groups new qa-team` creates a `Group` object. `add-role-to-group` binds an existing group to a role; it does not create the group. `oc new-project` creates a project/namespace, not a user group. A ServiceAccount is a workload identity, not an HTPasswd/user group.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using RBAC to define and apply permissions",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "auth-groups-membership",
+      "type": "multi",
+      "domain": "auth",
+      "objective": "Create and manage groups",
+      "stem": "Group `qa-team` already exists. Which two commands change its user membership (without granting RBAC)?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "oc adm groups add-users qa-team jdoe"
+        },
+        {
+          "id": "c",
+          "text": "oc adm groups remove-users qa-team jdoe"
+        },
+        {
+          "id": "b",
+          "text": "oc adm policy add-role-to-group edit qa-team"
+        },
+        {
+          "id": "d",
+          "text": "oc adm policy add-cluster-role-to-group cluster-admin qa-team"
+        },
+        {
+          "id": "e",
+          "text": "oc adm policy add-role-to-user qa-team jdoe"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "`oc adm groups add-users` and `oc adm groups remove-users` edit group membership. `add-role-to-group` and `add-cluster-role-to-group` attach roles to the group; they do not add or remove users. `add-role-to-user qa-team jdoe` treats `qa-team` as a role name bound to user `jdoe`, which is not group membership.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using RBAC to define and apply permissions",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "auth-project-admin-role",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Modify user and group permissions",
+      "stem": "User `nina` must manage most objects in project `billing`, including roles in that project, but must not become a cluster-wide superuser. Which command is appropriate?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "oc adm policy add-role-to-user admin nina -n billing"
+        },
+        {
+          "id": "b",
+          "text": "oc adm policy add-cluster-role-to-user cluster-admin nina"
+        },
+        {
+          "id": "a",
+          "text": "oc adm policy add-role-to-group view nina -n billing"
+        },
+        {
+          "id": "c",
+          "text": "oc adm policy add-cluster-role-to-group edit nina"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`add-role-to-user admin nina -n billing` is a local binding of the `admin` cluster role in that project (project manager, including roles/bindings there, but not cluster-wide). `add-cluster-role-to-user cluster-admin` makes `nina` a superuser on every project. `add-role-to-group view nina` treats `nina` as a group name and grants only `view`. `add-cluster-role-to-group edit nina` likewise binds a group named `nina` cluster-wide to `edit`.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Adding roles to users",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "auth-cluster-admin-bind",
+      "type": "single",
+      "domain": "auth",
+      "objective": "Modify user and group permissions",
+      "stem": "Group `sre-leads` must be able to perform any action in any project. Which command grants that cluster-wide?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "oc adm policy add-cluster-role-to-group cluster-admin sre-leads"
+        },
+        {
+          "id": "c",
+          "text": "oc adm policy add-role-to-group admin sre-leads -n default"
+        },
+        {
+          "id": "a",
+          "text": "oc adm policy add-role-to-user cluster-admin sre-leads -n kube-system"
+        },
+        {
+          "id": "d",
+          "text": "oc adm groups add-users cluster-admin sre-leads"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Cluster-wide group bindings use `oc adm policy add-cluster-role-to-group cluster-admin sre-leads` (no `-n`). `add-role-to-group admin … -n default` is only a local `admin` binding in `default`. `add-role-to-user cluster-admin sre-leads` treats `sre-leads` as a username and still only binds locally in `kube-system`. `oc adm groups add-users` adds users to a group; it does not bind the `cluster-admin` role.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Cluster role binding commands",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "net-cni-default",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure networking components",
+      "stem": "A newly installed OpenShift Container Platform 4.22 cluster uses which default Container Network Interface (CNI) plugin?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "OVN-Kubernetes"
+        },
+        {
+          "id": "a",
+          "text": "OpenShift SDN"
+        },
+        {
+          "id": "d",
+          "text": "Flannel overlay"
+        },
+        {
+          "id": "b",
+          "text": "Calico enterprise"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "OpenShift 4.22 defaults to OVN-Kubernetes. OpenShift SDN was the earlier plugin and is not the 4.22 default. Flannel is not the OpenShift default CNI. Calico can appear in some optional or partner setups but is not what a stock 4.22 install runs.",
+      "references": [
+        {
+          "title": "OCP 4.22 — About OVN-Kubernetes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ovn-kubernetes_network_plugin/about-ovn-kubernetes"
+        }
+      ]
+    },
+    {
+      "id": "net-operator-cluster",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure networking components",
+      "stem": "You need to inspect the Cluster Network Operator configuration, including which plugin the cluster is using. Which command reads that object?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "oc get network.operator cluster"
+        },
+        {
+          "id": "c",
+          "text": "oc get sdn cluster -o yaml"
+        },
+        {
+          "id": "b",
+          "text": "oc get ingresscontroller default -n default"
+        },
+        {
+          "id": "d",
+          "text": "oc get route network -n openshift-ovn-kubernetes"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`oc get network.operator cluster` (and the sibling `network.config cluster`) is the CNO/cluster network configuration. `sdn cluster` is the old OpenShift SDN API, not the 4.22 operator object. The default IngressController lives in `openshift-ingress-operator`, not `default`. There is no Route named `network` that holds CNI settings.",
+      "references": [
+        {
+          "title": "OCP 4.22 — About OVN-Kubernetes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ovn-kubernetes_network_plugin/about-ovn-kubernetes"
+        }
+      ]
+    },
+    {
+      "id": "net-ovn-pod-ns",
+      "type": "single",
+      "domain": "network",
+      "objective": "Troubleshoot software defined networking",
+      "stem": "Worker `worker-2` is NotReady and you suspect the node overlay. Where do you first list the OVN-Kubernetes daemon pods?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "oc get pods -n openshift-ovn-kubernetes"
+        },
+        {
+          "id": "a",
+          "text": "oc get pods -n openshift-sdn"
+        },
+        {
+          "id": "c",
+          "text": "oc get pods -n openshift-ingress-operator"
+        },
+        {
+          "id": "b",
+          "text": "oc get pods -n kube-flannel"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "OVN-Kubernetes pods run in `openshift-ovn-kubernetes`. `openshift-sdn` is the retired SDN namespace. `openshift-ingress-operator` hosts the Ingress Operator, not the node overlay. `kube-flannel` is not an OpenShift 4.22 namespace. Extra networks, if used, are described by `NetworkAttachmentDefinition` objects, but the first overlay check is still the OVN-K pods.",
+      "references": [
+        {
+          "title": "OCP 4.22 — About OVN-Kubernetes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ovn-kubernetes_network_plugin/about-ovn-kubernetes"
+        }
+      ]
+    },
+    {
+      "id": "net-co-network",
+      "type": "single",
+      "domain": "network",
+      "objective": "Troubleshoot software defined networking",
+      "stem": "You want a single Available/Progressing/Degraded summary for the cluster network. Which command shows that ClusterOperator?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "oc get co network"
+        },
+        {
+          "id": "d",
+          "text": "oc get co dns"
+        },
+        {
+          "id": "a",
+          "text": "oc get ns openshift-network-operator"
+        },
+        {
+          "id": "c",
+          "text": "oc logs -n openshift-ingress deploy/router-default"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc get co network` (`clusteroperator/network`) is the CNO status. `co dns` reports CoreDNS, not the CNI. Listing a namespace only proves the NS exists. Router logs in `openshift-ingress` help with Route/Ingress problems, not the node overlay itself.",
+      "references": [
+        {
+          "title": "OCP 4.22 — About OVN-Kubernetes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ovn-kubernetes_network_plugin/about-ovn-kubernetes"
+        }
+      ]
+    },
+    {
+      "id": "net-expose-insecure",
+      "type": "single",
+      "domain": "network",
+      "objective": "Create and edit external routes",
+      "stem": "Route `frontend` already exists and points at Service `frontend`. You must change its public hostname to `shop.apps.ocp.example.com`. Which command edits that field?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc expose svc/frontend --hostname=shop.apps.ocp.example.com`"
+        },
+        {
+          "id": "b",
+          "text": "`oc patch route/frontend --type=merge -p '{\"spec\":{\"host\":\"shop.apps.ocp.example.com\"}}'`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create ingress frontend --rule='shop.apps.ocp.example.com/=frontend:80'`"
+        },
+        {
+          "id": "d",
+          "text": "`oc annotate svc/frontend route.openshift.io/host=shop.apps.ocp.example.com`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "An existing Route is updated with `oc patch` (or `oc edit`) on `spec.host`. `oc expose` creates a new Route and fails if `frontend` already exists as a Route name. A Kubernetes Ingress is a different object. Annotating the Service does not change the Route hostname.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-passthrough-create",
+      "type": "single",
+      "domain": "network",
+      "objective": "Expose non-HTTP/SNI Applications",
+      "stem": "Service `broker` speaks TLS on port 9093 and clients must keep an end-to-end TLS session (the router must not decrypt). Which command publishes that Service on the default apps domain?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc expose svc/broker`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create route edge broker --service=broker`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create route passthrough broker --service=broker`"
+        },
+        {
+          "id": "d",
+          "text": "`oc create route reencrypt broker --service=broker --dest-ca-cert=ca.crt`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Passthrough termination forwards the TLS session to the backend without decrypting at the router, which is the Route option for non-HTTP or SNI TLS apps. `oc expose` creates an insecure HTTP Route. Edge terminates TLS at the router and talks HTTP to the pod. Re-encrypt terminates at the router and opens a new TLS session to the backend, so the router still decrypts.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Securing routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-insecure-redirect",
+      "type": "single",
+      "domain": "network",
+      "objective": "Create and edit external routes",
+      "stem": "An edge-terminated Route already serves TLS on the secure port. Which `insecureEdgeTerminationPolicy` value answers cleartext requests on port 80 with an HTTP 302 to the TLS URL?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`Redirect`"
+        },
+        {
+          "id": "b",
+          "text": "`None`"
+        },
+        {
+          "id": "c",
+          "text": "`Allow`"
+        },
+        {
+          "id": "d",
+          "text": "`Passthrough`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`Redirect` issues an HTTP→HTTPS redirect. `Allow` serves both HTTP and HTTPS. `None` (the default) does not serve HTTP. `Passthrough` is a `spec.tls.termination` mode, not an `insecureEdgeTerminationPolicy` value.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-ic-default-ns",
+      "type": "single",
+      "domain": "network",
+      "objective": "Control cluster network ingress",
+      "stem": "You must change replicas on the cluster’s default IngressController. Which namespaced object do you edit?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "IngressController/default in namespace openshift-ingress-operator"
+        },
+        {
+          "id": "a",
+          "text": "IngressController/default in namespace openshift-ingress"
+        },
+        {
+          "id": "c",
+          "text": "Deployment/router-default in namespace openshift-config"
+        },
+        {
+          "id": "b",
+          "text": "Route/default in namespace openshift-ingress-operator"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "The Ingress Operator manages `IngressController` objects in `openshift-ingress-operator`; the shipped controller is named `default`. Router pods themselves run in `openshift-ingress`, so editing an IngressController there is the wrong namespace. Scaling `router-default` in `openshift-config` is the wrong object and namespace; the operator reconciles replicas from the IngressController spec. There is no Route named `default` that controls cluster ingress.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-router-pod-ns",
+      "type": "single",
+      "domain": "network",
+      "objective": "Control cluster network ingress",
+      "stem": "A Route is admitted but returns 503. Which namespace holds the default router (HAProxy) pods you should inspect?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "openshift-ingress"
+        },
+        {
+          "id": "c",
+          "text": "openshift-ingress-operator"
+        },
+        {
+          "id": "a",
+          "text": "openshift-ovn-kubernetes"
+        },
+        {
+          "id": "d",
+          "text": "openshift-config"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Router pods run in `openshift-ingress`. `openshift-ingress-operator` holds the Ingress Operator and IngressController CRs, not the HAProxy pods. `openshift-ovn-kubernetes` is the CNI. `openshift-config` stores cluster configuration such as the HTPasswd Secret, not router pods.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-apps-wildcard",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure external application access",
+      "stem": "A Route omits `spec.host`. On a cluster whose domain is `ocp.example.com`, which hostname does the default IngressController assign?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`<route-name>.api.ocp.example.com`"
+        },
+        {
+          "id": "b",
+          "text": "`<route-name>.svc.cluster.local`"
+        },
+        {
+          "id": "c",
+          "text": "`<route-name>-<namespace>.apps.ocp.example.com`"
+        },
+        {
+          "id": "d",
+          "text": "`<namespace>.console.ocp.example.com`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Default external Routes use the apps wildcard `*.apps.<cluster_domain>`, commonly `<name>-<namespace>.apps.<cluster_domain>`. `api.` is the Kubernetes/OpenShift API, not app Routes. `console.` is the web console. `svc.cluster.local` is the in-cluster DNS name of a Service, which is not external.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-edge-termination",
+      "type": "single",
+      "domain": "network",
+      "objective": "Secure external and internal traffic using TLS certificates",
+      "stem": "Clients must use HTTPS, but the application pod only speaks HTTP. Which Route TLS termination mode should you choose?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`edge`"
+        },
+        {
+          "id": "b",
+          "text": "`reencrypt`"
+        },
+        {
+          "id": "c",
+          "text": "`passthrough`"
+        },
+        {
+          "id": "d",
+          "text": "`Allow`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "Edge termination (the default for secured Routes) decrypts TLS at the router and forwards HTTP to the pod. Passthrough does not decrypt, so the pod must speak TLS. Reencrypt decrypts at the router and then opens a new TLS session to the backend, so the pod must speak TLS. `Allow` is an `insecureEdgeTerminationPolicy` value, not a termination mode.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-passthrough-no-cert",
+      "type": "truefalse",
+      "domain": "network",
+      "objective": "Secure external and internal traffic using TLS certificates",
+      "stem": "A passthrough Route does not carry a certificate or key on the Route object; the backend pod must present TLS.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "true"
+      ],
+      "explanation": "Passthrough sends encrypted bytes to the Service without decrypting them, so no cert/key is stored on the Route. Edge and reencrypt do store (or inherit) certificates on the Route for the client-facing handshake. Reencrypt additionally needs a destination CA so the router can health-check the backend TLS endpoint.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-edge-custom-cert",
+      "type": "multi",
+      "domain": "network",
+      "objective": "Secure external and internal traffic using TLS certificates",
+      "selectCount": 2,
+      "stem": "You are creating a custom-certificate edge Route for Service `store`. Which two files must you pass to `oc create route edge`?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`--cert=tls.crt`"
+        },
+        {
+          "id": "b",
+          "text": "`--dest-ca-cert=destca.crt`"
+        },
+        {
+          "id": "c",
+          "text": "`--key=tls.key`"
+        },
+        {
+          "id": "d",
+          "text": "`--certificate-authority=ca.crt`"
+        },
+        {
+          "id": "e",
+          "text": "`--type=kubernetes.io/tls`"
+        }
+      ],
+      "answer": [
+        "a",
+        "c"
+      ],
+      "explanation": "`oc create route edge --service=store --cert=tls.crt --key=tls.key` (often with `--ca-cert=ca.crt` and `--hostname=...`) is the documented custom-cert command. `--dest-ca-cert` is for reencrypt health checks, not edge. `--certificate-authority` is not an `oc create route` flag (`--ca-cert` is). `--type=kubernetes.io/tls` is a Secret type, not a Route flag.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-np-same-ns",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure application network policies",
+      "stem": "In project `shop`, pods labeled `app=api` must accept TCP 8080 only from pods labeled `app=web` in that same project. Which NetworkPolicy ingress rule matches that requirement?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Select `app=api`; ingress from `podSelector: app=web` with `ports: TCP/8080`"
+        },
+        {
+          "id": "b",
+          "text": "Select `app=api`; ingress from `ipBlock: 0.0.0.0/0` with no ports"
+        },
+        {
+          "id": "c",
+          "text": "Select `app=web`; ingress from `namespaceSelector: shop` on all ports"
+        },
+        {
+          "id": "d",
+          "text": "Select `app=api`; egress to `podSelector: app=web` on TCP/8080"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "The policy must **select** the api pods and **allow ingress** from `app=web` on TCP 8080. Omitting `ports` would allow every port from those pods. Selecting `app=web` would isolate the clients, not the api pods. An `ipBlock` of `0.0.0.0/0` allows the whole network. Egress rules control outbound traffic, not inbound 8080.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Network policy",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/network_security/network-policy"
+        }
+      ]
+    },
+    {
+      "id": "net-np-default-allow",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure application network policies",
+      "stem": "You created project `shop` and have not created any NetworkPolicy objects. How is east-west traffic among pods in `shop` treated?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "All pod-to-pod traffic in the project is allowed"
+        },
+        {
+          "id": "b",
+          "text": "All ingress is denied until you add a default-allow policy"
+        },
+        {
+          "id": "c",
+          "text": "Only traffic from `openshift-ingress` is allowed"
+        },
+        {
+          "id": "d",
+          "text": "Only traffic from the same Deployment is allowed"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "With no NetworkPolicy objects, Kubernetes/OpenShift allow all traffic in a user project. Isolation starts only for pods that a policy `podSelector` matches. OpenShift may install deny-all policies in some **platform** namespaces (DNS/Ingress); that does not apply to an empty user project. Ingress-controller or same-Deployment restrictions require policies you create.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Network policy",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/network_security/network-policy"
+        }
+      ]
+    },
+    {
+      "id": "net-tcp-no-edge",
+      "type": "single",
+      "domain": "network",
+      "objective": "Expose non-HTTP/SNI Applications",
+      "stem": "Service `orders-db` fronts PostgreSQL (plain TCP 5432, no HTTP, no TLS SNI). The cluster has no cloud load balancer. How do you publish it on every node’s IP?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "Change the Service type to NodePort"
+        },
+        {
+          "id": "a",
+          "text": "oc create route edge --service=orders-db --port=5432"
+        },
+        {
+          "id": "d",
+          "text": "oc expose svc/orders-db --port=5432"
+        },
+        {
+          "id": "c",
+          "text": "Create a NetworkPolicy that allows ipBlock 0.0.0.0/0 on 5432"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Non-HTTP/non-SNI TCP is published with a NodePort or LoadBalancer Service (or a passthrough Route only when the payload is TLS with SNI). An edge Route speaks HTTP after TLS termination and cannot carry arbitrary PostgreSQL frames. `oc expose` creates an HTTP Route, not a TCP listener. A NetworkPolicy filters traffic to selected pods; it does not allocate an external port.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        }
+      ]
+    },
+    {
+      "id": "net-passthrough-sni",
+      "type": "single",
+      "domain": "network",
+      "objective": "Expose non-HTTP/SNI Applications",
+      "stem": "PostgreSQL in project `db` listens on TCP 5432 with no TLS. You must reach it from outside the cluster on a high port on every node. Which object do you create?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A passthrough Route to Service `postgres`"
+        },
+        {
+          "id": "b",
+          "text": "An edge Route to Service `postgres`"
+        },
+        {
+          "id": "c",
+          "text": "A Service of type `NodePort` for port 5432"
+        },
+        {
+          "id": "d",
+          "text": "A reencrypt Route with `--dest-ca-cert`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "The OpenShift router handles HTTP, HTTPS, and TLS with SNI. Plain PostgreSQL TCP is not a Route. A `NodePort` (or `LoadBalancer`) Service publishes arbitrary TCP. Passthrough still requires TLS/SNI. Edge and reencrypt terminate HTTP(S) at the router.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-lb-service-type",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure a load balancer service",
+      "stem": "On a cloud OpenShift 4.22 cluster you need TCP 6379 on `cache` pods reachable from the internet through a cloud load balancer. Which Service `spec.type` do you set?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`ClusterIP`"
+        },
+        {
+          "id": "b",
+          "text": "`ExternalName`"
+        },
+        {
+          "id": "c",
+          "text": "`Headless`"
+        },
+        {
+          "id": "d",
+          "text": "`LoadBalancer`"
+        }
+      ],
+      "answer": [
+        "d"
+      ],
+      "explanation": "`spec.type: LoadBalancer` asks the cloud (or an on-prem LB implementation) for an address that forwards to the Service. ClusterIP stays internal. ExternalName is a DNS CNAME alias, not a proxy. Headless (`clusterIP: None`) returns pod IPs for stateful discovery; it does not provision a load balancer. `Headless` is also not a valid `spec.type` value.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-lb-onprem-type",
+      "type": "single",
+      "domain": "network",
+      "objective": "Configure a load balancer service",
+      "stem": "You installed MetalLB so bare-metal workers can publish Services with external IPs. What `spec.type` do application Services still use?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`ClusterIP`"
+        },
+        {
+          "id": "b",
+          "text": "`NodePort`"
+        },
+        {
+          "id": "c",
+          "text": "`LoadBalancer`"
+        },
+        {
+          "id": "d",
+          "text": "`ExternalName`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "MetalLB (or a similar on-prem implementation) fulfills Services whose type is still `LoadBalancer`. NodePort publishes a high port on every node but does not use MetalLB address pools. ClusterIP is internal only. ExternalName is a DNS CNAME alias, not a proxied Service with an allocated address.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "net-external-methods",
+      "type": "multi",
+      "domain": "network",
+      "objective": "Configure external application access",
+      "selectCount": 2,
+      "stem": "Which two objects publish applications from outside an OpenShift 4.22 cluster?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A ClusterIP Service alone, using only `svc.cluster.local`"
+        },
+        {
+          "id": "b",
+          "text": "A Route for HTTP, HTTPS, or TLS SNI"
+        },
+        {
+          "id": "c",
+          "text": "An EgressNetworkPolicy that lists the client CIDR"
+        },
+        {
+          "id": "d",
+          "text": "A ConfigMap whose keys are public hostnames"
+        },
+        {
+          "id": "e",
+          "text": "A Service of type LoadBalancer or NodePort for arbitrary TCP"
+        }
+      ],
+      "answer": [
+        "b",
+        "e"
+      ],
+      "explanation": "External HTTP/HTTPS/SNI access uses Routes (and Ingress, which OpenShift typically realizes as Routes). Arbitrary TCP uses a LoadBalancer or NodePort Service. A ClusterIP Service is reachable only inside the cluster. EgressNetworkPolicy (legacy SDN egress firewall) restricts outbound traffic; it does not publish an app. A ConfigMap cannot bind a hostname on the router or a load balancer.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring routes",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-routes"
+        },
+        {
+          "title": "OCP 4.22 — Configuring ingress",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/ingress_and_load_balancing/configuring-ingress"
+        }
+      ]
+    },
+    {
+      "id": "self-crq-shared",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure cluster resource quotas",
+      "stem": "The platform team wants a combined cap of 40 pods and 80Gi memory across every project labeled `shop=loom`. A project admin in `loom-dev` must not be able to raise that cap. Which object enforces the shared pool?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "A LimitRange in each loom-* project setting max pods to 40"
+        },
+        {
+          "id": "a",
+          "text": "A ClusterResourceQuota selecting shop=loom with spec.quota.hard"
+        },
+        {
+          "id": "d",
+          "text": "A HorizontalPodAutoscaler with maxReplicas: 40 on a Deployment"
+        },
+        {
+          "id": "b",
+          "text": "A ResourceQuota in loom-dev listing spec.hard.pods: \"40\""
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "ClusterResourceQuota (quota.openshift.io/v1) is cluster-scoped and uses spec.selector plus spec.quota.hard so every matching project draws from one pool. A namespaced ResourceQuota in loom-dev only caps that one project and is not shared. LimitRange constrains each Pod or Container, not the sum across projects. HorizontalPodAutoscaler changes replica counts from metrics; it does not enforce a multi-project quota.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Projects (self-service and project creation)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        },
+        {
+          "title": "OCP 4.22 — AppliedClusterResourceQuota / ClusterResourceQuota APIs",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/schedule_and_quota_apis/appliedclusterresourcequota-quota-openshift-io-v1"
+        }
+      ]
+    },
+    {
+      "id": "self-crq-applied",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure cluster resource quotas",
+      "stem": "User `weft` is the project admin of `weave-ui` but is not a cluster-admin. They need to see how much of the shop-wide ClusterResourceQuota their project is consuming. Which object can they describe from that project?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "AppliedClusterResourceQuota projected into weave-ui"
+        },
+        {
+          "id": "a",
+          "text": "ClusterResourceQuota listed from kube-system"
+        },
+        {
+          "id": "d",
+          "text": "ClusterRoleBinding named quota-viewer-weft"
+        },
+        {
+          "id": "c",
+          "text": "ResourceQuota named cluster-wide-quota"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Project admins cannot create or edit ClusterResourceQuota, but OpenShift projects the matching quota into the namespace as AppliedClusterResourceQuota (`oc describe appliedclusterresourcequota`). A cluster-scoped ClusterResourceQuota list is a cluster-admin operation. A namespaced ResourceQuota is a different object and would not show the shared cluster pool. A ClusterRoleBinding grants RBAC; it is not a quota view.",
+      "references": [
+        {
+          "title": "OCP 4.22 — AppliedClusterResourceQuota [quota.openshift.io/v1]",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/schedule_and_quota_apis/appliedclusterresourcequota-quota-openshift-io-v1"
+        }
+      ]
+    },
+    {
+      "id": "self-crq-spec",
+      "type": "multi",
+      "domain": "selfservice",
+      "objective": "Configure cluster resource quotas",
+      "stem": "You are writing ClusterResourceQuota `shop-loom` so projects labeled `shop=loom` share one pool of 20 pods and 40 secrets. Which two spec fields must be set?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "a",
+          "text": "spec.selector (labels and/or annotations)"
+        },
+        {
+          "id": "c",
+          "text": "spec.hard at the object root"
+        },
+        {
+          "id": "b",
+          "text": "spec.quota.hard for the shared caps"
+        },
+        {
+          "id": "d",
+          "text": "spec.targetNamespaces listing each project"
+        },
+        {
+          "id": "e",
+          "text": "spec.limits with type: Container"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "ClusterResourceQuota requires spec.selector (label selector and/or annotation selector, commonly openshift.io/requester) and spec.quota.hard for the shared caps. spec.hard at the root is the namespaced ResourceQuota shape. spec.targetNamespaces belongs to OperatorGroup. spec.limits with type Container belongs to LimitRange.",
+      "references": [
+        {
+          "title": "OCP 4.22 — ClusterResourceQuota spec (selector and quota)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/schedule_and_quota_apis/appliedclusterresourcequota-quota-openshift-io-v1"
+        }
+      ]
+    },
+    {
+      "id": "self-rq-compute",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project quotas",
+      "stem": "Only project `kiln` must be limited to 4 CPU requests, 8 CPU limits, 8Gi memory requests, and 12 PersistentVolumeClaims. Other projects stay unbounded. Which object do you create in `kiln`?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "A ClusterResourceQuota matching every namespace"
+        },
+        {
+          "id": "b",
+          "text": "A ResourceQuota whose spec.hard lists those four keys"
+        },
+        {
+          "id": "a",
+          "text": "A LimitRange whose max matches those four keys"
+        },
+        {
+          "id": "c",
+          "text": "A HorizontalPodAutoscaler with those four keys"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A namespaced ResourceQuota with spec.hard (requests.cpu, limits.cpu, requests.memory, persistentvolumeclaims) caps the sum of those objects inside kiln only. LimitRange sets per-Pod/Container min/max/default, not a project-wide count of PVCs or CPU. ClusterResourceQuota would apply to every project that matches its selector, which is broader than kiln. HPA does not implement quota keys.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Working with clusters (quota and limits)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-rq-kind",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project quotas",
+      "stem": "A developer in project `hopper` is Forbidden when creating another Secret; the project already has 20. A cluster-admin applied a namespaced object whose `spec.hard` includes `secrets: \"20\"`. Which kind is that object?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`ClusterResourceQuota`"
+        },
+        {
+          "id": "b",
+          "text": "`LimitRange`"
+        },
+        {
+          "id": "c",
+          "text": "`ResourceQuota`"
+        },
+        {
+          "id": "d",
+          "text": "`HorizontalPodAutoscaler`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Project-level caps live in a namespaced `ResourceQuota` at `spec.hard` (including `secrets`). `ClusterResourceQuota` is cluster-scoped and uses `spec.quota.hard` plus a project selector; it is not a namespaced object in `hopper`. `LimitRange` sets per-container min/max/defaults, not a count of Secret objects. `HorizontalPodAutoscaler` scales replicas from metrics and does not admit or reject Secret creates.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Resource quotas per project",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        }
+      ]
+    },
+    {
+      "id": "self-req-container",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project resource requirements",
+      "stem": "Deployment `mill-api` in project `hopper` must guarantee 250m CPU and 256Mi RAM, and must never exceed 1 CPU and 512Mi. Where do you set those values?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "container resources.requests and resources.limits"
+        },
+        {
+          "id": "a",
+          "text": "ResourceQuota spec.hard.requests and spec.hard.limits"
+        },
+        {
+          "id": "d",
+          "text": "HorizontalPodAutoscaler spec.minReplicas only"
+        },
+        {
+          "id": "b",
+          "text": "LimitRange spec.limits[].min and spec.limits[].max"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "The pod's own resource requirements are container resources.requests (guarantee / scheduling) and resources.limits (cap). A LimitRange can constrain or default those fields, but it is not where this Deployment declares its needs. ResourceQuota spec.hard is the project sum, not one container. HPA minReplicas only controls replica count.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Restrict resource consumption with limit ranges",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-req-defaults",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project resource requirements",
+      "stem": "Project `kiln` has a ResourceQuota that requires requests.cpu and requests.memory. Developers deploy a Deployment with no `resources` block and pods are Forbidden. There is no LimitRange. Which change lets developers omit `resources` while still satisfying the quota?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "Add a HorizontalPodAutoscaler targeting 50 percent CPU"
+        },
+        {
+          "id": "d",
+          "text": "Set the Deployment spec.replicas field to 1"
+        },
+        {
+          "id": "a",
+          "text": "Add a LimitRange with Container defaultRequest values"
+        },
+        {
+          "id": "c",
+          "text": "Add a ClusterResourceQuota with an empty selector"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "When a quota tracks request (or limit) quantities, admission rejects pods that omit those fields unless a LimitRange injects defaultRequest (and usually default limits). HPA does not fill in requests. replica count does not create CPU or memory requests. A ClusterResourceQuota with no useful selector does not inject per-container values and may even add another shared cap.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Limit ranges (default and defaultRequest)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-lr-inject",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project limit ranges",
+      "stem": "LimitRange `silo-limits` in project `silo` has a Container item with default.cpu: 300m, default.memory: 200Mi, defaultRequest.cpu: 100m, and defaultRequest.memory: 50Mi. A container omits `resources`. What does admission inject?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "requests 300m / 200Mi and limits 100m / 50Mi"
+        },
+        {
+          "id": "c",
+          "text": "requests 100m / 50Mi and no limits at all"
+        },
+        {
+          "id": "b",
+          "text": "requests 100m / 50Mi and limits 300m / 200Mi"
+        },
+        {
+          "id": "d",
+          "text": "requests 50Mi CPU and limits 300m memory only"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "On a Container LimitRange item, default sets the container limits when omitted, and defaultRequest sets the container requests when omitted. Swapping them (a) is the common mix-up. Omitting limits (c) ignores the default field. Mixing CPU and memory units across request and limit (d) is not how the fields map.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Creating a limit range",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-lr-scope",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project limit ranges",
+      "stem": "In project `crib` you must ensure every container requests at least 64Mi and at most 1Gi, and that omitted values become request 128Mi and limit 256Mi. The project-wide sum of memory is already capped by a ResourceQuota. Which object adds the per-container rules?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "A ResourceQuota listing min and max memory per container"
+        },
+        {
+          "id": "b",
+          "text": "A LimitRange Container item with min, max, default, defaultRequest"
+        },
+        {
+          "id": "a",
+          "text": "A ClusterResourceQuota selecting project crib by name"
+        },
+        {
+          "id": "c",
+          "text": "A HorizontalPodAutoscaler targeting 128Mi average memory"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "LimitRange is the per-object control: min/max plus default (limit) and defaultRequest (request) on type Container (also Pod, PersistentVolumeClaim, ImageStream). ResourceQuota and ClusterResourceQuota only set aggregate hard totals; they have no min/max/default per container. HPA scales replicas from observed usage, it does not admit min/max memory on a container.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Restrict resource consumption with limit ranges",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-lr-quota-tf",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project limit ranges",
+      "stem": "Project `crib` must reject any container that asks for more than 1Gi of memory, even when the namespace quota still has unused memory. Which object enforces that per-container maximum?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A ResourceQuota with `spec.hard.limits.memory: 1Gi`"
+        },
+        {
+          "id": "b",
+          "text": "A LimitRange with a Container `max.memory` of 1Gi"
+        },
+        {
+          "id": "c",
+          "text": "A ClusterResourceQuota selecting the project with `quota.hard.memory: 1Gi`"
+        },
+        {
+          "id": "d",
+          "text": "A HorizontalPodAutoscaler with `maxReplicas: 1`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "LimitRange `max` is per Container (or Pod). ResourceQuota and ClusterResourceQuota cap the **sum** of requests/limits in the namespace, so one container could still request 1Gi if other pods use nothing. HPA changes replica count, not a per-container memory ceiling.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Limit ranges",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-clusters"
+        }
+      ]
+    },
+    {
+      "id": "self-tpl-wire",
+      "type": "single",
+      "domain": "selfservice",
+      "objective": "Configure project templates",
+      "stem": "You created Template `shop-project` that includes a ResourceQuota and a LimitRange. Which pair makes `oc new-project` (and the web console project request) use that template?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "Template in kube-system; annotate a ClusterResourceQuota with its name"
+        },
+        {
+          "id": "a",
+          "text": "Template in default; ConfigMap project-request in kube-system"
+        },
+        {
+          "id": "b",
+          "text": "Template in openshift-config; project.config.openshift.io/cluster names it"
+        },
+        {
+          "id": "d",
+          "text": "Template in openshift-operators; a Subscription selects the Template"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "The project request Template must live in openshift-config. You then edit project.config.openshift.io/cluster and set spec.projectRequestTemplate.name to that Template. A Template in default, kube-system, or openshift-operators is ignored for project requests. ConfigMaps, ClusterResourceQuota annotations, and OLM Subscriptions do not select the project request template.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Configuring project creation",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        }
+      ]
+    },
+    {
+      "id": "self-tpl-params",
+      "type": "multi",
+      "domain": "selfservice",
+      "objective": "Configure project templates",
+      "stem": "You bootstrap a custom project request template with `oc adm create-bootstrap-project-template`. Which two parameters does the API substitute when a user runs `oc new-project`?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "d",
+          "text": "OPERATOR_PACKAGE"
+        },
+        {
+          "id": "a",
+          "text": "PROJECT_NAME"
+        },
+        {
+          "id": "e",
+          "text": "DEPLOYMENT_IMAGE"
+        },
+        {
+          "id": "c",
+          "text": "CHANNEL_NAME"
+        },
+        {
+          "id": "b",
+          "text": "PROJECT_ADMIN_USER"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "The project request API substitutes PROJECT_NAME, PROJECT_DISPLAYNAME, PROJECT_DESCRIPTION, PROJECT_ADMIN_USER, and PROJECT_REQUESTING_USER. The default template binds PROJECT_ADMIN_USER as admin on the new project. OPERATOR_PACKAGE and CHANNEL_NAME belong to an OLM Subscription. DEPLOYMENT_IMAGE is not a project-request parameter.",
+      "references": [
+        {
+          "title": "OCP 4.22 — About project creation (template parameters)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/building_applications/projects"
+        }
+      ]
+    },
+    {
+      "id": "oper-og-sub",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Install an operator",
+      "stem": "You will install a Red Hat Operator whose CSV supports SingleNamespace so it watches only project `cicd-tools`. That project currently has no OperatorGroup. What do you create first, then second?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "A CatalogSource in `cicd-tools`, then a ClusterServiceVersion by hand"
+        },
+        {
+          "id": "b",
+          "text": "An OperatorGroup targeting `cicd-tools`, then a Subscription in `cicd-tools`"
+        },
+        {
+          "id": "c",
+          "text": "A Subscription in `openshift-operators`, then a CatalogSource in `cicd-tools`"
+        },
+        {
+          "id": "d",
+          "text": "An InstallPlan in `openshift-marketplace`, then a PackageManifest"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A SingleNamespace install needs an OperatorGroup whose `spec.targetNamespaces` lists `cicd-tools`, then a Subscription in that same namespace. OLM creates the InstallPlan and ClusterServiceVersion from the Subscription; you do not author those first. Red Hat Operators already have a CatalogSource (`redhat-operators`) in `openshift-marketplace`. A Subscription in `openshift-operators` is the AllNamespaces install path, not a single project.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Administrator tasks (installing Operators)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-allns",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Install an operator",
+      "stem": "You will install a Red Hat Operator in AllNamespaces mode from the default software catalog. Where do you create the Subscription?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "openshift-marketplace, because that is where catalogs live"
+        },
+        {
+          "id": "a",
+          "text": "kube-system, because Operators must run as cluster pods"
+        },
+        {
+          "id": "b",
+          "text": "openshift-operators, which already has a matching OperatorGroup"
+        },
+        {
+          "id": "d",
+          "text": "default, because every Operator defaults to that project"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "AllNamespaces installs go in openshift-operators; that namespace already has OperatorGroup global-operators with an empty target set. openshift-marketplace holds CatalogSource objects (redhat-operators, certified-operators), not the Subscription for a cluster-wide Operator. kube-system and default are not the OLM global Operator namespace.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Installing Operators from the software catalog",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-sub-source",
+      "type": "multi",
+      "domain": "operators",
+      "objective": "Install an operator",
+      "stem": "Subscription `pipelines-operator` should track package `openshift-pipelines-operator-rh` on channel `latest` from the default Red Hat catalog. Which two spec fields point OLM at that catalog?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "c",
+          "text": "spec.catalog: OperatorHub.coreos"
+        },
+        {
+          "id": "a",
+          "text": "spec.source: redhat-operators"
+        },
+        {
+          "id": "e",
+          "text": "spec.csvOwner: ClusterOperator"
+        },
+        {
+          "id": "b",
+          "text": "spec.sourceNamespace: openshift-marketplace"
+        },
+        {
+          "id": "d",
+          "text": "spec.packageSource: certified-operators"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "A Subscription names the CatalogSource with spec.source (typically redhat-operators) and spec.sourceNamespace (typically openshift-marketplace). spec.name is the package and spec.channel is the channel; those are not the catalog pointer. There is no spec.catalog or spec.packageSource field. ClusterOperator/csvOwner is CVO cluster Operators, not OLM.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Administrator tasks (Subscription spec)",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-uninst-subcsv",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Uninstall an operator",
+      "stem": "Cluster-admin `anvil` must fully uninstall the GitOps Operator from `openshift-gitops` using the CLI so OLM stops reconciling it. After operand CRs are gone, which pair do you delete?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "The redhat-operators CatalogSource and the PackageManifest"
+        },
+        {
+          "id": "c",
+          "text": "The Subscription and the ClusterServiceVersion"
+        },
+        {
+          "id": "b",
+          "text": "The InstallPlan only, leaving the Subscription in place"
+        },
+        {
+          "id": "d",
+          "text": "The OperatorGroup only, leaving the CSV in place"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "Documented CLI uninstall is: note currentCSV, delete the Subscription, then delete that ClusterServiceVersion. Deleting only the InstallPlan does not remove the Operator; the Subscription can recreate a plan. Deleting only the OperatorGroup does not remove the CSV. Removing the cluster's redhat-operators CatalogSource would break catalog access for every Operator, and PackageManifests are views into the catalog, not the installed Operator.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deleting Operators from a cluster",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-uninst-csv-left",
+      "type": "truefalse",
+      "domain": "operators",
+      "objective": "Uninstall an operator",
+      "stem": "Uninstalling an Operator from the web console also deletes that Operator’s CRDs and operand custom resources.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Console **Uninstall Operator** removes the Operator Subscription, CSV, and Operator pods. It does not remove CRDs or operand CRs; those stay so you do not lose application data. You delete operands first if you want them gone, then uninstall, then remove leftover CRDs if required.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deleting Operators from a cluster",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-uninst-console",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Uninstall an operator",
+      "stem": "From the OpenShift 4.22 web console, where do you start to uninstall an Operator that shows status Succeeded?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ecosystem → Installed Operators → Uninstall Operator"
+        },
+        {
+          "id": "b",
+          "text": "Operators → OperatorHub → Uninstall Operator"
+        },
+        {
+          "id": "c",
+          "text": "Administration → Cluster Settings → ClusterOperators"
+        },
+        {
+          "id": "d",
+          "text": "Workloads → Deployments → Delete Deployment"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "On OpenShift 4.22 the console path is **Ecosystem → Installed Operators**, then **Uninstall Operator**. That removes the Operator Subscription, CSV, and Operator pods. The older **Operators → OperatorHub** path is the pre-4.22 catalog UI name and is not the uninstall page. ClusterOperators are CVO-managed platform Operators, not OLM add-ons. Deleting the Deployment leaves the Subscription and CSV, so OLM recreates the pods.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deleting Operators from a cluster",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-del-crds",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Delete an operator",
+      "stem": "You uninstalled the Logging Operator (Subscription and CSV are gone). ClusterLogForwarder objects still exist and `oc get crd | grep logging` still shows the CRDs. What does that mean?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "Uninstall leaves operand CRs and CRDs; delete those separately if required"
+        },
+        {
+          "id": "a",
+          "text": "The CatalogSource redhat-operators was deleted and must be recreated"
+        },
+        {
+          "id": "d",
+          "text": "The OperatorGroup global-operators now owns those leftover CRDs"
+        },
+        {
+          "id": "b",
+          "text": "OLM always removes CRDs, so this output means the uninstall failed"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "OLM uninstall removes the Operator runtime (Subscription, CSV, Operator pods). It does not delete CustomResourceDefinitions or remaining operand custom resources; you delete operand CRs first (so finalizers can run) and CRDs only if you intend to wipe the APIs. CatalogSource is unrelated. OperatorGroup does not take ownership of those CRDs after uninstall. Remaining CRDs are expected, not proof of failure.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deleting Operators from a cluster",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "oper-csv-short",
+      "type": "single",
+      "domain": "operators",
+      "objective": "Delete an operator",
+      "stem": "You already deleted Subscription `gitops-operator` in `openshift-gitops`, but Operator pods are still running. Which remaining object represents the installed Operator and must be deleted to finish removal?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`CatalogSource`"
+        },
+        {
+          "id": "b",
+          "text": "`ClusterServiceVersion`"
+        },
+        {
+          "id": "c",
+          "text": "`OperatorGroup`"
+        },
+        {
+          "id": "d",
+          "text": "`InstallPlan`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A `ClusterServiceVersion` (CSV) is the installed Operator. Deleting only the Subscription can leave the CSV and its Operand/Operator pods. `CatalogSource` is the index of packages in `openshift-marketplace` and is shared. `OperatorGroup` is deleted only if it was the last Operator in that namespace. `InstallPlan` is a resolved install/upgrade plan, not the running Operator.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Deleting Operators from a cluster",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/operators/administrator-tasks"
+        }
+      ]
+    },
+    {
+      "id": "appsec-sa-field",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Configure and manage service accounts",
+      "stem": "Deployment `mill-api` in project `mill` must call the API as ServiceAccount `mill-runner` instead of `default`. Which pod-template field selects that identity?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "spec.template.spec.serviceAccountName: mill-runner"
+        },
+        {
+          "id": "a",
+          "text": "spec.template.spec.imagePullSecrets: mill-runner"
+        },
+        {
+          "id": "d",
+          "text": "spec.template.spec.securityContext.fsGroup: mill-runner"
+        },
+        {
+          "id": "b",
+          "text": "spec.template.spec.automountServiceAccountToken: true"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "spec.template.spec.serviceAccountName (on a Pod, spec.serviceAccountName) selects the ServiceAccount whose identity and token the pod uses. automountServiceAccountToken controls whether a token is mounted, not which SA is used. imagePullSecrets are registry credentials. fsGroup is a filesystem group, not an API identity.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using service accounts in applications",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-service-accounts-in-applications"
+        }
+      ]
+    },
+    {
+      "id": "appsec-sa-create",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Configure and manage service accounts",
+      "stem": "Project `inspect` needs a dedicated identity for scanner pods, and those pods must not mount an API token. Which change matches that requirement?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Create Secret `scanner` and set `imagePullSecrets` to it"
+        },
+        {
+          "id": "b",
+          "text": "Create ServiceAccount `scanner`, set `serviceAccountName`, and set `automountServiceAccountToken: false`"
+        },
+        {
+          "id": "c",
+          "text": "Create RoleBinding `scanner` and set `spec.serviceAccount` to `default`"
+        },
+        {
+          "id": "d",
+          "text": "Grant SCC `privileged` to ServiceAccount `default` and keep using `default`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc create sa scanner` creates the identity. Point the workload at it with `serviceAccountName` and set `automountServiceAccountToken: false` so kubelet does not mount a token. A generic Secret is not an identity. RoleBindings grant RBAC; the pod field is `serviceAccountName`, not `spec.serviceAccount`. Granting `privileged` to `default` does not create a dedicated SA or disable the token.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using service accounts in applications",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-service-accounts-in-applications"
+        }
+      ]
+    },
+    {
+      "id": "appsec-priv-not-enough",
+      "type": "truefalse",
+      "domain": "appsec",
+      "objective": "Run privileged applications",
+      "stem": "Setting `securityContext.privileged: true` on a container is enough for OpenShift to admit the pod under the privileged SCC.",
+      "choices": [
+        {
+          "id": "true",
+          "text": "True"
+        },
+        {
+          "id": "false",
+          "text": "False"
+        }
+      ],
+      "answer": [
+        "false"
+      ],
+      "explanation": "Admission picks an SCC the pod's ServiceAccount is allowed to use that also satisfies the pod spec. privileged: true requests a privileged container, but the SA still needs `use` on the privileged SCC (for example `oc adm policy add-scc-to-user privileged -z <sa> -n <ns>`). Without that grant the pod is rejected even if the spec asks for privileged.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    },
+    {
+      "id": "appsec-priv-grant",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Run privileged applications",
+      "stem": "DaemonSet `node-agent` in `forge` must run a privileged container as ServiceAccount `agent`. Which command grants the SCC that allows privileged containers?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "oc adm policy add-scc-to-user restricted-v2 -z agent -n forge"
+        },
+        {
+          "id": "c",
+          "text": "oc adm policy add-scc-to-user privileged -z agent -n forge"
+        },
+        {
+          "id": "b",
+          "text": "oc adm policy add-scc-to-user anyuid -z default -n forge"
+        },
+        {
+          "id": "d",
+          "text": "oc adm policy add-role-to-user cluster-admin -z agent -n forge"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`oc adm policy add-scc-to-user privileged -z agent -n forge` grants the privileged SCC to that ServiceAccount (`-z` means SA). restricted-v2 is the default constrained SCC and does not allow privileged containers. anyuid on default only relaxes UID, and it targets the wrong SA. cluster-admin is RBAC to the Kubernetes API, not an SCC grant.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    },
+    {
+      "id": "appsec-scc-default",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Manage and apply permissions using security context constraints",
+      "stem": "On a new OpenShift 4.22 install, which default SCC forces pods into a Linux user namespace by setting `UserNamespaceLevel` to `RequirePodLevel` (`hostUsers: false`)?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`restricted-v2`"
+        },
+        {
+          "id": "b",
+          "text": "`anyuid`"
+        },
+        {
+          "id": "c",
+          "text": "`restricted-v3`"
+        },
+        {
+          "id": "d",
+          "text": "`privileged`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`restricted-v3` is like `restricted-v2` plus `UserNamespaceLevel: RequirePodLevel`, so pods run with `hostUsers: false`. `restricted-v2` drops capabilities and sets seccomp `runtime/default` but does not require a user namespace. `anyuid` relaxes the runAsUser strategy. `privileged` is the most relaxed SCC and does not force a user namespace.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    },
+    {
+      "id": "appsec-scc-anyuid",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Manage and apply permissions using security context constraints",
+      "stem": "Image `registry.example.com/ledger:4.2` must run as UID 999 (it ignores a random UID). Pods using ServiceAccount `ledger` in project `books` fail SCC admission under restricted-v2. Which SCC do you grant to `ledger`?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "anyuid"
+        },
+        {
+          "id": "a",
+          "text": "hostnetwork"
+        },
+        {
+          "id": "d",
+          "text": "restricted-v2"
+        },
+        {
+          "id": "b",
+          "text": "hostaccess"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "anyuid keeps most restricted volume and capability rules but allows RunAsAny, which is the usual grant for images that require a fixed UID. restricted-v2 already applies and uses MustRunAsRange with an allocated UID. hostnetwork and hostaccess open host namespaces and are unrelated to a numeric UID inside the container. privileged would work but is far more than this image needs.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    },
+    {
+      "id": "appsec-scc-noedit",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Manage and apply permissions using security context constraints",
+      "stem": "You need a slightly relaxed policy for ServiceAccount `scanner` (allow a fixed UID, keep other restricted-v2 rules). What is the supported way to do that on OpenShift 4.22?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "Grant scanner an existing or custom SCC; leave restricted-v2 unchanged"
+        },
+        {
+          "id": "a",
+          "text": "Edit the default restricted-v2 SCC and set runAsUser to RunAsAny"
+        },
+        {
+          "id": "d",
+          "text": "Delete SCC privileged so CVO recreates it with your UID range"
+        },
+        {
+          "id": "c",
+          "text": "Patch SCC anyuid to drop its users list and bind it cluster-wide"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "Do not modify default SCCs. Upgrades reset those objects, and deleting a default SCC causes it to be regenerated. Grant the SA a suitable existing SCC (anyuid) or create a custom SCC and bind it with add-scc-to-user. Editing restricted-v2, deleting privileged, or rewriting anyuid's users list for everyone are the unsupported shortcuts.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    },
+    {
+      "id": "appsec-sec-generic",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Create and apply secrets to manage sensitive information",
+      "stem": "Pods in project `mill` pull `registry.example.com/mill-api:1.4` and fail with `unauthorized`. Which command creates the image-pull Secret?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc create secret generic pull --from-literal=password=s3cret -n mill`"
+        },
+        {
+          "id": "b",
+          "text": "`oc create secret docker-registry mill-pull --docker-server=registry.example.com --docker-username=robot --docker-password=s3cret -n mill`"
+        },
+        {
+          "id": "c",
+          "text": "`oc create secret tls mill-pull --cert=tls.crt --key=tls.key -n mill`"
+        },
+        {
+          "id": "d",
+          "text": "`oc create configmap mill-pull --from-literal=auths=registry.example.com -n mill`"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "`oc create secret docker-registry` builds a `kubernetes.io/dockerconfigjson` Secret for registry login. You then link it with `imagePullSecrets` on the ServiceAccount or pod. A generic Secret with a password key is not in dockerconfigjson form. A TLS Secret holds a certificate pair. A ConfigMap is not a pull credential.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Allowing pods to reference images from other secured registries",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/images/managing-images"
+        }
+      ]
+    },
+    {
+      "id": "appsec-sec-consume",
+      "type": "multi",
+      "domain": "appsec",
+      "objective": "Create and apply secrets to manage sensitive information",
+      "selectCount": 2,
+      "stem": "Secret `db-creds` already exists in `mill`. Which two methods let container `api` consume the `password` key at runtime?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Mount the Secret as a volume so the key appears as a file"
+        },
+        {
+          "id": "b",
+          "text": "Set an environment variable with `secretKeyRef` to key `password`"
+        },
+        {
+          "id": "c",
+          "text": "Copy the value into a ConfigMap and mount that instead"
+        },
+        {
+          "id": "d",
+          "text": "Put the value in a Deployment annotation named `db-password`"
+        },
+        {
+          "id": "e",
+          "text": "Add the value to the Service `spec.selector` as `password`"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "Pods consume Secrets as volumes (each key becomes a file) or as environment variables via `env.valueFrom.secretKeyRef` (or `envFrom.secretRef`). Copying the value into a ConfigMap or a Deployment annotation leaves the credential in a less protected object. Service selectors match pod labels; they do not inject Secret keys.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Providing sensitive data to pods by using secrets",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/nodes/working-with-pods"
+        }
+      ]
+    },
+    {
+      "id": "appsec-api-role",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Configure application access to Kubernetes APIs",
+      "stem": "ServiceAccount `crawler` in project `ledger` should list most namespaced objects in that project and must not list nodes. Which grant matches that scope?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc adm policy add-role-to-user view -z crawler -n ledger`"
+        },
+        {
+          "id": "b",
+          "text": "`oc adm policy add-cluster-role-to-user cluster-admin -z crawler`"
+        },
+        {
+          "id": "c",
+          "text": "`oc adm policy add-cluster-role-to-user edit -z crawler`"
+        },
+        {
+          "id": "d",
+          "text": "`oc adm policy add-scc-to-user privileged -z crawler -n ledger`"
+        }
+      ],
+      "answer": [
+        "a"
+      ],
+      "explanation": "`add-role-to-user view -z crawler -n ledger` creates a RoleBinding in `ledger` to the `view` ClusterRole, which can list namespaced objects in that project and cannot list nodes. `cluster-admin` or cluster-scoped `edit` is wider than one project. An SCC grant changes pod security, not API verbs.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using RBAC to define and apply permissions",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "appsec-api-verify",
+      "type": "multi",
+      "domain": "appsec",
+      "objective": "Configure application access to Kubernetes APIs",
+      "stem": "You bound ServiceAccount `crawler` in `ledger` to view. Which two actions confirm that identity can list pods in `ledger` and cannot list nodes?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "c",
+          "text": "oc adm policy add-scc-to-user anyuid -z crawler -n ledger"
+        },
+        {
+          "id": "a",
+          "text": "oc auth can-i list pods -n ledger --as=system:serviceaccount:ledger:crawler"
+        },
+        {
+          "id": "d",
+          "text": "oc describe scc restricted-v2 | grep system:serviceaccount:ledger:crawler"
+        },
+        {
+          "id": "b",
+          "text": "oc auth can-i list nodes --as=system:serviceaccount:ledger:crawler"
+        },
+        {
+          "id": "e",
+          "text": "oc create secret generic crawler --from-literal=token=view -n ledger"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "`oc auth can-i` impersonating system:serviceaccount:ledger:crawler is the check: list pods in ledger should be yes, list nodes should be no because view is namespaced. SCC describe and add-scc-to-user test pod security, not API access. A generic Secret named crawler is unrelated to RBAC.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Using RBAC to define and apply permissions",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/using-rbac"
+        }
+      ]
+    },
+    {
+      "id": "appsec-job-restart",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Deploy jobs to perform one-time tasks",
+      "stem": "You are writing Job `db-migrate` (batch/v1) to run a migration container once in `books`. Which restartPolicy values are valid on spec.template.spec?",
+      "choices": [
+        {
+          "id": "b",
+          "text": "Never or OnFailure"
+        },
+        {
+          "id": "a",
+          "text": "Always or OnFailure"
+        },
+        {
+          "id": "d",
+          "text": "Always or Never"
+        },
+        {
+          "id": "c",
+          "text": "Always only"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A Job pod template must set restartPolicy to Never or OnFailure. Always is the Deployment/ReplicaSet default and is rejected on a Job. completions, parallelism, and backoffLimit control how many pods succeed and how many retries occur, but they do not replace restartPolicy.",
+      "references": [
+        {
+          "title": "Kubernetes docs — Jobs",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+        }
+      ]
+    },
+    {
+      "id": "appsec-job-kind",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Deploy jobs to perform one-time tasks",
+      "stem": "Team `books` needs a one-shot database schema migration that runs to completion and then stops. Which workload kind is the right controller?",
+      "choices": [
+        {
+          "id": "c",
+          "text": "Deployment with spec.replicas: 1"
+        },
+        {
+          "id": "a",
+          "text": "CronJob with schedule \"* * * * *\""
+        },
+        {
+          "id": "b",
+          "text": "Job with completions: 1 and parallelism: 1"
+        },
+        {
+          "id": "d",
+          "text": "ReplicaSet with spec.replicas: 1"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "kind Job (batch/v1) runs pods until the requested completions succeed; completions: 1 and parallelism: 1 is a single one-time task. A CronJob would keep creating Jobs on a schedule. A Deployment or ReplicaSet keeps a replica running and restarts it, which is the opposite of a finite migration.",
+      "references": [
+        {
+          "title": "Kubernetes docs — Jobs",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/job/"
+        }
+      ]
+    },
+    {
+      "id": "appsec-cron-schedule",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Configure Kubernetes cron jobs",
+      "stem": "You need a nightly report at 02:15 in project `ledger`. Which object and field hold that schedule?",
+      "choices": [
+        {
+          "id": "d",
+          "text": "Deployment spec.template.spec.activeDeadlineSeconds"
+        },
+        {
+          "id": "b",
+          "text": "CronJob spec.schedule with spec.jobTemplate"
+        },
+        {
+          "id": "a",
+          "text": "Job spec.completions with a cron annotation"
+        },
+        {
+          "id": "c",
+          "text": "ReplicaSet spec.minReadySeconds with a schedule label"
+        }
+      ],
+      "answer": [
+        "b"
+      ],
+      "explanation": "A CronJob stores the crontab in spec.schedule (for example `15 2 * * *`) and the pod recipe under spec.jobTemplate (which embeds a Job template). A plain Job has no schedule. Deployments and ReplicaSets have no cron field; activeDeadlineSeconds and minReadySeconds are unrelated timers.",
+      "references": [
+        {
+          "title": "Kubernetes docs — CronJob",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+        }
+      ]
+    },
+    {
+      "id": "appsec-cron-concur",
+      "type": "multi",
+      "domain": "appsec",
+      "objective": "Configure Kubernetes cron jobs",
+      "stem": "CronJob `nightly-report` in `ledger` must never run two Jobs at once. Which two concurrencyPolicy values prevent overlap?",
+      "selectCount": 2,
+      "choices": [
+        {
+          "id": "c",
+          "text": "Allow"
+        },
+        {
+          "id": "a",
+          "text": "Forbid"
+        },
+        {
+          "id": "e",
+          "text": "Always"
+        },
+        {
+          "id": "b",
+          "text": "Replace"
+        },
+        {
+          "id": "d",
+          "text": "Serial"
+        }
+      ],
+      "answer": [
+        "a",
+        "b"
+      ],
+      "explanation": "concurrencyPolicy Forbid skips a new run if the previous Job is still going. Replace deletes the currently running Job and starts a new one. Allow (the default) permits concurrent Jobs. Always is a pod restartPolicy, not a CronJob concurrency value. Serial is not a CronJob policy.",
+      "references": [
+        {
+          "title": "Kubernetes docs — CronJob",
+          "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+        }
+      ]
+    },
+    {
+      "id": "appsec-scc-z",
+      "type": "single",
+      "domain": "appsec",
+      "objective": "Manage and apply permissions using security context constraints",
+      "stem": "You must grant SCC `anyuid` to ServiceAccount `scanner` in project `mill`. Which command treats `scanner` as a ServiceAccount rather than a User?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "`oc adm policy add-scc-to-user anyuid scanner -n mill`"
+        },
+        {
+          "id": "b",
+          "text": "`oc adm policy add-scc-to-group anyuid scanner -n mill`"
+        },
+        {
+          "id": "c",
+          "text": "`oc adm policy add-scc-to-user anyuid -z scanner -n mill`"
+        },
+        {
+          "id": "d",
+          "text": "`oc adm policy add-role-to-user anyuid -z scanner -n mill`"
+        }
+      ],
+      "answer": [
+        "c"
+      ],
+      "explanation": "`-z` / `--serviceaccount` makes `add-scc-to-user` bind the SCC to `system:serviceaccount:mill:scanner`. Without `-z`, `scanner` is treated as a User name. `add-scc-to-group` targets a Group, not an SA. `add-role-to-user` grants an RBAC role, not an SCC.",
+      "references": [
+        {
+          "title": "OCP 4.22 — Managing security context constraints",
+          "url": "https://docs.redhat.com/en/documentation/openshift_container_platform/4.22/html/authentication_and_authorization/managing-pod-security-policies"
+        }
+      ]
+    }
+  ]
+}

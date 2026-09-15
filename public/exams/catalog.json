@@ -62,6 +62,26 @@
         "Storage",
         "Troubleshooting"
       ]
+    },
+    {
+      "id": "ex280",
+      "title": "Red Hat Certified System Administrator in OpenShift",
+      "vendor": "Red Hat",
+      "version": "OCP 4.22",
+      "path": "ex280/exam.json",
+      "questionCount": 128,
+      "timeLimitMinutes": 180,
+      "passPercent": 70,
+      "domains": [
+        "Manage OpenShift Container Platform",
+        "Declarative Resource Management",
+        "Deploy applications",
+        "Manage authentication and authorization",
+        "Configure network security",
+        "Enable developer self-service",
+        "Manage OpenShift operators",
+        "Configure application security"
+      ]
     }
   ]
 }
