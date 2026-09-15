@@ -320,15 +320,15 @@
         },
         {
           "id": "b",
-          "text": "oc new-app rhel9 --name vm"
+          "text": "oc create -f vm.yaml after hand-writing a Pod spec named rhel9"
         },
         {
           "id": "c",
-          "text": "podman run --vm rhel9"
+          "text": "virtctl create vm --from-template rhel9"
         },
         {
           "id": "d",
-          "text": "virt-install --import --name rhel9"
+          "text": "oc create vm --name rhel-9-minimal"
         }
       ],
       "answer": [
@@ -638,11 +638,11 @@
         },
         {
           "id": "c",
-          "text": "host-device without a NAD"
+          "text": "sriov"
         },
         {
           "id": "d",
-          "text": "ClusterIP"
+          "text": "l2bridge"
         }
       ],
       "answer": [
@@ -755,15 +755,15 @@
         },
         {
           "id": "b",
-          "text": "It always creates an extra SR-IOV VF in addition to the pod network."
+          "text": "It adds a secondary Multus NIC beside the unchanged default pod network."
         },
         {
           "id": "c",
-          "text": "It is only used for Windows guests."
+          "text": "It creates a Linux-bridge NAD named default in every namespace."
         },
         {
           "id": "d",
-          "text": "It disables kube-proxy in the cluster."
+          "text": "It attaches an SR-IOV VF as the only VM interface."
         }
       ],
       "answer": [
@@ -790,15 +790,15 @@
         },
         {
           "id": "b",
-          "text": "MachineConfig"
+          "text": "UserDefinedNetwork"
         },
         {
           "id": "c",
-          "text": "Route"
+          "text": "NetworkAttachmentDefinition"
         },
         {
           "id": "d",
-          "text": "IngressController"
+          "text": "SriovNetwork"
         }
       ],
       "answer": [
@@ -973,17 +973,17 @@
         },
         {
           "id": "c",
-          "text": "LoadBalancer"
+          "text": "bridge"
         },
         {
           "id": "d",
-          "text": "hostPort"
+          "text": "pod"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "If an SR-IOV network device is configured and defined in the namespace, the NIC type is SR-IOV. Masquerade is pod-network NAT; LoadBalancer is a Service.",
+      "explanation": "If an SR-IOV network is defined in the namespace, the NIC type is SR-IOV. Bridge is Linux-bridge NADs; masquerade is the default pod network. Do not pick a Service type as a NIC binding.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
@@ -1198,15 +1198,15 @@
         },
         {
           "id": "b",
-          "text": "kind: PersistentVolumeClaim only"
+          "text": "apiGroup: snapshot.kubevirt.io, kind: VirtualMachineSnapshotContent, name: <vm_name>"
         },
         {
           "id": "c",
-          "text": "kind: Node, name: the virt-launcher node"
+          "text": "kind: PersistentVolumeClaim, name: <vm_name>"
         },
         {
           "id": "d",
-          "text": "apiGroup: apps, kind: Deployment"
+          "text": "apiGroup: cdi.kubevirt.io, kind: DataVolume, name: <vm_name>"
         }
       ],
       "answer": [
@@ -1332,21 +1332,21 @@
         },
         {
           "id": "b",
-          "text": "Always creates a brand-new namespace"
+          "text": "Creates a new VM from the snapshot without changing the source VM"
         },
         {
           "id": "c",
-          "text": "Converts the VM to a containerDisk"
+          "text": "Creates only a VolumeSnapshot of the PVC with no VM spec"
         },
         {
           "id": "d",
-          "text": "Deletes every PVC in the project"
+          "text": "Exports the VM with virtctl vmexport"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "Restore rolls the existing VM back to the snapshot. Creating a new VM from a snapshot is a separate action (Snapshots tab \u2192 Create VirtualMachine).",
+      "explanation": "Restore rolls the existing VM back to the snapshot\u2019s disks and spec. Creating a new VM from a snapshot is a separate Snapshots-tab action (Create VirtualMachine). VolumeSnapshot is the CSI object under the hood, not the restore result.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Backup and restore (VM snapshots)",
@@ -1402,15 +1402,15 @@
         },
         {
           "id": "b",
-          "text": "oc adm clone vm"
+          "text": "VirtualMachine details \u2192 Snapshots \u2192 Restore"
         },
         {
           "id": "c",
-          "text": "Catalog \u2192 Clone Operator"
+          "text": "VirtualMachine details \u2192 Actions \u2192 Stop"
         },
         {
           "id": "d",
-          "text": "Storage \u2192 Clone StorageClass"
+          "text": "Catalog \u2192 Add volume"
         }
       ],
       "answer": [
@@ -1437,15 +1437,15 @@
         },
         {
           "id": "b",
-          "text": "spec.source.git"
+          "text": "spec.source.http.url of a qcow2"
         },
         {
           "id": "c",
-          "text": "spec.source.configMap"
+          "text": "spec.source.registry.url of a container disk"
         },
         {
           "id": "d",
-          "text": "spec.source.secret"
+          "text": "spec.source.blank"
         }
       ],
       "answer": [
@@ -1526,15 +1526,15 @@
         },
         {
           "id": "b",
-          "text": "--volume-import type:git,url:https://example.com/rhel9.git"
+          "text": "--volume-import type:ds,url:https://example.com/rhel9.qcow2"
         },
         {
           "id": "c",
-          "text": "--from-image-stream rhel9"
+          "text": "--volume-import type:pvc,url:https://example.com/rhel9.qcow2"
         },
         {
           "id": "d",
-          "text": "--hostpath /var/lib/libvirt/images/rhel9.qcow2"
+          "text": "--volume-import type:http,src:openshift-virtualization-os-images/rhel9"
         }
       ],
       "answer": [
@@ -1561,15 +1561,15 @@
         },
         {
           "id": "b",
-          "text": "kube-public"
+          "text": "openshift-cnv"
         },
         {
           "id": "c",
-          "text": "openshift-operators"
+          "text": "openshift-marketplace"
         },
         {
           "id": "d",
-          "text": "default"
+          "text": "openshift-image-registry"
         }
       ],
       "answer": [
@@ -1600,15 +1600,15 @@
         },
         {
           "id": "b",
-          "text": "oc adm export vm web1"
+          "text": "oc create vmexport --vm=web1"
         },
         {
           "id": "c",
-          "text": "virtctl migrate web1 --export"
+          "text": "virtctl vmexport download myexport --vm=web1"
         },
         {
           "id": "d",
-          "text": "podman save web1"
+          "text": "virtctl expose vm web1 --name export"
         }
       ],
       "answer": [
@@ -1658,11 +1658,11 @@
         },
         {
           "id": "c",
-          "text": "A MachineSet"
+          "text": "A DataVolume (--dv)"
         },
         {
           "id": "d",
-          "text": "An Ingress"
+          "text": "A VirtualMachineInstance (--vmi)"
         }
       ],
       "answer": [
@@ -1812,7 +1812,7 @@
         },
         {
           "id": "d",
-          "text": "Installed Operators"
+          "text": "Network interfaces"
         }
       ],
       "answer": [
@@ -1958,11 +1958,11 @@
         },
         {
           "id": "c",
-          "text": "virtctl vmexport create web1"
+          "text": "virtctl restart web1"
         },
         {
           "id": "d",
-          "text": "oc adm drain --migrate-vms"
+          "text": "oc delete vmi web1"
         }
       ],
       "answer": [
@@ -2099,15 +2099,15 @@
         },
         {
           "id": "b",
-          "text": "Compute \u2192 Nodes \u2192 YAML"
+          "text": "Help \u2192 Command Line Tools"
         },
         {
           "id": "c",
-          "text": "Storage \u2192 StorageClasses"
+          "text": "Virtualization \u2192 Catalog"
         },
         {
           "id": "d",
-          "text": "User Management \u2192 Groups"
+          "text": "Compute \u2192 Nodes \u2192 YAML"
         }
       ],
       "answer": [
@@ -2344,15 +2344,15 @@
         },
         {
           "id": "b",
-          "text": "Writes the key into every node\u2019s authorized_keys"
+          "text": "Adds the key only to this VM and does not create a reusable secret"
         },
         {
           "id": "c",
-          "text": "Creates a cluster-wide UserDefinedNetwork"
+          "text": "Writes the key into every node\u2019s authorized_keys"
         },
         {
           "id": "d",
-          "text": "Disables virtctl ssh for other users"
+          "text": "Stores the key in kube-system for all projects"
         }
       ],
       "answer": [
@@ -2406,21 +2406,21 @@
         },
         {
           "id": "b",
-          "text": "--instancetype cluster/<name>"
+          "text": "--instancetype virtualmachineclusterinstancetype/<name>"
         },
         {
           "id": "c",
-          "text": "--kind Pod"
+          "text": "--preference virtualmachinepreference/<name>"
         },
         {
           "id": "d",
-          "text": "--host-device instancetype"
+          "text": "--instancetype /<name>"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "Include the kind in the flag: virtualmachineinstancetype/<name> or virtualmachinepreference/<name>. The object must be in the same namespace as the VM. Bare --instancetype <name> uses the cluster-wide type.",
+      "explanation": "Include the namespaced kind: --instancetype virtualmachineinstancetype/<name>. Bare --instancetype <name> or virtualmachineclusterinstancetype/<name> selects the cluster-wide object. --preference is a different resource.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Creating a virtual machine",
@@ -2480,15 +2480,15 @@
         },
         {
           "id": "b",
-          "text": "The VM can only run during business hours"
+          "text": "The VM is created but left off (same as runStrategy: Halted)"
         },
         {
           "id": "c",
-          "text": "Live migration is disabled"
+          "text": "Live migration is disabled for this VM"
         },
         {
           "id": "d",
-          "text": "The VM ignores instance types"
+          "text": "Instance types on the VM are ignored"
         }
       ],
       "answer": [
@@ -2615,29 +2615,29 @@
       "type": "single",
       "domain": "net",
       "objective": "Connect virtual machines to predefined networks, such as user-defined networks",
-      "stem": "You need persistent IPs on a user-defined network for VMs. Which topology provides persistent IPs?",
+      "stem": "On a UserDefinedNetwork, which topology does not provide persistent IP addresses for VMs?",
       "choices": [
         {
           "id": "a",
-          "text": "Layer2"
+          "text": "Layer3"
         },
         {
           "id": "b",
-          "text": "Layer3 only"
+          "text": "Layer2"
         },
         {
           "id": "c",
-          "text": "Neither; only masquerade pod network keeps IPs"
+          "text": "Layer2 with a shared OVN logical switch"
         },
         {
           "id": "d",
-          "text": "hostNetwork on the virt-launcher pod"
+          "text": "A Linux-bridge NAD (not a UDN topology)"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "The UDN support matrix: Layer2 has persistent IPs; Layer3 does not. Layer2 is the topology called out for VM workloads and live migration without NAT.",
+      "explanation": "The UDN support matrix: Layer2 has persistent IPs; Layer3 does not. Layer2 is the topology recommended for VM live migration without NAT. Linux-bridge NADs are a different attachment method, not a UDN topology value.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Primary user-defined networks",
@@ -2724,15 +2724,15 @@
         },
         {
           "id": "b",
-          "text": "A ClusterIP Service on port 80"
+          "text": "An OVN-Kubernetes localnet NAD"
         },
         {
           "id": "c",
-          "text": "virtctl ssh through the API server"
+          "text": "A masquerade NIC on the default pod network"
         },
         {
           "id": "d",
-          "text": "An Ingress with passthrough TLS"
+          "text": "An SR-IOV network attachment"
         }
       ],
       "answer": [
@@ -2755,11 +2755,11 @@
       "choices": [
         {
           "id": "a",
-          "text": "cnv-bridge"
+          "text": "bridge"
         },
         {
           "id": "b",
-          "text": "flannel"
+          "text": "ovn-k8s-cni-overlay"
         },
         {
           "id": "c",
@@ -2767,13 +2767,13 @@
         },
         {
           "id": "d",
-          "text": "host-device with no bridge"
+          "text": "macvlan"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "Documented bridge NAD config uses type cnv-bridge (and often cnv-tuning for MAC). Example fields include bridge, macspoofchk, and optional vlan.",
+      "explanation": "OpenShift 4.18 Linux-bridge NAD examples set spec.config type to bridge (web console Network Type: CNV Linux bridge). ovn-k8s-cni-overlay is the OVN secondary NAD type; ipvlan and macvlan are other CNI plugins used with NADs, not the Linux-bridge VM path.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Virtualization networking",
@@ -2821,29 +2821,29 @@
       "type": "single",
       "domain": "net",
       "objective": "Configure external access with load balancer services",
-      "stem": "The virtctl expose documentation shows publishing SSH with which example?",
+      "stem": "You ran virtctl expose vm web1 --name web1-ssh --type NodePort --port 22. How do clients reach SSH on the guest?",
       "choices": [
         {
           "id": "a",
-          "text": "virtctl expose vm rhel9_vm --name rhel9-ssh --type NodePort --port 22"
+          "text": "Each node IP on the allocated NodePort"
         },
         {
           "id": "b",
-          "text": "virtctl ssh rhel9_vm --type NodePort"
+          "text": "A cloud or metal load-balancer hostname (LoadBalancer type)"
         },
         {
           "id": "c",
-          "text": "oc create route ssh --port 22"
+          "text": "An OpenShift Route listening on TCP 22"
         },
         {
           "id": "d",
-          "text": "virtctl console --type NodePort"
+          "text": "The virtctl console proxy only"
         }
       ],
       "answer": [
         "a"
       ],
-      "explanation": "The CLI table example is virtctl expose vm rhel9_vm --name rhel9-ssh --type NodePort --port 22. LoadBalancer is the same command with --type LoadBalancer for external LB access.",
+      "explanation": "NodePort publishes the Service on a port on every node. LoadBalancer would allocate an external LB address instead. OpenShift Routes are HTTP/TLS, not arbitrary TCP 22. virtctl console is serial, not SSH.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 virtctl CLI tools",
@@ -2891,15 +2891,15 @@
         },
         {
           "id": "b",
-          "text": "Scripts"
+          "text": "Disks"
         },
         {
           "id": "c",
-          "text": "Installed Operators"
+          "text": "Environment"
         },
         {
           "id": "d",
-          "text": "MachineHealthCheck"
+          "text": "Scripts"
         }
       ],
       "answer": [
@@ -3000,15 +3000,15 @@
         },
         {
           "id": "b",
-          "text": "ReplicaSet"
+          "text": "VirtualMachineRestore"
         },
         {
           "id": "c",
-          "text": "VolumeAttachment only, with no snapshot CR"
+          "text": "VolumeSnapshot"
         },
         {
           "id": "d",
-          "text": "MachineConfigPool"
+          "text": "VirtualMachineExport"
         }
       ],
       "answer": [
@@ -3300,18 +3300,18 @@
         },
         {
           "id": "c",
-          "text": "A MachineSet YAML"
+          "text": "A containerDisk"
         },
         {
           "id": "d",
-          "text": "An Ingress secret"
+          "text": "A DataSource in another project"
         }
       ],
       "answer": [
         "a",
         "b"
       ],
-      "explanation": "Add volume uploads a new image or uses an existing PVC, a volume snapshot, or a containerDisk. Save then lets you boot from that volume.",
+      "explanation": "Add volume uploads a new image or uses an existing PVC, a volume snapshot, or a containerDisk. The question already excludes upload and containerDisk from the two answers, so PVC and volume snapshot are the pair. A DataSource in another project is a virtctl --volume-import type:ds path, not an Add volume source listed in that dialog.",
       "references": [
         {
           "title": "OCP 4.18 \u2014 Creating a virtual machine",
@@ -3421,15 +3421,15 @@
         },
         {
           "id": "b",
-          "text": "The wizard always hard-fails; snapshots are impossible"
+          "text": "Uncheck the ineligible disks and Save, with no warning checkbox"
         },
         {
           "id": "c",
-          "text": "Delete the VM first"
+          "text": "Change the disk storage class, then retry Take Snapshot"
         },
         {
           "id": "d",
-          "text": "Switch the VM to hostNetwork"
+          "text": "Stop the VM; online snapshots cannot continue with excluded disks"
         }
       ],
       "answer": [
@@ -3473,15 +3473,15 @@
         },
         {
           "id": "b",
-          "text": "virtctl restart --seal"
+          "text": "virt-customize -a /dev/vda --run-command 'rpm -qa'"
         },
         {
           "id": "c",
-          "text": "oc adm prune images"
+          "text": "virt-cat -a /dev/vda /etc/os-release"
         },
         {
           "id": "d",
-          "text": "virtctl vmexport --sysprep"
+          "text": "virt-df -a /dev/vda -h"
         }
       ],
       "answer": [
@@ -3508,15 +3508,15 @@
         },
         {
           "id": "b",
-          "text": "Virtualization \u2192 Templates \u2192 Networking"
+          "text": "Networking \u2192 NetworkAttachmentDefinitions \u2192 Create"
         },
         {
           "id": "c",
-          "text": "Compute \u2192 MachineSets \u2192 Network"
+          "text": "Virtualization \u2192 Networks \u2192 Create UDN"
         },
         {
           "id": "d",
-          "text": "Operators \u2192 OperatorHub \u2192 UDN"
+          "text": "Networking \u2192 Services \u2192 Create UserDefinedNetwork"
         }
       ],
       "answer": [
@@ -3600,11 +3600,11 @@
         },
         {
           "id": "c",
-          "text": "Mounted on every node as hostPath"
+          "text": "Attached as a containerDisk"
         },
         {
           "id": "d",
-          "text": "Sized under 1 GiB"
+          "text": "Provisioned from a hostPath volume"
         }
       ],
       "answer": [
