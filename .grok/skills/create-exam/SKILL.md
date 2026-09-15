@@ -19,7 +19,9 @@ Pack format lives in `public/exams/schema.json`. Vendor URL patterns live in
 ## Inputs
 
 Need an exam identity: vendor + exam name or code (e.g. `AZ-104`, `VCP-DCV 2024`).
-If missing, ask once. Optional: question count (default 50), domain subset, extra doc URLs.
+If missing, ask once. Optional: question count, domain subset, extra doc URLs.
+Default size is **80**. Prefer too many unique sourced items over too few; do not stop early
+to hit a round number. If the user sets a count, treat it as a floor, not a cap.
 
 Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`, `vcp-dcv-2024`).
 
@@ -33,10 +35,12 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 3. **Fetch supporting docs** for thin objectives (vendor learn/docs, RFCs, man pages).
    Use them for explanations and `references[]`, not as question banks.
 4. **Draft the pack** as `unofficial: true`. Domain `weight` values must sum to 100.
-   Cover every listed objective at least once when count allows; otherwise sample
+   Cover every listed objective at least twice (more is better). Sample extra items
    proportionally to weights. Mix `single`, `multi`, `truefalse`, and `fill`.
    Every question needs `explanation` and at least one public `references[]` entry.
    `multi.selectCount` equals `answer.length` and is less than the number of choices.
+   A large original bank beats a thin one; skip only if a remaining objective has no
+   public fact left to test. Never pad with rewords of items already in the pack.
 5. **Write files.** Create `public/exams/<id>/exam.json`. Upsert the object in
    `public/exams/catalog.json` (`path` must be `<id>/exam.json`; `questionCount`,
    `domains` names, `timeLimitMinutes`, `passPercent`, `title`, `vendor`, `version`
@@ -54,3 +58,4 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 - `fill` answers are short tokens (port numbers, command names, reserved words), with
   common variants listed in `answer`.
 - Never paste vendor exam item text, even "from memory."
+- Prefer surplus unique questions over a short pack.

@@ -21,7 +21,7 @@
       "vendor": "Red Hat",
       "version": "OCP 4.18",
       "path": "ex156/exam.json",
-      "questionCount": 58,
+      "questionCount": 113,
       "timeLimitMinutes": 120,
       "passPercent": 70,
       "domains": [
