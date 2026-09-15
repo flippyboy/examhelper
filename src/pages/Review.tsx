@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import QuestionCard from "../components/QuestionCard";
 import { loadExam } from "../lib/loadExams";
 import { isCorrect } from "../lib/scoring";
+import { withChoiceOrder } from "../lib/session";
 import { loadSession } from "../lib/storage";
 import type { Exam, SessionState } from "../types/exam";
 
@@ -28,7 +29,9 @@ export default function Review() {
   const question = useMemo(() => {
     if (!exam || !session) return null;
     const qid = session.questionIds[index];
-    return exam.questions.find((q) => q.id === qid) ?? null;
+    const raw = exam.questions.find((q) => q.id === qid);
+    if (!raw) return null;
+    return withChoiceOrder(raw, session.choiceOrder?.[qid]);
   }, [exam, session, index]);
 
   if (error) {

@@ -74,6 +74,8 @@ export interface SessionState {
   examId: string;
   config: SessionConfig;
   questionIds: string[];
+  /** Display order of choice ids per question. Missing on sessions started before shuffle. */
+  choiceOrder?: Record<string, string[]>;
   currentIndex: number;
   answers: Record<string, string[]>;
   flagged: string[];

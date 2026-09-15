@@ -1,4 +1,4 @@
-import type { Exam, SessionConfig, SessionState } from "../types/exam";
+import type { Exam, Question, SessionConfig, SessionState } from "../types/exam";
 
 export function shuffle<T>(items: T[]): T[] {
   const copy = [...items];
@@ -17,11 +17,17 @@ export function buildSession(exam: Exam, config: SessionConfig): SessionState {
     pool = pool.slice(0, config.questionLimit);
   }
   const now = Date.now();
+  const choiceOrder: Record<string, string[]> = {};
+  for (const q of pool) {
+    if (!q.choices || q.choices.length < 2 || q.type === "truefalse") continue;
+    choiceOrder[q.id] = shuffle(q.choices.map((c) => c.id));
+  }
   return {
     id: `${exam.id}-${now}`,
     examId: exam.id,
     config,
     questionIds: pool.map((q) => q.id),
+    choiceOrder,
     currentIndex: 0,
     answers: {},
     flagged: [],
@@ -30,6 +36,24 @@ export function buildSession(exam: Exam, config: SessionConfig): SessionState {
     endsAt: config.timed ? now + exam.timeLimitMinutes * 60_000 : null,
     finishedAt: null,
   };
+}
+
+export function withChoiceOrder(question: Question, order?: string[]): Question {
+  if (!question.choices || !order?.length) return question;
+  const byId = new Map(question.choices.map((c) => [c.id, c]));
+  const seen = new Set<string>();
+  const choices = [];
+  for (const id of order) {
+    const choice = byId.get(id);
+    if (choice) {
+      choices.push(choice);
+      seen.add(id);
+    }
+  }
+  for (const choice of question.choices) {
+    if (!seen.has(choice.id)) choices.push(choice);
+  }
+  return { ...question, choices };
 }
 
 export function remainingMs(session: SessionState, now = Date.now()): number | null {

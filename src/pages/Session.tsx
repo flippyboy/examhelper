@@ -12,6 +12,7 @@ import {
   remainingMs,
   setAnswer,
   toggleFlag,
+  withChoiceOrder,
 } from "../lib/session";
 import { loadSession, saveSession } from "../lib/storage";
 import type { Exam, Question, SessionState } from "../types/exam";
@@ -60,7 +61,9 @@ export default function Session() {
   const question = useMemo(() => {
     if (!exam || !session) return null;
     const qid = session.questionIds[session.currentIndex];
-    return exam.questions.find((q) => q.id === qid) ?? null;
+    const raw = exam.questions.find((q) => q.id === qid);
+    if (!raw) return null;
+    return withChoiceOrder(raw, session.choiceOrder?.[qid]);
   }, [exam, session]);
 
   function persist(next: SessionState) {

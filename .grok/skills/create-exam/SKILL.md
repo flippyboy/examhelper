@@ -90,6 +90,8 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
     sometimes be wrong.
   - Keep every choice at the same length and level of detail; the key must not
     be the longest or most specific option.
+  - Shuffle `choices[]` so the key is not always first. The app also randomizes
+    order per session (except `truefalse`).
   - No negative stems (`NOT`, `EXCEPT`, `least`). Reframe as a positive
     scenario asking which action/setting applies.
   - `truefalse` only for genuinely clear-cut facts (defaults, port numbers,
