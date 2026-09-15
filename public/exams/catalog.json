@@ -45,6 +45,23 @@
         "Argo Rollouts",
         "Argo Events"
       ]
+    },
+    {
+      "id": "cka",
+      "title": "Certified Kubernetes Administrator",
+      "vendor": "CNCF / Linux Foundation",
+      "version": "Kubernetes v1.35",
+      "path": "cka/exam.json",
+      "questionCount": 102,
+      "timeLimitMinutes": 120,
+      "passPercent": 66,
+      "domains": [
+        "Cluster Architecture, Installation & Configuration",
+        "Workloads & Scheduling",
+        "Services & Networking",
+        "Storage",
+        "Troubleshooting"
+      ]
     }
   ]
 }
