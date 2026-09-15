@@ -57,8 +57,13 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
    Reviewer must flag: joke/impossible/`foo`/`bar` distractors; wrong choices
    a novice would dismiss on sight; keys that disagree with the explanation or
    cited doc; duplicate or reworded stems; `fill` answers that are not short
-   tokens. Distractors pass only if they look like a nearby command, CRD, flag,
-   UI path, or sibling objective from the same product.
+   tokens; guessable patterns (see Question bar): "all/none of the above",
+   a key visibly longer or more detailed than its distractors, `NOT`/`EXCEPT`
+   stems, `truefalse` on anything with nuance; stems with a second defensible
+   answer or vague qualifiers; explanations that state the key without saying
+   why each distractor is wrong. Distractors pass only if they look like a
+   nearby command, CRD, flag, UI path, or sibling objective from the same
+   product.
 8. **Report** to the user: blueprint URL, domain coverage (domain → objective → question
    ids), question counts by type, review outcome, and that the pack is unofficial
    practice.
@@ -66,9 +71,29 @@ Output path: `public/exams/<id>/exam.json` where `<id>` is kebab-case (`az-104`,
 ## Question bar
 
 - Test one fact or decision from the objective; no trick double-negatives.
+- Exactly one defensibly correct answer. If you need a paragraph to argue why
+  the key is "more correct" than another choice, rewrite the item. No vague
+  qualifiers (`sometimes`, `usually`), no jargon absent from the cited docs.
+- Prefer scenarios over recall. Put the candidate in a situation ("a pod is
+  stuck in `Pending` after…; what do you check first?") rather than asking
+  them to recite a list. Scenario items should be the majority of the pack.
 - Wrong choices must be reasonable: a nearby command, similar CRD/kind, sibling
   UI path, or off-by-one flag from the same docs — the mix-up a practitioner
   might actually make. Not jokes, unrelated products, or throwaway fillers.
+  Best distractors encode a real misconception (wrong scope, wrong layer,
+  wrong default, a deprecated form still in circulation).
+- Do not make items guessable without knowledge:
+  - No "all of the above" / "none of the above". If one slips in, it must
+    sometimes be wrong.
+  - Keep every choice at the same length and level of detail; the key must not
+    be the longest or most specific option.
+  - No negative stems (`NOT`, `EXCEPT`, `least`). Reframe as a positive
+    scenario asking which action/setting applies.
+  - `truefalse` only for genuinely clear-cut facts (defaults, port numbers,
+    hard limits). Anything needing judgment becomes `single`/`multi`.
+- `explanation` must say why the key is right **and** why each distractor is
+  wrong, naming the misconception behind it. "Correct: X, because Y" beats a
+  restated answer.
 - `fill` answers are short tokens (port numbers, command names, reserved words), with
   common variants listed in `answer`.
 - Never paste vendor exam item text, even "from memory."
