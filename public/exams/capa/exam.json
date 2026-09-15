@@ -192,9 +192,9 @@
       "type": "fill",
       "domain": "workflows",
       "objective": "Understand the Argo Workflow Spec",
-      "stem": "Which template type lets you write code inline with an `image`, `command`, and a `source` block, and exposes what it prints to stdout as `{{...outputs.result}}`?",
-      "answer": ["script", "script template"],
-      "explanation": "A `script` template is a container template with an inline `source`. Its stdout is captured automatically as the `result` output parameter.",
+      "stem": "Complete the template key whose inline `source` code has its stdout captured automatically as `{{steps.gen.outputs.result}}`: `- name: gen` / `______:` / `image: python:alpine3.6` / `command: [python]` / `source: |` ...",
+      "answer": ["script", "script:", "script template", "script-template"],
+      "explanation": "A `script` template is a container template with an inline `source`. Its stdout is captured automatically as the `result` output parameter, so no `outputs.parameters` declaration is needed.",
       "references": [
         { "title": "Argo Workflows — Scripts & Results", "url": "https://argo-workflows.readthedocs.io/en/latest/walk-through/scripts-and-results/" }
       ]
@@ -376,7 +376,7 @@
         { "id": "e", "text": "Rollout controller (`argocd-rollouts-controller`)" }
       ],
       "answer": ["a", "b", "c"],
-      "explanation": "Argo CD's core architecture is the API server (UI/CLI/API), the repo server (clones repos and generates manifests), and the application controller (compares live vs. desired state and syncs). EventBus belongs to Argo Events and the rollout controller to Argo Rollouts.",
+      "explanation": "Argo CD's core architecture is the API server (UI/CLI/API), the repository server, and the application controller. EventBus belongs to Argo Events and the rollout controller to Argo Rollouts.",
       "references": [
         { "title": "Argo CD — Architectural Overview", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/architecture/" }
       ]
@@ -386,9 +386,9 @@
       "type": "fill",
       "domain": "cd",
       "objective": "Understand Argo CD Fundamentals",
-      "stem": "Which Argo CD component clones Git repositories and renders Helm/Kustomize/plain manifests? (short component name)",
-      "answer": ["repo-server", "argocd-repo-server", "repo server", "repository server"],
-      "explanation": "The repository server maintains a local cache of Git repositories and generates the Kubernetes manifests that the application controller compares against the cluster.",
+      "stem": "In a default Argo CD install, complete the name of the Deployment that clones Git repositories and renders Helm/Kustomize/plain manifests: `argocd-______`",
+      "answer": ["repo-server", "repo server", "reposerver", "repository-server", "repository server", "argocd-repo-server"],
+      "explanation": "`argocd-repo-server` maintains a local cache of Git repositories and generates the Kubernetes manifests that `argocd-application-controller` compares against the live cluster. `argocd-server` is the API/UI server.",
       "references": [
         { "title": "Argo CD — Architectural Overview", "url": "https://argo-cd.readthedocs.io/en/stable/operator-manual/architecture/" }
       ]
@@ -842,8 +842,8 @@
       "type": "fill",
       "domain": "events",
       "objective": "Understand Argo Events Fundamentals",
-      "stem": "Which Argo Events custom resource defines event dependencies and the triggers to execute when those dependencies are satisfied?",
-      "answer": ["Sensor", "sensor"],
+      "stem": "Complete the `kind` of the Argo Events resource whose spec lists `dependencies` (which EventSource/event to wait for) and `triggers` (what to run once they are satisfied): `apiVersion: argoproj.io/v1alpha1` / `kind: ______`",
+      "answer": ["sensor", "sensors"],
       "explanation": "A `Sensor` lists `dependencies` (which EventSource and event name it waits for, with optional filters) and `triggers` (what to do when the dependencies resolve).",
       "references": [
         { "title": "Argo Events — Sensor", "url": "https://argoproj.github.io/argo-events/concepts/sensor/" }
